@@ -7,8 +7,16 @@ import ListItem from './ListItem';
 import {Container, Content, Header, Left, Right, Icon} from 'native-base';
 import Swiper from 'react-native-swiper';
 
+import {connect} from 'react-redux';
+import {getUser} from '../redux/actions';
+
 const Home = props => {
   const {title} = props;
+  const {user, dispatch, getUser} = props;
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
 
   const [items, setItems] = useState([
     {id: uuid(), text: 'Milk'},
@@ -31,6 +39,7 @@ const Home = props => {
 
   return (
     <Container style={''}>
+      {console.log("*reduxx",user)}
       <Header style={{backgroundColor: '#EFF'}}>
         <Left style={{flexDirection: 'row'}}>
           <Icon
@@ -38,7 +47,9 @@ const Home = props => {
             style={{marginRight: 15}}
             onPress={() => props.navigation.navigate('DrawerOpen')}
           />
-          <Text style={''}>{title}</Text>
+          <Text style={''} onPress={() => {
+            console.log("asdfasdfasdfasdf**")
+          }}>{title}</Text>
         </Left>
         <Right>
           <Icon
@@ -72,4 +83,9 @@ const css = StyleSheet.create({
   },
 });
 
-export default Home;
+export default connect(state => ({
+  user: state.userReducer.user
+}), dispatch => ({
+  dispatch,
+  getUser
+}))(Home);

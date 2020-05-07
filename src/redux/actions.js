@@ -18,17 +18,12 @@ export const getUser = () => ({
 });
 
 // category
-export const listCategory = () => {
-  return (a,b,c,d) => {
-    console.log("**A,b,c,d", a,b,c,d);
-    return ({
-      type: LIST_CATEGORY,
-      payload: API.graphql(graphqlOperation(listCategorys)).then(r => {
-        console.log('*action', r.data.listCategorys);
-        return r.data;
-      }),
-    })
-  };
+export function listCategory() {
+  return (dispatch, getState) => dispatch({
+        type: LIST_CATEGORY,
+        payload: API.graphql(graphqlOperation(listCategorys)).then(r => r.data.listCategorys).catch(e => console.log('error', e)),
+      },
+  );
 };
 
 export const addCategory = (cat) => ({

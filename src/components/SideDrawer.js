@@ -29,6 +29,7 @@ const SideDrawer = props => {
       <View>
         <TouchableOpacity><Text style={style.list}>Home</Text></TouchableOpacity>
         <TouchableOpacity><Text style={style.list}>Profile</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={style.list} onPress={() => props.navigation.navigate('Category')}>Category</Text></TouchableOpacity>
         <TouchableOpacity><Text style={style.list}>About</Text></TouchableOpacity>
         <TouchableOpacity><Text style={style.list}>Help</Text></TouchableOpacity>
         <TouchableOpacity

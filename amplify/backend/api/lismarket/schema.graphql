@@ -1,0 +1,45 @@
+type User @model {
+  id:ID!
+  email: String!
+  contactNo: String
+  userGroup: String
+  orders: [Order] @connection(name: "OrderUsers")
+}
+
+type Category @model{
+  id:ID!
+  name: String!
+  createdAt: String
+  products: [Product] @connection(name:"CategoryProducts", sortField:"createdAt")
+}
+
+type Product @model{
+  id:ID!
+  name: String!
+  description: String!
+  image: String
+  price: Float!
+  stockQuantity: Int!
+  createdBy: String!
+  createdAt: String
+  category: Category @connection(name:"CategoryProducts", sortField:"createdAt")
+  orderItems: [OrderItem] @connection(name:"OrderItemProduct")
+}
+
+type Order @model{
+  id:ID!
+  paymentType: String!
+  sentPackaging: Boolean
+  collectionReady: Boolean
+  comment: String
+  users : User @connection(name: "OrderUsers")
+  orderItems: [OrderItem] @connection(name:"OrderItemOrder")
+  }
+
+type OrderItem @model{
+  id:ID!
+  order: Order @connection(name:"OrderItemOrder")
+  orderQuantity: Int!
+  amount: Float!
+  product: Product @connection(name:"OrderItemProduct")
+}

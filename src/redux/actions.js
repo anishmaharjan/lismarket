@@ -1,16 +1,42 @@
 import uuid from 'react-native-uuid';
+import {client} from '../util';
+import gql from 'graphql-tag';
+import {API, graphqlOperation} from 'aws-amplify';
+import {listCategorys} from '../graphql/queries';
+import {createCategory} from '../graphql/mutations';
 
 export const USER = 'USER';
 export const ITEMS = 'ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';
+
+export const LIST_CATEGORY = 'LIST_CATEGORY';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
 
 export const getUser = () => ({
   type: USER,
   payload: [{u: 'a'}],
 });
 
+// category
+export const listCategory = () => {
+  return (a,b,c,d) => {
+    console.log("**A,b,c,d", a,b,c,d);
+    return ({
+      type: LIST_CATEGORY,
+      payload: API.graphql(graphqlOperation(listCategorys)).then(r => {
+        console.log('*action', r.data.listCategorys);
+        return r.data;
+      }),
+    })
+  };
+};
 
+export const addCategory = (cat) => ({
+  type: ADD_CATEGORY,
+  payload: API.graphql(graphqlOperation(createCategory, {input: cat})),
+});
 
+// add product
 
 // ITEMS
 export const getItems = () => ({
@@ -25,5 +51,5 @@ export const getItems = () => ({
 
 export const addItem = (text) => ({
   type: ADD_ITEM,
-  payload: {id: uuid(), text: text}
+  payload: {id: uuid(), text: text},
 });

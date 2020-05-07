@@ -8,15 +8,16 @@ import {Container, Content, Header, Left, Right, Icon} from 'native-base';
 import Swiper from 'react-native-swiper';
 
 import {connect} from 'react-redux';
-import {getUser, getItems} from '../redux/actions';
+import {getUser, getItems, listCategory} from '../redux/actions';
 
 const Home = props => {
   const {title} = props;
-  const {user, items, dispatch, getUser} = props;
+  const {user, items, dispatch, getUser, listCategory} = props;
 
   useEffect(() => {
     dispatch(getUser());
     dispatch(getItems());
+    dispatch(listCategory());
   }, []);
 
   const deleteItem = id => {
@@ -26,7 +27,7 @@ const Home = props => {
   };
 
   return (
-    <Container style={''}>
+    <Container>
       <Header style={{backgroundColor: '#EFF'}}>
         <Left style={{flexDirection: 'row'}}>
           <Icon
@@ -74,5 +75,6 @@ export default connect(state => ({
 }), dispatch => ({
   dispatch,
   getUser,
-  getItems
+  getItems,
+  listCategory
 }))(Home);

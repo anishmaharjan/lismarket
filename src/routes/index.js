@@ -7,17 +7,32 @@ import SideDrawer from '../components/SideDrawer';
 import Cart from '../components/Cart';
 // import Header from '../components/Header';
 
+import Category from '../components/category/Category';
+import AddCategory from '../components/category/AddCategory';
+
+const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
 
-const routes = (
-  <NavigationContainer>
-    {/*<Header />*/}
+const MainStackScreen = () => (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="DrawerOpen" component={SideDrawer} />
-      <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="Home" component={Home}/>
+      <Stack.Screen name="DrawerOpen" component={SideDrawer}/>
+      <Stack.Screen name="Cart" component={Cart}/>
+      <Stack.Screen name="Category" component={Category}/>
     </Stack.Navigator>
-  </NavigationContainer>
 );
 
-export default routes;
+const rootStack = (
+    <NavigationContainer>
+      <RootStack.Navigator mode="modal" headerMode="none">
+        <RootStack.Screen
+            name="Main"
+            component={MainStackScreen}
+            options={{headerShown: false}}
+        />
+        <RootStack.Screen name="AddCategory" component={AddCategory}/>
+      </RootStack.Navigator>
+    </NavigationContainer>
+);
+
+export default rootStack;

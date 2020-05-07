@@ -18,6 +18,8 @@
     "amazon-cognito-identity-js": "^4.2.1",
     "aws-amplify": "^3.0.7",
     "aws-amplify-react-native": "^4.0.3",
+    "aws-appsync": "^3.0.3",
+    "graphql-tag": "^2.10.3",
     "native-base": "^2.13.12",
     "react": "16.11.0",
     "react-native": "0.62.2",

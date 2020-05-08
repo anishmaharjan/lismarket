@@ -23,10 +23,11 @@ const Category = props => {
               onPress={() => props.navigation.navigate('AddCategory')}
           />
           <Text>List of Categories</Text>
-          <FlatList
-              data={category}
-              renderItem={(item) => <View><Text>A</Text></View>}
-          />
+          {
+            category && category.map(item => <View>
+              <Text>{item.name}</Text>
+            </View>)
+          }
         </View>
       </View>
   );

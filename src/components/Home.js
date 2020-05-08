@@ -17,7 +17,7 @@ const Home = props => {
   useEffect(() => {
     dispatch(getUser());
     dispatch(getItems());
-    dispatch(listCategory());
+    // dispatch(listCategory());
   }, []);
 
   const deleteItem = id => {

@@ -8,11 +8,11 @@ import {Container, Content, Header, Left, Right, Icon} from 'native-base';
 import Swiper from 'react-native-swiper';
 
 import {connect} from 'react-redux';
-import {getUser, getItems, listCategory} from '../redux/actions';
+import {getUser, getItems} from '../redux/actions';
 
 const Home = props => {
   const {title} = props;
-  const {user, items, dispatch, getUser, listCategory} = props;
+  const {user, items, dispatch, getUser} = props;
 
   useEffect(() => {
     dispatch(getUser());
@@ -52,6 +52,9 @@ const Home = props => {
           <ListItem item={item} deleteItem={deleteItem} />
         )}
       />
+
+      {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
+      <Text>Icons made by Freepik from www.flaticon.com</Text>
     </Container>
   );
 };
@@ -76,5 +79,4 @@ export default connect(state => ({
   dispatch,
   getUser,
   getItems,
-  listCategory
 }))(Home);

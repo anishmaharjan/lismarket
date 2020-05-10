@@ -1,14 +1,14 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import userReducer from './redux/userReducer';
 import itemReducer from './redux/itemReducer';
-import productReducer from './redux/productReducer';
+import categoryReducer from './redux/categoryReducer';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 
 const rootReducer = combineReducers({
   userReducer,
   item: itemReducer,
-  product: productReducer
+  category: categoryReducer
 });
 
 const configureStore = () => createStore(rootReducer, applyMiddleware(thunk));

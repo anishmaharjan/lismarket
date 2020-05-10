@@ -10,29 +10,14 @@ export const ITEMS = 'ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';
 
 export const LIST_CATEGORY = 'LIST_CATEGORY';
+export const LIST_CATEGORY_SUCCESS = 'LIST_CATEGORY_SUCCESS';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const ADD_CATEGORY_SUCCESS = 'ADD_CATEGORY_SUCCESS';
 
 export const getUser = () => ({
   type: USER,
   payload: [{u: 'a'}],
 });
-
-// category
-export function listCategory() {
-  return (dispatch, getState) => ({
-    type: LIST_CATEGORY,
-    payload: API.graphql(graphqlOperation(listCategorys)).then(r =>
-        dispatch({type: LIST_CATEGORY, payload: r.data.listCategorys.items}),
-    ).catch(e => console.log('error', e)),
-  });
-}
-
-export const addCategory = (cat) => ({
-  type: ADD_CATEGORY,
-  payload: API.graphql(graphqlOperation(createCategory, {input: cat})),
-});
-
-// add product
 
 // ITEMS
 export const getItems = () => ({

@@ -1,11 +1,8 @@
 import uuid from 'react-native-uuid';
-import {client} from '../util';
-import gql from 'graphql-tag';
-import {API, graphqlOperation} from 'aws-amplify';
-import {listCategorys} from '../graphql/queries';
-import {createCategory} from '../graphql/mutations';
 
-export const USER = 'USER';
+export const USER_INFO = 'USER_INFO';
+export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
+
 export const ITEMS = 'ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';
 
@@ -20,10 +17,6 @@ export const  LIST_PRODUCT_SUCCESS = 'LIST_PRODUCT_SUCCESS';
 export const GET_PRODUCTS_BY_CATEGORY = 'GET_PRODUCTS_BY_CATEGORY';
 export const GET_PRODUCTS_BY_CATEGORY_SUCCESS = 'GET_PRODUCTS_BY_CATEGORY_SUCCESS';
 
-export const getUser = () => ({
-  type: USER,
-  payload: [{u: 'a'}],
-});
 
 // ITEMS
 export const getItems = () => ({

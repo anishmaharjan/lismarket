@@ -4,7 +4,6 @@ import {View, Text, Button, StyleSheet, FlatList, TouchableOpacity} from 'react-
 import styled, {css} from '@emotion/native';
 import {Image} from 'react-native-elements';
 
-import {getUser, getItems} from '../../redux/types';
 import {listCategory} from '../../redux/actions/category';
 
 const Category = props => {

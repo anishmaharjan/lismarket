@@ -9,16 +9,15 @@ import styled, {css} from '@emotion/native';
 import Header from './Header';
 import Footer from './Footer';
 
-import {getUser, getItems} from '../redux/types';
+import {getItems} from '../redux/types';
 import {listCategory} from '../redux/actions/category';
 import {listAllProducts} from '../redux/actions/product';
 
 const Home = props => {
   const {title, navigation} = props;
-  const {user, items, categories, products, dispatch, getUser, listAllProducts} = props;
+  const {userInfo, items, categories, products, dispatch, listAllProducts} = props;
 
   useEffect(() => {
-    dispatch(getUser());
     dispatch(getItems());
     dispatch(listCategory());
     dispatch(listAllProducts());
@@ -96,13 +95,12 @@ const Home = props => {
 };
 
 export default connect(state => ({
-  user: state.userReducer.user,
+  userInfo: state.user.userInfo,
   items: state.item.items,
   categories: state.category.categories,
   products: state.product.products
 }), dispatch => ({
   dispatch,
-  getUser,
   getItems,
   listCategory,
   listAllProducts

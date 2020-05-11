@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity} from 'react-native';
-
-import {Container, Content, Header, Left, Right, Icon} from 'native-base';
 import {Auth} from 'aws-amplify';
 import {navigate} from '@react-navigation/routers/src/CommonActions';
+
+import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity} from 'react-native';
+import {Container, Content, Left, Right, Icon} from 'native-base';
+import Header from './Header';
 
 const signOut = async () => {
   try {
@@ -22,11 +23,9 @@ const Menu = props => {
 
   return (
       <Container>
-        <Header>
-          <Text>Drawer</Text>
-        </Header>
+        <Header/>
         <View>
-          <TouchableOpacity><Text style={style.list}>[A]Products</Text></TouchableOpacity>
+          <TouchableOpacity onPress={navPointer('AdminProducts')}><Text style={style.list}>[A]Products</Text></TouchableOpacity>
 
           <TouchableOpacity><Text style={style.list}>Profile</Text></TouchableOpacity>
           <TouchableOpacity><Text style={style.list} onPress={navPointer('Category')}>Category</Text></TouchableOpacity>

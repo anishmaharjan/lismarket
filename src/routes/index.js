@@ -6,6 +6,7 @@ import Home from '../components/Home';
 import Menu from '../components/Menu';
 import Cart from '../components/Cart';
 
+import AdminProduct from '../components/product/AdminProduct';
 import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
@@ -21,6 +22,9 @@ const MainStackScreen = () => (
       <Stack.Screen name="ProductList" component={ProductList}/>
       <Stack.Screen name="Cart" component={Cart}/>
       <Stack.Screen name="Category" component={Category}/>
+
+      {/*Admin*/}
+      <Stack.Screen name="AdminProducts" component={AdminProduct}/>
     </Stack.Navigator>
 );
 

@@ -1,4 +1,4 @@
-import {ITEMS, ADD_ITEM} from './actions';
+import {ITEMS, ADD_ITEM} from './types';
 
 const initialState = {
   items: null,

@@ -1,27 +1,33 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {css} from '@emotion/native';
 
 const Header = props => {
-  const {title} = props;
+  const {navigation} = props;
 
   return (
-    <View style={css.header}>
-      <Text style={css.text}>{title}</Text>
-    </View>
+      <View style={css`
+      flex-direction: row;
+      justify-content: space-between;
+      height: 50px;
+      padding: 10px 20px;
+      `}>
+        <TouchableOpacity>
+          <Text style={css`
+          font-size: 24px;
+          `}>LI Market</Text>
+        </TouchableOpacity>
+        <View>
+          <FontAwesome5 name={'shopping-cart'} style={css`
+            font-size: 24px;
+            padding-bottom: 5px;
+            `} onPress={() => navigation.navigate('Cart')}
+          />
+        </View>
+      </View>
   );
 };
 
-const css = StyleSheet.create({
-  header: {
-    height: 60,
-    padding: 15,
-    backgroundColor: 'darkslateblue',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 23,
-    textAlign: 'center',
-  },
-});
 
 export default Header;

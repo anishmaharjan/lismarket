@@ -12,7 +12,7 @@ import {navigate} from '@react-navigation/routers/src/CommonActions';
 const signOut = async () => {
   try {
     await Auth.signOut();
-    navigate('Protected', { user: 'John' });
+    navigate('Home');
   } catch (error) {
     console.log('error signing out: ', error);
   }

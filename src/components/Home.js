@@ -1,25 +1,27 @@
 import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import Swiper from 'react-native-swiper';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Container, Content, Header, Left, Right} from 'native-base';
-
-import Swiper from 'react-native-swiper';
+import {Container, Content, Left, Right} from 'native-base';
 import styled, {css} from '@emotion/native';
-
-import {connect} from 'react-redux';
-import {getUser, getItems} from '../redux/actions';
+import Header from './Header';
 import Footer from './Footer';
+
+import {getUser, getItems} from '../redux/types';
+import {listCategory} from '../redux/actions/category';
+import {listAllProducts} from '../redux/actions/product';
 
 const Home = props => {
   const {title, navigation} = props;
-  const {user, items, dispatch, getUser} = props;
+  const {user, items, categories, products, dispatch, getUser, listAllProducts} = props;
 
   useEffect(() => {
     dispatch(getUser());
     dispatch(getItems());
-    // dispatch(listCategory());
+    dispatch(listCategory());
+    dispatch(listAllProducts());
   }, []);
 
   const deleteItem = id => {
@@ -30,26 +32,7 @@ const Home = props => {
 
   return (
       <Container>
-        <View style={css`
-      flex-direction: row;
-      justify-content: space-between;
-      height: 50px;
-      padding: 10px 20px;
-      `}>
-          <TouchableOpacity>
-            <Text style={css`
-          font-size: 24px;
-          `}>LI Market</Text>
-          </TouchableOpacity>
-          <View>
-            <FontAwesome5 name={'shopping-cart'} style={css`
-            font-size: 24px;
-            padding-bottom: 5px;
-            `} onPress={() => navigation.navigate('Cart')}
-            />
-          </View>
-        </View>
-
+        <Header navigation={navigation}/>
         <View style={css`
         height: 200px;
         `}>
@@ -73,45 +56,28 @@ const Home = props => {
         flex-direction: row;
         padding: 10px;
         `}>
-          <View style={css`
-          padding: 10px;`}>
-            <View style={css`
-          flex-direction: row;
-          background-color: #c4c4c4;
-          width: 100px;
-          height: 100px;
-          padding: 10px;
-          border-radius: 10px;
-          `}>
-              <Text>A</Text>
-            </View>
-          </View>
-          <View style={css`
-          padding: 10px;`}>
-            <View style={css`
-          flex-direction: row;
-          background-color: #c4c4c4;
-          width: 100px;
-          height: 100px;
-          padding: 10px;
-          border-radius: 10px;
-          `}>
-              <Text>A</Text>
-            </View>
-          </View>
-          <View style={css`
-          padding: 10px;`}>
-            <View style={css`
-          flex-direction: row;
-          background-color: #c4c4c4;
-          width: 100px;
-          height: 100px;
-          padding: 10px;
-          border-radius: 10px;
-          `}>
-              <Text>A</Text>
-            </View>
-          </View>
+          {
+            categories && categories.map((cat, key) => <View key={'cat' + key} style={css`
+            padding: 10px;`}>
+              <TouchableOpacity
+                  onPress={() => navigation.navigate('ProductList', {
+                    category: cat
+                  })}
+                  style={css`
+              flex-direction: row;
+              background-color: #c4c4c4;
+              width: 100px;
+              height: 100px;
+              padding: 10px;
+              border-radius: 10px;
+              `}>
+                <Text>{cat.name}</Text>
+                  </TouchableOpacity>
+                </View>,
+            )
+          }
+
+
         </View>
 
         {/*<FlatList
@@ -124,7 +90,6 @@ const Home = props => {
 
         {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
         {/*<Text>Icons made by Freepik from www.flaticon.com</Text>*/}
-
         <Footer navigation={navigation}/>
       </Container>
   );
@@ -133,8 +98,12 @@ const Home = props => {
 export default connect(state => ({
   user: state.userReducer.user,
   items: state.item.items,
+  categories: state.category.categories,
+  products: state.product.products
 }), dispatch => ({
   dispatch,
   getUser,
   getItems,
+  listCategory,
+  listAllProducts
 }))(Home);

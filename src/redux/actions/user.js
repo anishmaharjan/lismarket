@@ -2,26 +2,11 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 import {
   SS, ER,
-  USER_INFO,
-  USER_INFO_SUCCESS,
   GET_USER_API,
-  GET_USER_API_SUCCESS,
   CREATE_USER_API,
 } from '../types';
 import {getUser} from '../../graphql/queries';
 import {createUser} from '../../graphql/mutations';
-
-export const getUserInfo = (cb = () => {}) => (dispatch) => ({
-  type: USER_INFO,
-  payload: Auth.currentUserInfo().then(result => {
-        dispatch({
-          type: USER_INFO_SUCCESS,
-          payload: result,
-        });
-        cb(result.id);
-      },
-  ).catch(e => console.log('*Error: User', e)),
-});
 
 export const getUserApi = (userId) => (dispatch) => ({
   type: GET_USER_API,
@@ -29,10 +14,11 @@ export const getUserApi = (userId) => (dispatch) => ({
     console.log('*getUserAPi', result);
     if (result.data.getUser) {
       dispatch({
-        type: GET_USER_API_SUCCESS,
+        type: GET_USER_API + SS,
         payload: result.data.getUser,
       });
     } else {
+      console.log("User Not Found!");
       //create user here
     }
   }).catch(e => console.log('Error Get User API: ', e)),

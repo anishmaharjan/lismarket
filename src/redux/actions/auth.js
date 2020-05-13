@@ -5,11 +5,14 @@ import {
   AUTH_SIGN_OUT,
   AUTH_SIGN_UP,
   AUTH_SIGN_UP_CONFIRM,
+  AUTH_USER_INFO,
+  AUTH_CHECK_USER
 } from '../types';
 
-export const signIn = (form) => dispatch => ({
+export const signIn = (form, cb) => dispatch => ({
   type: AUTH_SIGN_IN,
   payload: Auth.signIn(form.username, form.password).then(data => {
+    cb(data.attributes);
     dispatch({
       type: AUTH_SIGN_IN + SS,
       payload: data,
@@ -43,7 +46,7 @@ export const signUp = (form, cb) => dispatch => {
 export const confirmSignUp = (form) => dispatch => ({
   type: AUTH_SIGN_UP_CONFIRM,
   payload: Auth.confirmSignUp(form.username, form.code).then(data => {
-    console.log("CONFIRM SIGNUP", data);
+    console.log('CONFIRM SIGNUP', data);
     dispatch({
       type: AUTH_SIGN_UP_CONFIRM + SS,
       payload: data,
@@ -59,4 +62,29 @@ export const signOut = () => dispatch => ({
       payload: data,
     });
   }).catch(e => console.log('Error signing out', e)),
+});
+
+export const getUserInfo = () => (dispatch) => ({
+  type: AUTH_USER_INFO,
+  payload: Auth.currentUserInfo().then(result => {
+        dispatch({
+          type: AUTH_USER_INFO + SS,
+          payload: result,
+        });
+      },
+  ).catch(e => console.log('*Error: User', e)),
+});
+
+export const checkCurrentUser = () => (dispatch) => ({
+  type: AUTH_CHECK_USER,
+  payload: Auth.currentAuthenticatedUser().then(result => {
+        dispatch({
+          type: AUTH_CHECK_USER + SS,
+          payload: result,
+        });
+      },
+  ).catch(e => dispatch({
+    type: AUTH_CHECK_USER + ER,
+    payload: e,
+  })),
 });

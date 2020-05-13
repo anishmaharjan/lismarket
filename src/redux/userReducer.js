@@ -1,23 +1,21 @@
-import {USER_INFO, USER_INFO_SUCCESS} from './types';
+import {SS, ER, GET_USER_API} from './types';
 
 const initialState = {
-  userInfo: null,
-  fetchingUser: false,
+  user: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case USER_INFO:
+
+    case GET_USER_API:
       return {
         ...state,
-        fetchingUser: true,
       };
-    case USER_INFO_SUCCESS:
+    case GET_USER_API + SS:
       return {
         ...state,
-        fetchingUser: false,
-        userInfo: action.payload,
-      }
+        user: action.payload
+      };
 
     default:
       return state;

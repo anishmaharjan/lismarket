@@ -19,19 +19,13 @@ import {
 import {css} from '@emotion/native';
 import Routes from './src/routes';
 import {connect} from 'react-redux';
-import {getUserApi, getUserInfo} from './src/redux/actions/user';
+import {checkCurrentUser} from './src/redux/actions/auth';
 
 const App: () => React$Node = (props) => {
-  const {isLoggedIn, userInfo, dispatch, getUserInfo, getUserApi} = props;
-
-  const checkUser = () => {
-    Auth.currentAuthenticatedUser().then(user => console.log('CHecking user', {user})).catch(err => console.log(err));
-  };
+  const {isLoggedIn, dispatch, checkCurrentUser} = props;
 
   useEffect(() => {
-    // dispatch(getUserInfo((userId) => {
-    //   dispatch(getUserApi(userId));
-    // }));
+    dispatch(checkCurrentUser());
   }, []);
 
   useEffect(() => {
@@ -55,23 +49,20 @@ const App: () => React$Node = (props) => {
   }, []);
 
   return (
-        <View style={css`
+      <View style={css`
           paddingTop: 60;
           flex: 1;
           `}>
-          {console.log('*appjs', userInfo)}
-          <Routes isLoggedIn={isLoggedIn}/>
-        </View>
+        <Routes isLoggedIn={isLoggedIn}/>
+      </View>
   );
 };
 
 export default (
     connect(state => ({
       isLoggedIn: state.auth.isLoggedIn,
-      userInfo: state.user.userInfo,
     }), dispatch => ({
       dispatch,
-      getUserInfo,
-      getUserApi,
+      checkCurrentUser
     }))(App)
 );

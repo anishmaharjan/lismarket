@@ -1,21 +1,24 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import {Text, View} from 'react-native';
 import {Container} from 'native-base';
 import styled, {css} from '@emotion/native';
 import {Input, Button} from 'react-native-elements';
 import {signIn} from '../../redux/actions/auth';
-import {connect} from 'react-redux';
+import {getUserApi} from '../../redux/actions/user';
 
 import gas from '../styles';
 
 const SignIn = props => {
   const {navigation} = props;
-  const {fetchingSignIn, dispatch, signIn} = props;
+  const {fetchingSignIn, dispatch, signIn, getUserApi} = props;
 
   const [form, setForm] = useState({});
 
   const submitForm = () => {
-    dispatch(signIn(form));
+    dispatch(signIn(form, (userData) => {
+      dispatch(getUserApi(userData.email))
+    }));
   };
 
   return (
@@ -68,4 +71,5 @@ export default connect(state => ({
 }), dispatch => ({
   dispatch,
   signIn,
+  getUserApi
 }))(SignIn);

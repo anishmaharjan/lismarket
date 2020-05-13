@@ -1,21 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Auth} from 'aws-amplify';
-import {navigate} from '@react-navigation/routers/src/CommonActions';
 
 import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity} from 'react-native';
 import {Container, Content, Left, Right, Icon} from 'native-base';
 import Header from './Header';
-
-const signOut = async () => {
-  try {
-    await Auth.signOut();
-  } catch (error) {
-    console.log('error signing out: ', error);
-  }
-};
+import {connect} from 'react-redux';
+import {signOut} from '../redux/actions/auth';
 
 const Menu = props => {
   const {title, navigation} = props;
+  const {dispatch, signOut} = props;
 
   const navPointer = (screen) => () => {
     navigation.navigate(screen);
@@ -32,11 +26,7 @@ const Menu = props => {
           <TouchableOpacity><Text style={style.list}>About</Text></TouchableOpacity>
           <TouchableOpacity><Text style={style.list}>Help</Text></TouchableOpacity>
           <TouchableOpacity
-              onPress={() => signOut().then((r) => {
-                    console.log('signout ', r);
-                    navigate('Home');
-                  },
-              )}
+              onPress={() => dispatch(signOut())}
           ><Text style={style.list}>Sign out</Text></TouchableOpacity>
         </View>
       </Container>
@@ -54,4 +44,7 @@ const style = StyleSheet.create({
   },
 });
 
-export default Menu;
+export default connect(null, dispatch => ({
+  dispatch,
+  signOut
+}))(Menu);

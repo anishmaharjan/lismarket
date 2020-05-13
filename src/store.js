@@ -5,8 +5,10 @@ import categoryReducer from './redux/categoryReducer';
 import productReducer from './redux/productReducer';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
+import authReducer from './redux/actions/authReducer';
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   user: userReducer,
   item: itemReducer,
   category: categoryReducer,

@@ -2,15 +2,33 @@ import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {css} from '@emotion/native';
 import {Button, Input} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {Picker} from '@react-native-community/picker';
+
 
 const AddProduct = props => {
-  const {navigation} = props;
+  const {navigation, categories} = props;
+
   const [form, setForm] = useState({});
+
+  const handleChange = (name, val) => {
+    setForm(prev => ({...prev, [name]: val}));
+  };
 
   return (
       <View>
         <Text style={css` font-size: 18px; padding: 10px 20px`}>Add a category</Text>
-
+        {console.log(categories)}
+        <Picker
+            // selectedValue={this.state.language}
+            // style={{height: 50, width: 100}}
+            // onValueChange={(itemValue, itemIndex) =>
+            //     this.setState({language: itemValue})
+            // }
+        >
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="js" />
+        </Picker>
         <Input
             placeholder='Product Name'
             onChangeText={inputVal => setForm(prev => ({...prev, name: inputVal}))}
@@ -35,6 +53,11 @@ const AddProduct = props => {
             name='name'
             containerStyle={css` padding: 10px 20px;`}
         />
+        <Input
+            placeholder='Created By'
+            onChangeText={val => handleChange('createdBy', val)}
+            containerStyle={css`padding: 10px 20px;`}
+        />
         <Button
             onPress={() => navigation.goBack()}
             title="Cancel"
@@ -47,4 +70,8 @@ const AddProduct = props => {
   );
 };
 
-export default AddProduct;
+export default connect(state => ({
+  categories: state.category.categories,
+}), dispatch => ({
+  dispatch,
+}))(AddProduct);

@@ -3,32 +3,41 @@ import {Text, View} from 'react-native';
 import {css} from '@emotion/native';
 import {Button, Input} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {Picker} from '@react-native-community/picker';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const AddProduct = props => {
   const {navigation, categories} = props;
 
   const [form, setForm] = useState({});
+  const submitForm = ()=> {
+        console.log(form);
+  };
 
+  const handleDropdown = (category) => {
+        setForm(prev => ({...prev, productCategoryId: category.value}));
+  }
   const handleChange = (name, val) => {
     setForm(prev => ({...prev, [name]: val}));
   };
 
   return (
-      <View>
+     <View>
         <Text style={css` font-size: 18px; padding: 10px 20px`}>Add a category</Text>
         {console.log(categories)}
-        <Picker
-            // selectedValue={this.state.language}
-            // style={{height: 50, width: 100}}
-            // onValueChange={(itemValue, itemIndex) =>
-            //     this.setState({language: itemValue})
-            // }
-        >
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-        </Picker>
+
+        <DropDownPicker
+            items={categories.map((val, key)=>
+                (
+                    {label : val.name, value: val.id}
+                ) )
+            }
+            defaultIndex={1}
+            placeholder="Select a Category"
+            containerStyle={{height: 60}}
+            activeLabelStyle={{color: 'red'}}
+            onChangeItem={handleDropdown}
+        />
+
         <Input
             placeholder='Product Name'
             onChangeText={inputVal => setForm(prev => ({...prev, name: inputVal}))}
@@ -58,6 +67,15 @@ const AddProduct = props => {
             onChangeText={val => handleChange('createdBy', val)}
             containerStyle={css`padding: 10px 20px;`}
         />
+
+        <Button
+            onPress={submitForm}
+            title="Submit"
+            style={css`
+            padding: 10px 20px;
+            `}
+        />
+
         <Button
             onPress={() => navigation.goBack()}
             title="Cancel"

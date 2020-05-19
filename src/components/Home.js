@@ -79,14 +79,6 @@ const Home = props => {
 
         </View>
 
-        {/*<FlatList
-            data={items}
-            renderItem={({item}) => (
-                <ListItem item={item} deleteItem={deleteItem}/>
-            )}
-        />*/}
-
-
         {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
         {/*<Text>Icons made by Freepik from www.flaticon.com</Text>*/}
         <Footer navigation={navigation}/>

@@ -15,7 +15,7 @@ const AddProduct = props => {
 
   return (
       <View>
-        <Text style={css` font-size: 18px; padding: 10px 20px`}>Add a category</Text>
+        <Text style={css` font-size: 18px; padding: 10px 20px`}>Add a product</Text>
         {console.log(categories)}
 
         <Input

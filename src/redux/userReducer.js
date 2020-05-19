@@ -1,7 +1,8 @@
-import {SS, ER, GET_USER_API} from './types';
+import {SS, ER, GET_USER_API, LIST_USERS, CREATE_USER_API} from './types';
 
 const initialState = {
-  user: null
+  user: null,
+  userList: null,
 };
 
 export default (state = initialState, action) => {
@@ -14,8 +15,20 @@ export default (state = initialState, action) => {
     case GET_USER_API + SS:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       };
+
+    case LIST_USERS + SS:
+      return {
+        ...state,
+        userList: action.payload,
+      };
+
+    case CREATE_USER_API + SS:
+      return {...state};
+
+    case CREATE_USER_API + ER:
+      return {...state};
 
     default:
       return state;

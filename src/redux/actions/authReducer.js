@@ -12,7 +12,7 @@ const initialState = {
   fetchingConfirmSignUp: false,
 
   fetchingUser: false,
-  userInfo: null,
+  authUser: null,
 };
 
 export default (state = initialState, action) => {
@@ -67,7 +67,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingUser: false,
-        userInfo: action.payload,
+        authUser: action.payload,
       };
 
     case AUTH_CHECK_USER + SS:

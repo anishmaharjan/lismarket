@@ -7806,6 +7806,14 @@ react-native-drawer@2.5.1:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
 
+react-native-dropdown-picker@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-2.1.1.tgz#790610b34e965ab5878024105e23d21536fd8b3e"
+  integrity sha512-zLECjazOUbTCsFcP5v+RmWPPAHei5tw/Nc1Fe/pRLgPjoD3BMuO3pUYJHPBeB3AbX+DWSzv/laNO92SLhWMwKg==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-vector-icons "^6.6.0"
+
 react-native-easy-grid@0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz#f0be33620be1ebe2d2295918eb58b0a27e8272ab"

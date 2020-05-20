@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {css} from '@emotion/native';
 
 const ProductList = props => {
-  const {route, navigation,categories, dispatch} = props;
+  const {route, navigation, products, categories, dispatch} = props;
   const {category} = route.params;
 
   useEffect(() => {
@@ -13,21 +13,34 @@ const ProductList = props => {
   return (
       <View>
         <View style={css`
-        flex-direction: row
+        flex-direction: row;
+        height: 40px;
+        padding: 10px 20px;
         `}>
+          {console.log(products, category, categories)}
           {
-            categories && categories.map((cat, key) => {
-              <Text key={key}>{cat.name}</Text>
-            })
+            categories && categories.map((cat, key) => <View key={key}>
+                  <Text>{cat.name}</Text>
+                </View>,
+            )
           }
-
         </View>
-        {console.log(category, categories)}
+        {
+          products && products.items && products.items.filter(fil => category.id === fil.category.id).map((item, key) =>
+              <View key={key} style={css`
+              padding: 10px 20px;
+              `}>
+                <Text>{item.name}</Text>
+              </View>,
+          )
+        }
+
       </View>
   );
 };
 export default connect(state => ({
   categories: state.category.categories,
+  products: state.product.products,
 }), dispatch => ({
   dispatch,
 }))(ProductList);

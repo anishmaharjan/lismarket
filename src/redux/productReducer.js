@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingProducts: false,
-        products: action.payload,
+        products: action.payload.listProducts,
       };
 
     case ADD_PRODUCT:

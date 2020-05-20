@@ -6,10 +6,11 @@ import {Input, Button} from 'react-native-elements';
 import {signUp} from '../../redux/actions/auth';
 import {connect} from 'react-redux';
 import gas from '../styles';
+import {createUserApi} from '../../redux/actions/user';
 
 const SignIn = props => {
   const {navigation} = props;
-  const {fetchingSignUp, dispatch, signUp} = props;
+  const {fetchingSignUp, dispatch, signUp, createUserApi} = props;
 
   const [form, setForm] = useState({
     userGroup: 'user',
@@ -22,14 +23,20 @@ const SignIn = props => {
       return;
     }
 
-    dispatch(signUp(form, () => {
+    dispatch(signUp(form, (data) => {
+      dispatch(createUserApi({
+        id: data.userSub,
+        email: form.email,
+        contactNo: form.phone_number,
+        userGroup: form.userGroup || 'user',
+      }))
       navigation.navigate('ConfirmSignUpScreen');
     }));
   };
 
   return (
-      <Container style={css}>
-      <View style={css}>
+      <Container >
+      <View >
         <Text style={css` font-size: 18px; padding: 10px 20px`}>Create a new user</Text>
         <Input
             placeholder='Username'
@@ -88,4 +95,5 @@ export default connect(state => ({
 }), dispatch => ({
   dispatch,
   signUp,
+  createUserApi
 }))(SignIn);

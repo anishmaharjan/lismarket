@@ -10,6 +10,8 @@ import Home from '../components/Home';
 import Menu from '../components/Menu';
 import Cart from '../components/Cart';
 
+import Users from '../components/user/admin/AdminUsers';
+
 import AdminProduct from '../components/product/admin/AdminProduct';
 import AddProduct from '../components/product/admin/AddProduct';
 import ProductList from '../components/product/ProductList';
@@ -40,6 +42,7 @@ const rootStack = ({isLoggedIn}) => {
             </>
         )}
         {/*Admin*/}
+        <Stack.Screen name="UsersScreen" component={Users}/>
         <Stack.Screen name="AdminProducts" component={AdminProduct}/>
       </Stack.Navigator>
   );

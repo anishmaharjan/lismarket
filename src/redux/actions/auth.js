@@ -33,7 +33,7 @@ export const signUp = (form, cb) => dispatch => {
         'custom:userGroup': userGroup,
       },
     }).then(data => {
-      cb();
+      cb(data);
       console.log('Signup data: ', data);
       dispatch({
         type: AUTH_SIGN_UP + SS,
@@ -43,10 +43,11 @@ export const signUp = (form, cb) => dispatch => {
   });
 };
 
-export const confirmSignUp = (form) => dispatch => ({
+export const confirmSignUp = (form, cb) => dispatch => ({
   type: AUTH_SIGN_UP_CONFIRM,
   payload: Auth.confirmSignUp(form.username, form.code).then(data => {
     console.log('CONFIRM SIGNUP', data);
+    cb();
     dispatch({
       type: AUTH_SIGN_UP_CONFIRM + SS,
       payload: data,

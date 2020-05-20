@@ -10,6 +10,8 @@ export const AUTH_SIGN_UP_CONFIRM = 'AUTH_SIGN_UP_CONFIRM';
 export const AUTH_USER_INFO = 'AUTH_USER_INFO';
 export const AUTH_CHECK_USER = 'AUTH_CHECK_USER';
 
+export const LIST_USERS = 'LIST_USERS';
+
 export const GET_USER_API = 'GET_USER_API';
 export const CREATE_USER_API = 'CREATE_USER_API';
 

@@ -2,9 +2,10 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {css} from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Header = props => {
-  const {navigation} = props;
+  const navigation = useNavigation();
 
   return (
       <View style={css`

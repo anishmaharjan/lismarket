@@ -18,6 +18,7 @@ import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
 import AddCategory from '../components/category/AddCategory';
+import ProductDetails from '../components/product/ProductDetails';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -31,6 +32,7 @@ const rootStack = ({isLoggedIn}) => {
               <Stack.Screen name="Home" component={Home}/>
               <Stack.Screen name="Menu" component={Menu}/>
               <Stack.Screen name="ProductList" component={ProductList}/>
+              <Stack.Screen name="ProductDetailScreen" component={ProductDetails}/>
               <Stack.Screen name="Cart" component={Cart}/>
               <Stack.Screen name="Category" component={Category}/>
             </>

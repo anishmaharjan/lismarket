@@ -31,7 +31,7 @@ const Home = props => {
 
   return (
       <Container>
-        <Header navigation={navigation}/>
+        <Header/>
         <View style={css`
         height: 200px;
         `}>

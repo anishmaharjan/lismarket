@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Container, Picker} from 'native-base';
 import {Image, Button} from 'react-native-elements';
@@ -7,10 +7,18 @@ import Header from '../Header';
 import * as tm from '../theme.style';
 import {monefy} from '../../util';
 import {defaultQty, failSafeImage} from '../../consts';
+import {addToCart} from '../../redux/actions/cart';
+import {connect} from 'react-redux';
 
 const ProductDetails = props => {
-  const {route} = props;
+  const {route, dispatch, addToCart} = props;
   const {product, quantity, setQuantity} = route.params;
+
+  const [locoQuantity, setLocoQuantity] = useState(quantity);
+
+  useEffect(() => {
+    setQuantity(locoQuantity)
+  }, [locoQuantity]);
 
   return (
       <Container>
@@ -34,8 +42,8 @@ const ProductDetails = props => {
                 style={css`width:70px; background:#eee;`}
                 textStyle={css`color:black`}
                 itemTextStyle={{fontSize: 18}}
-                selectedValue={quantity}
-                onValueChange={val => setQuantity(val)}
+                selectedValue={locoQuantity}
+                onValueChange={val => setLocoQuantity(val)}
 
             >
               {defaultQty.map((v, i) =>
@@ -45,7 +53,7 @@ const ProductDetails = props => {
 
             <TouchableOpacity style={css`${tm.btn}
             margin: 0 10px;
-            `} onPress={() => {}}>
+            `} onPress={() => dispatch(addToCart({...product, quantity: quantity}))}>
               <Text style={css`${tm.btnText}`}>Add to cart</Text>
             </TouchableOpacity>
           </View>
@@ -55,4 +63,7 @@ const ProductDetails = props => {
   );
 };
 
-export default ProductDetails;
+export default connect(null, dispatch => ({
+  dispatch,
+  addToCart
+}))(ProductDetails);

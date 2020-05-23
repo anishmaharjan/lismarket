@@ -7,9 +7,12 @@ import {useNavigation} from '@react-navigation/native';
 import * as tm from '../theme.style';
 import {defaultQty} from '../../consts';
 import {monefy} from '../../util';
+import {addToCart} from '../../redux/actions/cart';
+import {connect} from 'react-redux';
 
 const EachItem = props => {
-  const {product} = props;
+  const {product, dispatch, addToCart} = props;
+
 
   const navigation = useNavigation();
 
@@ -62,7 +65,7 @@ const EachItem = props => {
         <View style={css`
                   flex-direction: row;
                   `}>
-          <TouchableOpacity style={css` ${tm.btn} `}>
+          <TouchableOpacity style={css` ${tm.btn} `} onPress={() => dispatch(addToCart({...product, quantity: quantity}))}>
             <Text style={css`${tm.btnText} `}>Add to cart</Text>
           </TouchableOpacity>
         </View>
@@ -71,4 +74,8 @@ const EachItem = props => {
   );
 };
 
-export default EachItem;
+export default connect(state => ({
+}), dispatch => ({
+  dispatch,
+  addToCart,
+}))(EachItem);

@@ -24,9 +24,8 @@ const ProductList = props => {
         height: 40px;
         padding: 10px 20px;
         `}>
-            {console.log(products, category, categories)}
             {
-              categories && categories.map((cat, key) => <View key={key}>
+              categories && categories.map((cat, key) => <View key={'category'+key}>
                     <TouchableOpacity style={css`
                   `}>
                       <Text style={css`
@@ -55,7 +54,7 @@ const ProductList = props => {
                 ...products.items,
                 ...products.items,
                 ...products.items].filter(fil => category.id === fil.category.id).map((product, key) =>
-                  <EachItem product={product}/>
+                  <EachItem key={'product-list'+key} product={product}/>
               )
             }
           </ScrollView>

@@ -12,7 +12,6 @@ const Category = props => {
 
   useEffect(() => {
     dispatch(listCategory());
-
   }, []);
 
   return (

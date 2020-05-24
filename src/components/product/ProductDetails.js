@@ -53,7 +53,7 @@ const ProductDetails = props => {
 
             <TouchableOpacity style={css`${tm.btn}
             margin: 0 10px;
-            `} onPress={() => dispatch(addToCart({...product, quantity: quantity}))}>
+            `} onPress={() => dispatch(addToCart({...product, quantity: locoQuantity}))}>
               <Text style={css`${tm.btnText}`}>Add to cart</Text>
             </TouchableOpacity>
           </View>

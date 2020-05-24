@@ -7,7 +7,7 @@ import {Button, Input} from 'react-native-elements';
 import {confirmSignUp} from '../../redux/actions/auth';
 import {connect} from 'react-redux';
 
-import gas from '../styles';
+import gas from '../variables.styles';
 
 const ConfirmSignUp = props => {
   const {navigation} = props;
@@ -51,7 +51,7 @@ const ConfirmSignUp = props => {
               onPress={submitForm}
               loading={fetchingConfirmSignUp}
               buttonStyle={{
-                backgroundColor: gas.btn,
+                backgroundColor: gas.primary,
               }}
           />
         </View>

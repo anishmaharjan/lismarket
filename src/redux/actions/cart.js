@@ -1,6 +1,7 @@
 import {
   SS, ER,
   ADD_TO_CART,
+  UDPATE_CART_QUANTITY
 } from '../types';
 
 export const addToCart = (product) => (dispatch) => dispatch({
@@ -8,3 +9,7 @@ export const addToCart = (product) => (dispatch) => dispatch({
   payload: {product},
 });
 
+export const updateCartQuantity = ({index, quantity}) => (dispatch) => dispatch({
+  type: UDPATE_CART_QUANTITY,
+  payload: {index, quantity}
+})

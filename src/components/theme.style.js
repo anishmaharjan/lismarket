@@ -1,7 +1,9 @@
+import gss from './variables.styles';
+
 export const borderBottom = `
   border-bottom-width: 1px; 
-  border-bottom-color: #333;
-  padding: 5px 0;
+  border-bottom-color: ${gss.grey2};
+  padding: 10px 0;
   `;
 
 export const h1 = `

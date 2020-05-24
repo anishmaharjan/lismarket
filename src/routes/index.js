@@ -8,7 +8,7 @@ import ConfirmSignUp from '../components/auth/ConfirmSignUp';
 
 import Home from '../components/Home';
 import Menu from '../components/Menu';
-import Cart from '../components/Cart';
+import Cart from '../components/cart/Cart';
 import Profile from '../components/Profile';
 
 import Users from '../components/user/admin/AdminUsers';

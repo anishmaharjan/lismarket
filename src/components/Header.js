@@ -23,14 +23,12 @@ const Header = props => {
           font-size: 24px;
           `}>LI Market</Text>
         </TouchableOpacity>
-        <View>
+        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
           <FontAwesome5 name={'shopping-cart'} style={css`
             font-size: 24px;
             padding-bottom: 5px;
-            `} onPress={() => navigation.navigate('Cart')}
-          >
-
-          </FontAwesome5>
+            `}
+          />
           <Badge
               status="warning"
               value={cart.length}
@@ -41,7 +39,7 @@ const Header = props => {
               width: 90%;
               `}
           />
-        </View>
+        </TouchableOpacity>
       </View>
   );
 };

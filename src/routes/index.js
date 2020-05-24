@@ -9,6 +9,7 @@ import ConfirmSignUp from '../components/auth/ConfirmSignUp';
 import Home from '../components/Home';
 import Menu from '../components/Menu';
 import Cart from '../components/cart/Cart';
+import CheckoutScreen from '../components/cart/CheckoutScreen';
 import Profile from '../components/Profile';
 
 import Users from '../components/user/admin/AdminUsers';
@@ -39,7 +40,8 @@ const rootStack = ({isLoggedIn}) => {
               <Stack.Screen name="Profile" component={Profile}/>
               <Stack.Screen name="ProductList" component={ProductList}/>
               <Stack.Screen name="ProductDetailScreen" component={ProductDetails}/>
-              <Stack.Screen name="Cart" component={Cart}/>
+              <Stack.Screen name="CartScreen" component={Cart}/>
+              <Stack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
               <Stack.Screen name="Category" component={Category}/>
             </>
         ) : (

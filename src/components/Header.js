@@ -23,7 +23,7 @@ const Header = props => {
           font-size: 24px;
           `}>LI Market</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+        <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
           <FontAwesome5 name={'shopping-cart'} style={css`
             font-size: 24px;
             padding-bottom: 5px;

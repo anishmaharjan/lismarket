@@ -14,12 +14,13 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar,
+  StatusBar, SafeAreaView, ScrollView,
 } from 'react-native';
 import {css} from '@emotion/native';
 import Routes from './src/routes';
 import {connect} from 'react-redux';
 import {checkCurrentUser} from './src/redux/actions/auth';
+import {Root} from 'native-base';
 
 const App: () => React$Node = (props) => {
   const {isLoggedIn, dispatch, checkCurrentUser} = props;
@@ -49,12 +50,14 @@ const App: () => React$Node = (props) => {
   }, []);
 
   return (
-      <View style={css`
+      <Root>
+        <View style={css`
           paddingTop: 60;
           flex: 1;
           `}>
-        <Routes isLoggedIn={isLoggedIn}/>
-      </View>
+          <Routes isLoggedIn={isLoggedIn}/>
+        </View>
+      </Root>
   );
 };
 
@@ -63,6 +66,6 @@ export default (
       isLoggedIn: state.auth.isLoggedIn,
     }), dispatch => ({
       dispatch,
-      checkCurrentUser
+      checkCurrentUser,
     }))(App)
 );

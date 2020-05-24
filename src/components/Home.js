@@ -5,11 +5,10 @@ import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 
 import {Container, Content, Left, Right} from 'native-base';
-import styled, {css} from '@emotion/native';
+import {css} from '@emotion/native';
 import Header from './Header';
 import Footer from './Footer';
 
-import {getItems} from '../redux/types';
 import {listCategory} from '../redux/actions/category';
 import {listAllProducts} from '../redux/actions/product';
 
@@ -18,7 +17,6 @@ const Home = props => {
   const {userInfo, items, categories, products, dispatch, listAllProducts} = props;
 
   useEffect(() => {
-    dispatch(getItems());
     dispatch(listCategory());
     dispatch(listAllProducts());
   }, []);
@@ -31,7 +29,7 @@ const Home = props => {
 
   return (
       <Container>
-        <Header navigation={navigation}/>
+        <Header/>
         <View style={css`
         height: 200px;
         `}>
@@ -58,11 +56,11 @@ const Home = props => {
           {
             categories && categories.map((cat, key) => <View key={'cat' + key} style={css`
             padding: 10px;`}>
-              <TouchableOpacity
-                  onPress={() => navigation.navigate('ProductList', {
-                    category: cat
-                  })}
-                  style={css`
+                  <TouchableOpacity
+                      onPress={() => navigation.navigate('ProductList', {
+                        category: cat,
+                      })}
+                      style={css`
               flex-direction: row;
               background-color: #c4c4c4;
               width: 100px;
@@ -70,7 +68,7 @@ const Home = props => {
               padding: 10px;
               border-radius: 10px;
               `}>
-                <Text>{cat.name}</Text>
+                    <Text>{cat.name}</Text>
                   </TouchableOpacity>
                 </View>,
             )
@@ -90,10 +88,9 @@ export default connect(state => ({
   userInfo: state.user.userInfo,
   items: state.item.items,
   categories: state.category.categories,
-  products: state.product.products
+  products: state.product.products,
 }), dispatch => ({
   dispatch,
-  getItems,
   listCategory,
-  listAllProducts
+  listAllProducts,
 }))(Home);

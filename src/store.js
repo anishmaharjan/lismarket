@@ -6,6 +6,7 @@ import productReducer from './redux/productReducer';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import authReducer from './redux/actions/authReducer';
+import cartReducer from './redux/cartReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   item: itemReducer,
   category: categoryReducer,
   product: productReducer,
+  cart: cartReducer,
 });
 
 const configureStore = () => createStore(rootReducer, applyMiddleware(thunk));

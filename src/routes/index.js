@@ -8,7 +8,7 @@ import ConfirmSignUp from '../components/auth/ConfirmSignUp';
 
 import Home from '../components/Home';
 import Menu from '../components/Menu';
-import Cart from '../components/Cart';
+import Cart from '../components/cart/Cart';
 import Profile from '../components/Profile';
 
 import Users from '../components/user/admin/AdminUsers';
@@ -19,6 +19,7 @@ import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
 import AddCategory from '../components/category/AddCategory';
+import ProductDetails from '../components/product/ProductDetails';
 
 
 import Dashboard from '../components/admin/Dashboard';
@@ -37,6 +38,7 @@ const rootStack = ({isLoggedIn}) => {
               <Stack.Screen name="Menu" component={Menu}/>
               <Stack.Screen name="Profile" component={Profile}/>
               <Stack.Screen name="ProductList" component={ProductList}/>
+              <Stack.Screen name="ProductDetailScreen" component={ProductDetails}/>
               <Stack.Screen name="Cart" component={Cart}/>
               <Stack.Screen name="Category" component={Category}/>
             </>

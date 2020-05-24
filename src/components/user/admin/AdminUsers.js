@@ -5,7 +5,7 @@ import {Container} from 'native-base';
 import {createUserApi, getAllUsers} from '../../../redux/actions/user';
 import {getUserInfo} from '../../../redux/actions/auth';
 import {css} from '@emotion/native';
-import gas from '../../styles';
+import gas from '../../variables.styles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 const AdminUsers = props => {

@@ -13,7 +13,6 @@ const initialState = {
   addingCategory: false,
   successAddingCategory: false,
   fetchingProductsByCategory: false,
-
 };
 
 export default (state = initialState, action) => {

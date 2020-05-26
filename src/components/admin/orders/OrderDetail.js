@@ -3,14 +3,8 @@ import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {css} from '@emotion/native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import {listOrder} from '../../../redux/actions/order';
 
-
-const Order = props => {
-const {dispatch, orderList,listOrder} = props;
-useEffect(() => {
-    dispatch(listOrder());
-  }, []);
+const OrderDetail = props => {
 
   return (
       <View style = {styles.container}>
@@ -53,9 +47,6 @@ const styles = StyleSheet.create({
 
 });
 
-export default connect(state => ({
-  orderList: state.order.orderList,
-}),  dispatch => ({
-      dispatch,
-      listOrder
- }))(Order);
+export default connect(null,dispatch => ({
+      dispatch      
+ }))(OrderDetail);

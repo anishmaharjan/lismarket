@@ -10,7 +10,6 @@ import {signOut} from '../../redux/actions/auth';
 
 const Menu = props => {
   const {authUser} = props;
-  console.log(authUser);
   const {title, navigation} = props;
   const {dispatch, signOut} = props;
   const card = el => {
@@ -27,7 +26,7 @@ const Menu = props => {
   const items = [
     { name: 'Customers', value: 'Customers', background: '#74D4DE', icon: 'user' },
     { name: 'Products', value: 'AdminProducts', background: '#76EE00', icon: 'lemon-o' },
-    { name: 'Inventory', value: 'UsersScreen', background: '#FEC001', icon: 'file-o' },
+    { name: 'Inventory', value: 'Inventory', background: '#FEC001', icon: 'file-o' },
     { name: 'Orders', value: 'Orders', background: '#FC8369', icon: 'shopping-bag' },
     { name: 'Home Page', value: 'Home', background: '#9932CC', icon: 'home' },
     { name: 'SignOut', value: 'signout', background: '#778899', icon: 'sign-out' },

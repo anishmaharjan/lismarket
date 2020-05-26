@@ -33,22 +33,5 @@ export const  UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const GET_PRODUCTS_BY_CATEGORY = 'GET_PRODUCTS_BY_CATEGORY';
 export const GET_PRODUCTS_BY_CATEGORY_SUCCESS = 'GET_PRODUCTS_BY_CATEGORY_SUCCESS';
 
-export const LIST_ORDERS = 'LIST_ORDERS';
-
-
-
-// ITEMS
-export const getItems = () => ({
-  type: ITEMS,
-  payload: [
-    {id: uuid(), text: 'Milk'},
-    {id: uuid(), text: 'Eggs'},
-    {id: uuid(), text: 'Bread'},
-    {id: uuid(), text: 'Juice'},
-  ],
-});
-
-export const addItem = (text) => ({
-  type: ADD_ITEM,
-  payload: {id: uuid(), text: text},
-});
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const UDPATE_CART_QUANTITY = 'UDPATE_CART_QUANTITY';

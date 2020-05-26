@@ -17,7 +17,7 @@ const Menu = props => {
 
   return (
       <Container>
-        <Header navigation={navigation}/>
+        <Header/>
         <View>
           <TouchableOpacity onPress={navPointer('Customers')}><Text style={style.list}>[A]Users</Text></TouchableOpacity>
           <TouchableOpacity onPress={navPointer('AdminProducts')}><Text style={style.list}>[A]Products</Text></TouchableOpacity>

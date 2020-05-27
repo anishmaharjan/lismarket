@@ -1,24 +1,12 @@
-import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
-import awsConfig from '../aws-exports';
+export const monefy = amt => amt && `$ ${amt.toFixed(2)}`;
 
-export const client = new AWSAppSyncClient({
-  url: awsConfig.aws_appsync_graphqlEndpoint,
-  region: awsConfig.aws_appsync_region,
-  auth: {
-    type: AUTH_TYPE.API_KEY, //awsConfig.aws_appsync_authenticationType,
-    apiKey: awsConfig.aws_appsync_apiKey,
-  }
-});
+export const calculateTotal = cartItems =>
+  cartItems &&
+  cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-
-/*
-*
-client.query({
-    query: gql(listCategorys)
-  }).then(({ data: { listCategorys } }) => {
-    console.log(listCategorys.items);
-    return listCategorys.items;
-  })
-*
-*
-* */
+export const getRandomInt = (min, max) => {
+  //The maximum is exclusive and the minimum is inclusive
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+};

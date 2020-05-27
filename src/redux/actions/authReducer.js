@@ -74,6 +74,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
+        authUser: action.payload.attributes
       };
     case AUTH_CHECK_USER + ER:
       return {

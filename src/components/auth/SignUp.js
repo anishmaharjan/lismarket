@@ -5,7 +5,7 @@ import {css} from '@emotion/native';
 import {Input, Button} from 'react-native-elements';
 import {signUp} from '../../redux/actions/auth';
 import {connect} from 'react-redux';
-import gas from '../styles';
+import gas from '../variables.styles';
 import {createUserApi} from '../../redux/actions/user';
 
 const SignIn = props => {
@@ -73,7 +73,7 @@ const SignIn = props => {
             padding: 10px 20px;
             `}
             buttonStyle={{
-              backgroundColor: gas.btn,
+              backgroundColor: gas.primary,
             }}
             onPress={submitForm}
             loading={fetchingSignUp}
@@ -82,7 +82,7 @@ const SignIn = props => {
             title="* or confirm sign up code"
             type="clear"
             titleStyle={{
-              color: gas.btn,
+              color: gas.primary,
             }}
             onPress={() => navigation.navigate('ConfirmSignUpScreen')}
         />

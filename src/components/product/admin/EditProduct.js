@@ -4,28 +4,27 @@ import {css} from '@emotion/native';
 import {Button, Input} from 'react-native-elements';
 import {connect} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {addProduct, listAllProducts} from '../../../redux/actions/product';
+import {editProduct, listAllProducts} from '../../../redux/actions/product';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import gas from '../../variables.styles';
 
-const AddProduct = props => {
+const EditProduct = props => {
   const {navigation, authUser, categories} = props;
-  const {dispatch, addProduct, addingProductSuccess} = props;
-
+  const {dispatch, updatingProduct, updatingProductSuccess} = props;
+  const {product} = props.route.params;
   const [form, setForm] = useState({
-    createdBy: authUser.sub,
-    productCategoryId: '96f3378e-abfa-43c7-9668-d307dc1254a2',
+    id: product.id,
   });
 
   useEffect(() => {
-    if (addingProductSuccess === true) {
+    if (updatingProductSuccess === true) {
       navigation.goBack();
       dispatch(listAllProducts());
     }
-  }, [addingProductSuccess, dispatch, navigation]);
+  });
 
   const submitForm = () => {
-    dispatch(addProduct(form));
+    dispatch(editProduct(form));
   };
 
   const handleDropdown = ({value}) => {
@@ -47,7 +46,7 @@ const AddProduct = props => {
             font-size: 18px;
             padding: 10px 20px;
           `}>
-          Add a product
+          Edit a product
         </Text>
         <FontAwesome5
           name={'times'}
@@ -70,7 +69,7 @@ const AddProduct = props => {
           categories &&
           categories.map((val, key) => ({label: val.name, value: val.id}))
         }
-        placeholder="Select a category"
+        defaultValue={product.category.id}
         containerStyle={{height: 60}}
         activeLabelStyle={{color: 'red'}}
         onChangeItem={handleDropdown}
@@ -78,6 +77,7 @@ const AddProduct = props => {
 
       <Input
         placeholder="Product name"
+        defaultValue={product.name}
         onChangeText={val => handleChange('name', val)}
         containerStyle={css`
           padding: 10px 20px;
@@ -85,22 +85,25 @@ const AddProduct = props => {
       />
       <Input
         placeholder="Description"
+        defaultValue={product.description}
         onChangeText={val => handleChange('description', val)}
         containerStyle={css`
           padding: 10px 20px;
         `}
       />
       <Input
-        placeholder="Price"
         keyboardType="numeric"
+        placeholder="Price"
+        defaultValue={String(product.price)}
         onChangeText={val => handleChange('price', val)}
         containerStyle={css`
           padding: 10px 20px;
         `}
       />
       <Input
-        placeholder="Current stock"
         keyboardType="numeric"
+        placeholder="Current stock"
+        defaultValue={String(product.stockQuantity)}
         onChangeText={val => handleChange('stockQuantity', val)}
         containerStyle={css`
           padding: 10px 20px;
@@ -123,6 +126,7 @@ const AddProduct = props => {
         buttonStyle={css`
           background-color: ${gas.primary};
         `}
+        loading={updatingProduct}
       />
 
       <Button
@@ -147,10 +151,11 @@ export default connect(
   state => ({
     categories: state.category.categories,
     authUser: state.auth.authUser,
-    addingProductSuccess: state.product.addingProductSuccess,
+    updatingProduct: state.product.updatingProduct,
+    updatingProductSuccess: state.product.updatingProductSuccess,
   }),
   dispatch => ({
     dispatch,
-    addProduct,
+    editProduct,
   }),
-)(AddProduct);
+)(EditProduct);

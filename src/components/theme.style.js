@@ -8,7 +8,7 @@ export const borderBottom = `
 
 export const h1 = `
 font-size: 24px;
-font-weight: bold`;
+font-weight: bold;`;
 
 export const h2 = `
 font-size: 20px;`;
@@ -21,7 +21,6 @@ font-size: 16px;
 export const pt2 = `
 padding-top: 10px`;
 
-
 export const flexRow = `
   flex-direction: row;`;
 
@@ -29,7 +28,7 @@ export const padding = `
   padding: 0 5px;
   `;
 
-export const paddingWalls = `padding: 10px 20px;`;
+export const paddingWalls = 'padding: 10px 20px;';
 
 export const btn = `
 background-color: #FC8369;
@@ -51,4 +50,3 @@ color: #fff;
 font-weight: bold;
 align-items: center;
 padding: 10px;`;
-

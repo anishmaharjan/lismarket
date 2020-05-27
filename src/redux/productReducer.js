@@ -1,8 +1,4 @@
-import {
-  SS, ER,
-  LIST_PRODUCT,
-  ADD_PRODUCT,
-} from './types';
+import {SS, ER, LIST_PRODUCT, ADD_PRODUCT} from './types';
 
 const initialState = {
   products: null,
@@ -10,7 +6,6 @@ const initialState = {
 
   addingProduct: false,
   addedProduct: null,
-
 };
 
 export default (state = initialState, action) => {
@@ -26,6 +21,12 @@ export default (state = initialState, action) => {
         ...state,
         fetchingProducts: false,
         products: action.payload.listProducts,
+      };
+
+    case LIST_PRODUCT + ER:
+      return {
+        ...state,
+        fetchingProducts: false,
       };
 
     case ADD_PRODUCT:

@@ -73,7 +73,7 @@ export const listCategorys = /* GraphQL */ `
       items {
         id
         name
-        createdAt
+        image
         products {
           nextToken
         }

@@ -28,7 +28,7 @@ const CartItem = props => {
             <Text style={css`${tm.h2}`}>{item.name}</Text>
             <Text style={css`${tm.h3}`}>{item.description}</Text>
             <Text style={css`${tm.h3}`}>{monefy(item.price)}</Text>
-            <TouchableOpacity style={css`${tm.flexRow} padding: 20px 0; justify-content: center;`}>
+            <TouchableOpacity style={css`${tm.flexRow} padding: 20px 10px; justify-content: flex-end;`}>
               <FontAwesome5 name={'trash'} style={css` font-size: 16px; padding: 3px 5px; color: ${gss.primary};`}/>
               <Text style={css`${tm.h3} color: ${gss.text}`}>Remove item</Text>
             </TouchableOpacity>

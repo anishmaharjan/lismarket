@@ -1,96 +1,140 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Swiper from 'react-native-swiper';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {Icon, Image} from 'react-native-elements';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {Image} from 'react-native-elements';
 
-import {Container, Content, Left, Right} from 'native-base';
+import {Container} from 'native-base';
 import {css} from '@emotion/native';
 import Header from './Header';
 import Footer from './Footer';
 
 import {listCategory} from '../redux/actions/category';
 import {listAllProducts} from '../redux/actions/product';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = props => {
   const {title, navigation} = props;
-  const {userInfo, items, categories, products, dispatch, listAllProducts} = props;
+  const {
+    userInfo,
+    items,
+    categories,
+    products,
+    dispatch,
+    listAllProducts,
+  } = props;
 
   useEffect(() => {
     dispatch(listCategory());
     dispatch(listAllProducts());
-  }, []);
-
-  const deleteItem = id => {
-    setItems(prevItems => {
-      return prevItems.filter(item => item.id != id);
-    });
-  };
+  }, [dispatch, listAllProducts]);
 
   return (
-      <Container>
-        <Header/>
-        <View style={css`
-        height: 200px;
+    <Container>
+      <Header />
+      <View
+        style={css`
+          height: 200px;
         `}>
-          <Swiper style={css`
-        padding: 10px;
-        `} autoplay={false}>
-            <View style={''}>
-              <Image style={css`
-            height: 170px;
-            `} source={{uri: 'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png'}}/>
-            </View>
-            <View style={''}>
-              <Image style={css`
-            height: 170px;
-            `} source={{uri: 'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png'}}/>
-            </View>
-          </Swiper>
-        </View>
+        <Swiper
+          style={css`
+            padding: 10px;
+          `}
+          autoplay={false}>
+          <View style={''}>
+            <Image
+              style={css`
+                height: 170px;
+              `}
+              source={{
+                uri:
+                  'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png',
+              }}
+            />
+          </View>
+          <View style={''}>
+            <Image
+              style={css`
+                height: 170px;
+              `}
+              source={{
+                uri:
+                  'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner2.jpg',
+              }}
+            />
+          </View>
+          <View style={''}>
+            <Image
+              style={css`
+                height: 170px;
+              `}
+              source={{
+                uri:
+                  'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner3.jpg',
+              }}
+            />
+          </View>
+        </Swiper>
+      </View>
 
-        <View style={css`
-        flex-direction: row;
-        padding: 10px;
+      <ScrollView
+        horizontal={true}
+        style={css`
+          flex-direction: row;
+          padding: 10px;
         `}>
-          {
-            categories && categories.map((cat, key) => <View key={'cat' + key} style={css`
-            padding: 10px;`}>
-                  <TouchableOpacity
-                      onPress={() => navigation.navigate('ProductList', {
-                        category: cat,
-                      })}
-                      style={css`
-              flex-direction: row;
-              background-color: #c4c4c4;
-              width: 100px;
-              height: 100px;
-              padding: 10px;
-              border-radius: 10px;
+        {categories &&
+          categories.map((cat, key) => (
+            <View
+              key={'cat' + key}
+              style={css`
+                padding: 10px;
               `}>
-                    <Text>{cat.name}</Text>
-                  </TouchableOpacity>
-                </View>,
-            )
-          }
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ProductList', {
+                    category: cat,
+                  })
+                }
+                style={css`
+                  background-color: #abc;
+                  width: 100px;
+                  height: 100px;
+                  padding: 10px;
+                  border-radius: 10px;
+                  justify-content: center;
+                  align-items: center;
+                `}>
+                <FontAwesome5
+                  name={cat.image || 'circle-notch'}
+                  style={css`
+                    font-size: 24px;
+                    padding-bottom: 5px;
+                  `}
+                />
+                <Text>{cat.name}</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+      </ScrollView>
 
-
-        </View>
-
-        {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
-        {/*<Text>Icons made by Freepik from www.flaticon.com</Text>*/}
-        <Footer navigation={navigation}/>
-      </Container>
+      {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
+      {/*<Text>Icons made by Freepik from www.flaticon.com</Text>*/}
+      <Footer navigation={navigation} />
+    </Container>
   );
 };
 
-export default connect(state => ({
-  userInfo: state.user.userInfo,
-  items: state.item.items,
-  categories: state.category.categories,
-  products: state.product.products,
-}), dispatch => ({
-  dispatch,
-  listCategory,
-  listAllProducts,
-}))(Home);
+export default connect(
+  state => ({
+    userInfo: state.user.userInfo,
+    items: state.item.items,
+    categories: state.category.categories,
+    products: state.product.products,
+  }),
+  dispatch => ({
+    dispatch,
+    listCategory,
+    listAllProducts,
+  }),
+)(Home);

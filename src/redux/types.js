@@ -1,5 +1,3 @@
-import uuid from 'react-native-uuid';
-
 export const SS = '_SUCCESS';
 export const ER = '_ERROR';
 
@@ -25,13 +23,18 @@ export const ADD_CATEGORY_SUCCESS = 'ADD_CATEGORY_SUCCESS';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
 
-export const  ADD_PRODUCT = 'ADD_PRODUCT';
-export const  LIST_PRODUCT = 'LIST_PRODUCT';
-export const  DELETE_PRODUCT = 'DELETE_PRODUCT';
-export const  UPDATE_PRODUCT = 'UPDATE_PRODUCT';
+export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const LIST_PRODUCT = 'LIST_PRODUCT';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 export const GET_PRODUCTS_BY_CATEGORY = 'GET_PRODUCTS_BY_CATEGORY';
-export const GET_PRODUCTS_BY_CATEGORY_SUCCESS = 'GET_PRODUCTS_BY_CATEGORY_SUCCESS';
+export const GET_PRODUCTS_BY_CATEGORY_SUCCESS =
+  'GET_PRODUCTS_BY_CATEGORY_SUCCESS';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const UDPATE_CART_QUANTITY = 'UDPATE_CART_QUANTITY';
+export const CLEAR_CART = 'CLEAR_CART';
+
+export const CREATE_ORDER = 'CREATE_ORDER';
+export const LIST_ORDERS = 'LIST_ORDERS';

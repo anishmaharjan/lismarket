@@ -1,9 +1,10 @@
 import {
-  SS, ER,
+  SS,
+  ER,
   LIST_PRODUCT,
   ADD_PRODUCT,
   DELETE_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
 } from './types';
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
   updatingProductSuccess: false,
   addedProduct: null,
   deletedProduct: null,
-  updatedProduct: null
+  updatedProduct: null,
 };
 
 export default (state = initialState, action) => {
@@ -38,40 +39,48 @@ export default (state = initialState, action) => {
         products: action.payload.listProducts,
       };
 
+    case LIST_PRODUCT + ER:
+      return {
+        ...state,
+        fetchingProducts: false,
+      };
+
     case ADD_PRODUCT:
       return {...state, addingProduct: true};
 
-   case ADD_PRODUCT + SS:
+    case ADD_PRODUCT + SS:
       return {
-        ...state, 
-        addingProduct: false, 
+        ...state,
+        addingProduct: false,
         addingProductSuccess: true,
-        addedProduct: action.payload,                              
+        addedProduct: action.payload,
       };
 
-    case ADD_PRODUCT +ER:
-      return {...state, addingProductSuccess: false}
+    case ADD_PRODUCT + ER:
+      return {...state, addingProductSuccess: false};
 
     case DELETE_PRODUCT:
-      return { ...state, deletingProduct: true };
+      return {...state, deletingProduct: true};
 
     case DELETE_PRODUCT + SS:
-         return {...state, 
-         deletingProduct: false, 
-         deletingProductSuccess: true,
-         deletedProduct: action.payload,       
-        };
-    case DELETE_PRODUCT +ER:
-        return {...state, deletingProductSuccess: false}
+      return {
+        ...state,
+        deletingProduct: false,
+        deletingProductSuccess: true,
+        deletedProduct: action.payload,
+      };
+    case DELETE_PRODUCT + ER:
+      return {...state, deletingProductSuccess: false};
     case UPDATE_PRODUCT:
-       return {...state, updatingProduct: true};
+      return {...state, updatingProduct: true};
 
     case UPDATE_PRODUCT + SS:
-          return {...state, 
-            updatingProduct: false, 
-            updatingProductSuccess: true,
-            updatedProduct: action.payload
-          };
+      return {
+        ...state,
+        updatingProduct: false,
+        updatingProductSuccess: true,
+        updatedProduct: action.payload,
+      };
     default:
       return state;
   }

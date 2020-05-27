@@ -44,13 +44,18 @@ const CheckoutScreen = props => {
     setOrder(prev => ({...prev, [name]: val}));
   };
 
-  const submitPayment = () => {
+  const submitPayment = () => () => {
+    //validate
+    if (order.paymentType === 'bankCard') {
+      // order.cardNumber
+    }
+
     dispatch(
       createOrder(order, cart, orderSummary => {
         //clear cart
         navigation.navigate('PaymentSuccessScreen', {
           amountPaid: calculateTotal(cart),
-          invoiceNumber: order.invoiceNumber,
+          order: order,
         });
         dispatch(clearCart());
       }),
@@ -176,12 +181,12 @@ const CheckoutScreen = props => {
             ${tm.btn}
             align-items: center;
             margin-left: 30%;
-          `}>
+          `}
+          onPress={submitPayment()}>
           <Text
             style={css`
               ${tm.btnText}
-            `}
-            onPress={() => submitPayment()}>
+            `}>
             Pay
           </Text>
         </TouchableOpacity>

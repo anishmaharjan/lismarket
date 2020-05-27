@@ -1,7 +1,13 @@
 import {
-  SS, ER,
+  SS,
+  ER,
   AUTH_SIGN_IN,
-  AUTH_SIGN_OUT, AUTH_SIGN_UP, AUTH_SIGN_UP_CONFIRM, AUTH_USER_INFO, AUTH_CHECK_USER,
+  AUTH_SIGN_OUT,
+  AUTH_SIGN_UP,
+  AUTH_SIGN_UP_CONFIRM,
+  AUTH_USER_INFO,
+  AUTH_CHECK_USER,
+  AUTH_RESEND_CODE,
 } from '../types';
 
 const initialState = {
@@ -13,6 +19,7 @@ const initialState = {
 
   fetchingUser: false,
   authUser: null,
+  isAdmin: false,
 };
 
 export default (state = initialState, action) => {
@@ -41,7 +48,7 @@ export default (state = initialState, action) => {
     case AUTH_SIGN_UP + SS:
       return {...state, user: action.payload.user, fetchingSignUp: false};
 
-    case AUTH_SIGN_UP_CONFIRM :
+    case AUTH_SIGN_UP_CONFIRM:
       return {...state, fetchingConfirmSignUp: true};
 
     case AUTH_SIGN_UP_CONFIRM + SS:
@@ -74,12 +81,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        authUser: action.payload.attributes
+        authUser: action.payload.attributes,
+        isAdmin: action.payload.attributes['custom:userGroup'] === 'admin',
       };
     case AUTH_CHECK_USER + ER:
       return {
         ...state,
         isLoggedIn: false,
+      };
+
+    case AUTH_RESEND_CODE + SS:
+      return {
+        ...state,
       };
 
     default:

@@ -5,7 +5,6 @@ import categoryReducer from './redux/categoryReducer';
 import productReducer from './redux/productReducer';
 import orderReducer from './redux/orderReducer';
 import thunk from 'redux-thunk';
-import promise from 'redux-promise-middleware';
 import authReducer from './redux/actions/authReducer';
 import cartReducer from './redux/cartReducer';
 

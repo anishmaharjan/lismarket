@@ -7,6 +7,7 @@ export const AUTH_SIGN_UP = 'AUTH_SIGN_UP';
 export const AUTH_SIGN_UP_CONFIRM = 'AUTH_SIGN_UP_CONFIRM';
 export const AUTH_USER_INFO = 'AUTH_USER_INFO';
 export const AUTH_CHECK_USER = 'AUTH_CHECK_USER';
+export const AUTH_RESEND_CODE = 'AUTH_RESEND_CODE';
 
 export const LIST_USERS = 'LIST_USERS';
 

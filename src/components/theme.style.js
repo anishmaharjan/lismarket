@@ -50,3 +50,12 @@ color: #fff;
 font-weight: bold;
 align-items: center;
 padding: 10px;`;
+
+export const activeCategory = `
+font-size: 20px;
+font-weight: bold;
+`;
+
+export const activeCategoryBorder = `
+border-bottom-width: 3px;
+border-bottom-color: ${gss.primary};`;

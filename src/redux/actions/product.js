@@ -65,20 +65,20 @@ export const delProduct = productId => dispatch => ({
     }),
 });
 
-export const editProduct = product => dispatch => ({
-  type: UPDATE_PRODUCT,
-  payload: API.graphql(graphqlOperation(updateProduct, {input: product}))
-    .then(result => {
-      dispatch({
-        type: UPDATE_PRODUCT + SS,
-        payload: result.data.updateProduct,
-      });
-    })
-    .catch(e => {
-      console.log('Error update product', e);
-      dispatch({
-        type: UPDATE_PRODUCT + ER,
-        payload: e,
-      });
-    }),
-});
+export const editProduct = product => dispatch =>
+  dispatch({
+    type: UPDATE_PRODUCT,
+    payload: API.graphql(graphqlOperation(updateProduct, {input: product}))
+      .then(result => {
+        dispatch({
+          type: UPDATE_PRODUCT + SS,
+          payload: result.data.updateProduct,
+        });
+      })
+      .catch(e => {
+        dispatch({
+          type: UPDATE_PRODUCT + ER,
+          payload: e,
+        });
+      }),
+  });

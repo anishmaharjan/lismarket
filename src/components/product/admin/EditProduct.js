@@ -6,24 +6,24 @@ import {connect} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {editProduct, listAllProducts} from '../../../redux/actions/product';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import gas from '../../variables.styles';
 
 const EditProduct = props => {
   const {navigation, authUser, categories} = props;
-  const {dispatch, addProduct,updatingProductSuccess} = props;
-  const { product } = props.route.params;
+  const {dispatch, updatingProduct, updatingProductSuccess} = props;
+  const {product} = props.route.params;
   const [form, setForm] = useState({
     id: product.id,
   });
-  
-  useEffect(()=>{
-    if(updatingProductSuccess === true)
-    {
+
+  useEffect(() => {
+    if (updatingProductSuccess === true) {
       navigation.goBack();
       dispatch(listAllProducts());
     }
-  })
+  });
 
-  const submitForm = () => {   
+  const submitForm = () => {
     dispatch(editProduct(form));
   };
 
@@ -35,88 +35,127 @@ const EditProduct = props => {
   };
 
   return (
-      <ScrollView>
-        <View style={css`
-        flex-direction: row;
-        justify-content: space-between;
+    <ScrollView>
+      <View
+        style={css`
+          flex-direction: row;
+          justify-content: space-between;
         `}>
-          <Text style={css` font-size: 18px; padding: 10px 20px`}>Edit a product</Text>
-          <FontAwesome5 name={'times'} style={css`
+        <Text
+          style={css`
+            font-size: 18px;
+            padding: 10px 20px;
+          `}>
+          Edit a product
+        </Text>
+        <FontAwesome5
+          name={'times'}
+          style={css`
             font-size: 24px;
             padding: 10px;
-            `}
-                        onPress={() => navigation.goBack()}
-          />
-        </View>
+          `}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
 
-        <Text style={css`padding: 10px 20px`}>Choose a category</Text>
-        <DropDownPicker
-            items={categories && categories.map((val, key) =>
-                ({label: val.name, value: val.id}),
-            )}
-            defaultValue={product.category.id}
-            containerStyle={{height: 60}}
-            activeLabelStyle={{color: 'red'}}
-            onChangeItem={handleDropdown}
-        />
+      <Text
+        style={css`
+          padding: 10px 20px;
+        `}>
+        Choose a category
+      </Text>
+      <DropDownPicker
+        items={
+          categories &&
+          categories.map((val, key) => ({label: val.name, value: val.id}))
+        }
+        defaultValue={product.category.id}
+        containerStyle={{height: 60}}
+        activeLabelStyle={{color: 'red'}}
+        onChangeItem={handleDropdown}
+      />
 
-        <Input
-            placeholder='Product name'
-            defaultValue = {product.name}
-            onChangeText={val => handleChange('name', val)}
-            containerStyle={css` padding: 10px 20px;`}
-        />
-        <Input
-            placeholder='Description'
-            defaultValue = {product.description}
-            onChangeText={val => handleChange('description', val)}
-            containerStyle={css` padding: 10px 20px;`}
-        />
-        <Input
-            keyboardType="numeric"
-            placeholder='Price'
-            defaultValue = {String(product.price)}
-            onChangeText={val => handleChange('price', val)}
-            containerStyle={css` padding: 10px 20px;`}
-        />
-        <Input
-            keyboardType="numeric"
-            placeholder='Current stock'
-            defaultValue = {String(product.stockQuantity)}
-            onChangeText={val => handleChange('stockQuantity', val)}
-            containerStyle={css` padding: 10px 20px;`}
-        />
-        <Input
-            placeholder='Image Url'
-            onChangeText={val => handleChange('image', val)}
-            containerStyle={css`padding: 10px 20px;`}
-        />
+      <Input
+        placeholder="Product name"
+        defaultValue={product.name}
+        onChangeText={val => handleChange('name', val)}
+        containerStyle={css`
+          padding: 10px 20px;
+        `}
+      />
+      <Input
+        placeholder="Description"
+        defaultValue={product.description}
+        onChangeText={val => handleChange('description', val)}
+        containerStyle={css`
+          padding: 10px 20px;
+        `}
+      />
+      <Input
+        keyboardType="numeric"
+        placeholder="Price"
+        defaultValue={String(product.price)}
+        onChangeText={val => handleChange('price', val)}
+        containerStyle={css`
+          padding: 10px 20px;
+        `}
+      />
+      <Input
+        keyboardType="numeric"
+        placeholder="Current stock"
+        defaultValue={String(product.stockQuantity)}
+        onChangeText={val => handleChange('stockQuantity', val)}
+        containerStyle={css`
+          padding: 10px 20px;
+        `}
+      />
+      <Input
+        placeholder="Image Url"
+        onChangeText={val => handleChange('image', val)}
+        containerStyle={css`
+          padding: 10px 20px;
+        `}
+      />
 
-        <Button
-            onPress={submitForm}
-            title="Submit"
-            style={css`
-            padding: 10px 20px;
-            `}
-        />
+      <Button
+        onPress={submitForm}
+        title="Submit"
+        style={css`
+          padding: 10px 20px;
+        `}
+        buttonStyle={css`
+          background-color: ${gas.primary};
+        `}
+        loading={updatingProduct}
+      />
 
-        <Button
-            onPress={() => navigation.goBack()}
-            title="Cancel"
-            type='outline'
-            style={css`
-            padding: 10px 20px;
-            `}
-        />
-      </ScrollView>
+      <Button
+        onPress={() => navigation.goBack()}
+        title="Cancel"
+        type="outline"
+        style={css`
+          padding: 10px 20px;
+        `}
+        buttonStyle={css`
+          border-color: ${gas.primary};
+        `}
+        titleStyle={css`
+          color: ${gas.primary};
+        `}
+      />
+    </ScrollView>
   );
 };
 
-export default connect(state => ({
-  categories: state.category.categories,
-  authUser: state.auth.authUser,
-  updatingProductSuccess : state.product.updatingProductSuccess
-}), dispatch => ({
-  dispatch,
-  editProduct,
-}))(EditProduct);
+export default connect(
+  state => ({
+    categories: state.category.categories,
+    authUser: state.auth.authUser,
+    updatingProduct: state.product.updatingProduct,
+    updatingProductSuccess: state.product.updatingProductSuccess,
+  }),
+  dispatch => ({
+    dispatch,
+    editProduct,
+  }),
+)(EditProduct);

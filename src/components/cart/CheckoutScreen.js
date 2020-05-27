@@ -8,7 +8,7 @@ import CartSummary from './CartSummary';
 import {Input} from 'react-native-elements';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
-import {createOrderApi} from '../../redux/actions/order2';
+import {createOrderApi} from '../../redux/actions/order';
 import uuid from 'react-native-uuid';
 import {clearCart} from '../../redux/actions/cart';
 

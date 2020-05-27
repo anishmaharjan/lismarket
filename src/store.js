@@ -3,10 +3,10 @@ import userReducer from './redux/userReducer';
 import itemReducer from './redux/itemReducer';
 import categoryReducer from './redux/categoryReducer';
 import productReducer from './redux/productReducer';
+import orderReducer from './redux/orderReducer';
 import thunk from 'redux-thunk';
 import authReducer from './redux/actions/authReducer';
 import cartReducer from './redux/cartReducer';
-import orderReducer from './redux/orderReducer2';
 
 const rootReducer = combineReducers({
   auth: authReducer,

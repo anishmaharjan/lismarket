@@ -1,7 +1,16 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {listProducts} from '../../graphql/queries';
 import {createProduct} from '../../graphql/mutations';
-import {SS, ER, LIST_PRODUCT, ADD_PRODUCT} from '../types';
+import {deleteProduct} from '../../graphql/mutations';
+import {updateProduct} from '../../graphql/mutations';
+import {
+  SS,
+  ER,
+  LIST_PRODUCT,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  UPDATE_PRODUCT,
+} from '../types';
 
 export const listAllProducts = () => dispatch => ({
   type: LIST_PRODUCT,
@@ -33,6 +42,42 @@ export const addProduct = product => dispatch => ({
       console.log('Error add product', e);
       dispatch({
         type: ADD_PRODUCT + ER,
+        payload: e,
+      });
+    }),
+});
+
+export const delProduct = productId => dispatch => ({
+  type: DELETE_PRODUCT,
+  payload: API.graphql(graphqlOperation(deleteProduct, {input: productId}))
+    .then(result => {
+      dispatch({
+        type: DELETE_PRODUCT + SS,
+        payload: result.data.deleteProduct,
+      });
+    })
+    .catch(e => {
+      console.log('Error delete product', e);
+      dispatch({
+        type: DELETE_PRODUCT + ER,
+        payload: e,
+      });
+    }),
+});
+
+export const editProduct = product => dispatch => ({
+  type: UPDATE_PRODUCT,
+  payload: API.graphql(graphqlOperation(updateProduct, {input: product}))
+    .then(result => {
+      dispatch({
+        type: UPDATE_PRODUCT + SS,
+        payload: result.data.updateProduct,
+      });
+    })
+    .catch(e => {
+      console.log('Error update product', e);
+      dispatch({
+        type: UPDATE_PRODUCT + ER,
         payload: e,
       });
     }),

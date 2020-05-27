@@ -18,6 +18,7 @@ import Users from '../components/user/admin/AdminUsers';
 
 import AdminProduct from '../components/product/admin/AdminProduct';
 import AddProduct from '../components/product/admin/AddProduct';
+import EditProduct from '../components/product/admin/EditProduct';
 import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
@@ -26,6 +27,9 @@ import ProductDetails from '../components/product/ProductDetails';
 
 import Dashboard from '../components/admin/Dashboard';
 import Order from '../components/admin/orders/Order';
+import OrderDetail from '../components/admin/orders/OrderDetail';
+import Inventory from '../components/admin/inventory/Inventory';
+import StockChange from '../components/admin/inventory/StockChange';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -68,10 +72,11 @@ const rootStack = ({isLoggedIn}) => {
         </>
       )}
       {/*Admin*/}
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-      <Stack.Screen name="Customers" component={Users} />
-      <Stack.Screen name="AdminProducts" component={AdminProduct} />
-      <Stack.Screen name="Orders" component={Order} />
+      <Stack.Screen name="Dashboard" component={Dashboard}/>
+      <Stack.Screen name="Customers" component={Users}/>
+      <Stack.Screen name="AdminProducts" component={AdminProduct}/>
+      <Stack.Screen name="Orders" component={Order}/>
+      <Stack.Screen name="Inventory" component={Inventory}/>
     </Stack.Navigator>
   );
 
@@ -85,6 +90,8 @@ const rootStack = ({isLoggedIn}) => {
         />
         <RootStack.Screen name="AddCategory" component={AddCategory} />
         <RootStack.Screen name="AddProduct" component={AddProduct} />
+        <RootStack.Screen name="EditProduct" component={EditProduct}/>
+        <RootStack.Screen name="StockChange" component={StockChange}/>
       </RootStack.Navigator>
     </NavigationContainer>
   );

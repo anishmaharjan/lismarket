@@ -15,11 +15,8 @@ const rootReducer = combineReducers({
   item: itemReducer,
   category: categoryReducer,
   product: productReducer,
-<<<<<<< HEAD
   order: orderReducer,
-=======
   cart: cartReducer,
->>>>>>> 93dcbb42a0acfe59d927ff4aaccb82888405c115
 });
 
 const configureStore = () => createStore(rootReducer, applyMiddleware(thunk));

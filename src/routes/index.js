@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -30,13 +30,17 @@ import Order from '../components/admin/orders/Order';
 import OrderDetail from '../components/admin/orders/OrderDetail';
 import Inventory from '../components/admin/inventory/Inventory';
 import StockChange from '../components/admin/inventory/StockChange';
+import {connect} from 'react-redux';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
 
-const rootStack = ({isLoggedIn}) => {
+const rootStack = ({isLoggedIn, isAdmin}) => {
   const MainStackScreen = () => (
-    <Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName={
+        isLoggedIn ? (isAdmin ? 'Dashboard' : 'Home') : 'SignInScreen'
+      }>
       {isLoggedIn ? (
         <>
           <Stack.Screen name="Home" component={Home} />
@@ -71,12 +75,16 @@ const rootStack = ({isLoggedIn}) => {
           />
         </>
       )}
-      {/*Admin*/}
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-      <Stack.Screen name="Customers" component={Users} />
-      <Stack.Screen name="AdminProducts" component={AdminProduct} />
-      <Stack.Screen name="Orders" component={Order} />
-      <Stack.Screen name="Inventory" component={Inventory} />
+      {isAdmin && (
+        <>
+          {/*Admin*/}
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Customers" component={Users} />
+          <Stack.Screen name="AdminProducts" component={AdminProduct} />
+          <Stack.Screen name="Orders" component={Order} />
+          <Stack.Screen name="Inventory" component={Inventory} />
+        </>
+      )}
     </Stack.Navigator>
   );
 
@@ -97,4 +105,7 @@ const rootStack = ({isLoggedIn}) => {
   );
 };
 
-export default rootStack;
+export default connect(state => ({
+  authUser: state.auth.authUser,
+  isAdmin: state.auth.isAdmin,
+}))(rootStack);

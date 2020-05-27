@@ -7,8 +7,7 @@ import {connect} from 'react-redux';
 import {signOut} from '../redux/actions/auth';
 
 const Menu = props => {
-  const {title, navigation} = props;
-  const {dispatch, signOut} = props;
+  const {title, navigation, isAdmin, dispatch, signOut} = props;
 
   const navPointer = screen => () => {
     navigation.navigate(screen);
@@ -18,23 +17,28 @@ const Menu = props => {
     <Container>
       <Header />
       <View>
-        <TouchableOpacity onPress={navPointer('Customers')}>
-          <Text style={style.list}>[A]Users</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={navPointer('AdminProducts')}>
-          <Text style={style.list}>[A]Products</Text>
-        </TouchableOpacity>
+        {isAdmin && (
+          <>
+            <TouchableOpacity>
+              <Text style={style.list} onPress={navPointer('Dashboard')}>
+                [A] Dashboard
+              </Text>
+            </TouchableOpacity>
+            {/*<TouchableOpacity onPress={navPointer('Customers')}>
+              <Text style={style.list}>[A]Users</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={navPointer('AdminProducts')}>
+              <Text style={style.list}>[A]Products</Text>
+            </TouchableOpacity>*/}
+          </>
+        )}
 
         <TouchableOpacity>
           <Text style={style.list} onPress={navPointer('Profile')}>
             Profile
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={style.list} onPress={navPointer('Dashboard')}>
-            Dashboard
-          </Text>
-        </TouchableOpacity>
+
         <TouchableOpacity>
           <Text style={style.list} onPress={navPointer('Category')}>
             Category
@@ -66,7 +70,9 @@ const style = StyleSheet.create({
 });
 
 export default connect(
-  null,
+  state => ({
+    isAdmin: state.auth.isAdmin,
+  }),
   dispatch => ({
     dispatch,
     signOut,

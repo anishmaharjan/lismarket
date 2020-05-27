@@ -2,9 +2,10 @@ import {css} from '@emotion/native';
 import {Text, TouchableOpacity, View} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 export default props => {
-  const {navigation} = props;
+  const navigation = useNavigation();
 
   return (
     <View

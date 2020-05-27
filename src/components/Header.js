@@ -34,16 +34,18 @@ const Header = props => {
             padding-bottom: 5px;
           `}
         />
-        <Badge
-          status="warning"
-          value={cart.length}
-          containerStyle={css`
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            width: 90%;
-          `}
-        />
+        {cart.length !== 0 && (
+          <Badge
+            status="warning"
+            value={cart.length}
+            containerStyle={css`
+              position: absolute;
+              top: 5px;
+              right: 10px;
+              width: 90%;
+            `}
+          />
+        )}
       </TouchableOpacity>
     </View>
   );

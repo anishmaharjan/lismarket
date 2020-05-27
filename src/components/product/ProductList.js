@@ -49,7 +49,8 @@ const ProductList = props => {
           </View>
         </ScrollView>
         <ScrollView>
-          {products.items &&
+          {products &&
+            products.items &&
             [
               ...products.items,
               ...products.items,

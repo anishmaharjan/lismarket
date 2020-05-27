@@ -14,11 +14,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = props => {
   const {title, navigation} = props;
-  const {categories, products, dispatch, listAllProducts} = props;
+  const {authUser, categories, products, dispatch, listAllProducts} = props;
 
   useEffect(() => {
-    dispatch(listAllProducts());
-  }, [dispatch, listAllProducts]);
+    !authUser && dispatch(listAllProducts());
+  }, [authUser, dispatch, listAllProducts]);
 
   return (
     <Container>
@@ -118,7 +118,7 @@ const Home = props => {
 
 export default connect(
   state => ({
-    userInfo: state.user.userInfo,
+    authUser: state.auth.authUser,
     categories: state.category.categories,
     products: state.product.products,
   }),

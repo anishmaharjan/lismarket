@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-const AddItem = ({addItem}) => {
+const AddItem_safe_to_delete = ({addItem}) => {
   const [text, setText] = useState('');
 
   const onChange = textValue => setText(textValue);
@@ -48,4 +48,4 @@ const css = StyleSheet.create({
   },
 });
 
-export default AddItem;
+export default AddItem_safe_to_delete;

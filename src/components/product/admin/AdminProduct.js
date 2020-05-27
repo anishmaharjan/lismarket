@@ -15,6 +15,10 @@ const AdminProduct = props => {
   const {dispatch, deleteProduct, deletingProductSuccess} = props;
 
   useEffect(() => {
+    !products && dispatch(listAllProducts());
+  }, [dispatch, products]);
+
+  useEffect(() => {
     if (deletingProductSuccess === true) {
       dispatch(listAllProducts());
     }

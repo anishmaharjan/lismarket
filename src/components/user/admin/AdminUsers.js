@@ -10,12 +10,12 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 const AdminUsers = props => {
   const {authUser} = props;
-  const {userList, dispatch, getAllUsers} = props;
+  const {userList, dispatch, getUserInfo, getAllUsers} = props;
 
   useEffect(() => {
     dispatch(getAllUsers());
-    dispatch(getUserInfo());
-  }, []);
+    // dispatch(getUserInfo());
+  }, [dispatch, getAllUsers, getUserInfo]);
 
   const creatThisUser = () => {
     const {attributes} = authUser;
@@ -29,46 +29,72 @@ const AdminUsers = props => {
   };
 
   return (
-      <Container>
-        {console.log(authUser, userList)}
-        <View style={css`
-        `}>
-          {
-            userList && userList.items && userList.items.map((v, key) => (
-                <View key={key} style={css`
+    <Container>
+      <View style={css``}>
+        {userList &&
+          userList.items &&
+          userList.items.map((v, key) => (
+            <View
+              key={key}
+              style={css`
                 border-bottom-width: 1px;
-                border-bottom-color: #74D4DE;
+                border-bottom-color: #74d4de;
                 padding: 10px 20px;
-                background-color: #FAF7F7;
-                `}>
-                 <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
-                     <Text style={{paddingLeft: 5, paddingTop: 35}}><Icon name="user" size={26} color="#FC8369" /></Text>
-                  </View>
+                background-color: #faf7f7;
+              `}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                }}>
+                <Text style={{paddingLeft: 5, paddingTop: 35}}>
+                  <Icon name="user" size={26} color="#FC8369" />
+                </Text>
+              </View>
 
-                  <View style={{ flex: 1,padding: 35, alignItems: 'flex-start', justifyContent: 'center' }}>
-                  <Text style={css`
-                  font-size: 16px;
-                  `}>Anish Maharjan</Text>
-                  <Text style={css`
-                  font-size: 16px;
-                  `}>{v.email}</Text>
-                  <Text style={css`
-                  font-size: 16px;
-                  `}>{v.contactNo}</Text>
-                  </View>
-                </View>))
-          }
-        </View>
-      </Container>
+              <View
+                style={{
+                  flex: 1,
+                  padding: 35,
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={css`
+                    font-size: 16px;
+                  `}>
+                  Anish Maharjan
+                </Text>
+                <Text
+                  style={css`
+                    font-size: 16px;
+                  `}>
+                  {v.email}
+                </Text>
+                <Text
+                  style={css`
+                    font-size: 16px;
+                  `}>
+                  {v.contactNo}
+                </Text>
+              </View>
+            </View>
+          ))}
+      </View>
+    </Container>
   );
 };
 
-export default connect(state => ({
-  authUser: state.auth.authUser,
-  userList: state.user.userList,
-}), dispatch => ({
-  dispatch,
-  getAllUsers,
-  getUserInfo,
-  createUserApi,
-}))(AdminUsers);
+export default connect(
+  state => ({
+    authUser: state.auth.authUser,
+    userList: state.user.userList,
+  }),
+  dispatch => ({
+    dispatch,
+    getAllUsers,
+    getUserInfo,
+    createUserApi,
+  }),
+)(AdminUsers);

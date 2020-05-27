@@ -106,6 +106,7 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
 };
 
 export default connect(state => ({
+  isLoggedIn: state.auth.isLoggedIn,
   authUser: state.auth.authUser,
   isAdmin: state.auth.isAdmin,
 }))(rootStack);

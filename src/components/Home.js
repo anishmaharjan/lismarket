@@ -9,25 +9,16 @@ import {css} from '@emotion/native';
 import Header from './Header';
 import Footer from './Footer';
 
-import {listCategory} from '../redux/actions/category';
 import {listAllProducts} from '../redux/actions/product';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = props => {
   const {title, navigation} = props;
-  const {
-    userInfo,
-    items,
-    categories,
-    products,
-    dispatch,
-    listAllProducts,
-  } = props;
+  const {authUser, categories, products, dispatch, listAllProducts} = props;
 
   useEffect(() => {
-    dispatch(listCategory());
-    dispatch(listAllProducts());
-  }, [dispatch, listAllProducts]);
+    !authUser && dispatch(listAllProducts());
+  }, [authUser, dispatch, listAllProducts]);
 
   return (
     <Container>
@@ -127,14 +118,12 @@ const Home = props => {
 
 export default connect(
   state => ({
-    userInfo: state.user.userInfo,
-    items: state.item.items,
+    authUser: state.auth.authUser,
     categories: state.category.categories,
     products: state.product.products,
   }),
   dispatch => ({
     dispatch,
-    listCategory,
     listAllProducts,
   }),
 )(Home);

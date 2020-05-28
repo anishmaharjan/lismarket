@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const PaymentSuccess = props => {
   const {route} = props;
-  const {amountPaid, invoiceNumber} = route.params;
+  const {amountPaid, order} = route.params;
   const navigation = useNavigation();
 
   return (
@@ -19,13 +19,13 @@ const PaymentSuccess = props => {
           align-items: center;
           justify-content: center;
           height: 35%;
-          background-color: #aaa;
+          background-color: #ffe;
         `}>
         <FontAwesome5
           name={'check-circle'}
           style={css`
             font-size: 120px;
-            color: #0f8;
+            color: #50df90;
             padding-bottom: 5px;
           `}
         />
@@ -38,6 +38,7 @@ const PaymentSuccess = props => {
           style={css`
             ${tm.h1}
             padding-bottom: 20px;
+            text-align: center;
           `}>
           Payment successful
         </Text>
@@ -45,7 +46,8 @@ const PaymentSuccess = props => {
           style={css`
             align-items: center;
           `}>
-          <Text>For order number: {invoiceNumber}</Text>
+          <Text>Payment type: {order.paymentType}</Text>
+          <Text>For order number: {order.invoiceNumber}</Text>
           <Text>Payment made: {monefy(amountPaid || 0)}</Text>
         </View>
         <View

@@ -30,12 +30,18 @@ export default (state = initialState, action) => {
         ...state,
         fetchingSignIn: true,
       };
+
     case AUTH_SIGN_IN + SS:
       return {
         ...state,
         fetchingSignIn: false,
         isLoggedIn: true,
         user: action.payload,
+        authUser: {
+          ...action.payload.attributes,
+          username: action.payload.username,
+        },
+        isAdmin: action.payload.attributes['custom:userGroup'] === 'admin',
       };
     case AUTH_SIGN_IN + ER:
       return {
@@ -63,6 +69,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
         user: null,
+        authUser: null,
       };
 
     case AUTH_USER_INFO:
@@ -74,14 +81,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingUser: false,
-        authUser: action.payload,
       };
 
     case AUTH_CHECK_USER + SS:
       return {
         ...state,
         isLoggedIn: true,
-        authUser: action.payload.attributes,
+        authUser: {
+          ...action.payload.attributes,
+          username: action.payload.username,
+        },
         isAdmin: action.payload.attributes['custom:userGroup'] === 'admin',
       };
     case AUTH_CHECK_USER + ER:

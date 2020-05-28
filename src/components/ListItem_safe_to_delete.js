@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Container } from 'native-base';
 
-const ListItem = ({ item, deleteItem }) => {
+const ListItem_safe_to_delete = ({ item, deleteItem }) => {
   return (
     <TouchableOpacity style={css.listItem}>
       <View style={css.listItemView}>
@@ -52,4 +52,4 @@ const css = StyleSheet.create({
   },
 });
 
-export default ListItem;
+export default ListItem_safe_to_delete;

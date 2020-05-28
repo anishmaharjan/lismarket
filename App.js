@@ -8,64 +8,63 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import {Auth, Hub} from 'aws-amplify';
+import {Hub} from 'aws-amplify';
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  StatusBar, SafeAreaView, ScrollView,
-} from 'react-native';
+import {View} from 'react-native';
 import {css} from '@emotion/native';
 import Routes from './src/routes';
 import {connect} from 'react-redux';
 import {checkCurrentUser} from './src/redux/actions/auth';
 import {Root} from 'native-base';
+import {listCategory} from './src/redux/actions/category';
 
-const App: () => React$Node = (props) => {
-  const {isLoggedIn, dispatch, checkCurrentUser} = props;
+const App: () => React$Node = props => {
+  const {isLoggedIn, dispatch, listCategory, checkCurrentUser} = props;
 
+  console.log('is logged in ', isLoggedIn);
   useEffect(() => {
+    // keep user logged in
     dispatch(checkCurrentUser());
-  }, []);
+    dispatch(listCategory());
+  }, [checkCurrentUser, dispatch, listCategory]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log('running HUB');
-    Hub.listen('auth', (data) => {
+    Hub.listen('auth', data => {
       const {payload} = data;
       console.log('A new auth event has happened: ', data);
       if (payload.event === 'signIn') {
         console.log('a user has signed in!');
-        // setLoggedIn(true);
       }
       if (payload.event === 'signOut') {
         console.log('a user has signed out!');
-        // setLoggedIn(false);
       }
       if (payload.event === 'signUp') {
         console.log('a user has signed up!!!');
       }
-
     });
-  }, []);
+  }, []);*/
 
   return (
-      <Root>
-        <View style={css`
-          paddingTop: 60;
+    <Root>
+      <View
+        style={css`
+          padding-top: 60;
           flex: 1;
-          `}>
-          <Routes isLoggedIn={isLoggedIn}/>
-        </View>
-      </Root>
+        `}>
+        <Routes />
+      </View>
+    </Root>
   );
 };
 
-export default (
-    connect(state => ({
-      isLoggedIn: state.auth.isLoggedIn,
-    }), dispatch => ({
-      dispatch,
-      checkCurrentUser,
-    }))(App)
-);
+export default connect(
+  state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+  }),
+  dispatch => ({
+    dispatch,
+    checkCurrentUser,
+    listCategory,
+  }),
+)(App);

@@ -56,6 +56,7 @@ const Cart = props => {
             border-top-width: 1px;
             border-top-color: ${gss.grey2};
             padding: 10px 0;
+            background: white;
           `}>
           <TouchableOpacity
             style={css`

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {css} from '@emotion/native';
 import {Image, TouchableOpacity, View} from 'react-native';
-import {Picker, Text} from 'native-base';
+import {Picker, Text, Toast} from 'native-base';
 
 import {useNavigation} from '@react-navigation/native';
 import * as tm from '../theme.style';
@@ -105,7 +105,14 @@ const EachItem = props => {
           style={css`
             ${tm.btn}
           `}
-          onPress={() => dispatch(addToCart({...product, quantity: quantity}))}>
+          onPress={() => {
+            Toast.show({
+              text: 'Added to cart!',
+              buttonText: 'Okay',
+              duration: 3000,
+            });
+            dispatch(addToCart({...product, quantity: quantity}));
+          }}>
           <Text
             style={css`
               ${tm.btnText}

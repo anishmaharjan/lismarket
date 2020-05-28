@@ -9,7 +9,6 @@
 
 import React, {useState, useEffect} from 'react';
 import {Hub} from 'aws-amplify';
-
 import {View} from 'react-native';
 import {css} from '@emotion/native';
 import Routes from './src/routes';
@@ -17,6 +16,14 @@ import {connect} from 'react-redux';
 import {checkCurrentUser} from './src/redux/actions/auth';
 import {Root} from 'native-base';
 import {listCategory} from './src/redux/actions/category';
+
+// @TODO: This is to hide a Warning caused by NativeBase after upgrading to RN 0.62
+import {YellowBox} from 'react-native';
+
+YellowBox.ignoreWarnings([
+  'Animated: `useNativeDriver` was not specified. This is a required option and must be explicitly set to `true` or `false`',
+]);
+// ------- END OF WARNING SUPPRESSION
 
 const App: () => React$Node = props => {
   const {isLoggedIn, dispatch, listCategory, checkCurrentUser} = props;

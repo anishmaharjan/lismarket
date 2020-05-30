@@ -13,6 +13,7 @@ export const LIST_USERS = 'LIST_USERS';
 
 export const GET_USER_API = 'GET_USER_API';
 export const CREATE_USER_API = 'CREATE_USER_API';
+export const GET_PURCHASE_HISTORY = 'GET_PURCHASE_HISTORY';
 
 export const ITEMS = 'ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';
@@ -35,6 +36,7 @@ export const GET_PRODUCTS_BY_CATEGORY_SUCCESS =
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const UDPATE_CART_QUANTITY = 'UDPATE_CART_QUANTITY';
+export const CART_REMOVE_ITEM = 'CART_REMOVE_ITEM';
 export const CLEAR_CART = 'CLEAR_CART';
 
 export const CREATE_ORDER = 'CREATE_ORDER';

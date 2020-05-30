@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
 import uuid from 'react-native-uuid';
-import {getUserInfo} from '../redux/actions/auth';
+import {getUserInfo} from '../../redux/actions/auth';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faUser,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {Container, Spinner} from 'native-base';
@@ -39,6 +39,10 @@ const CheckoutScreen = props => {
     collectionReady: false,
     orderUsersId: authUser.sub,
   });
+
+  useEffect(() => {
+    setOrder(prev => ({...prev, paymentType: paymentOption}));
+  }, [paymentOption]);
 
   const handleChange = (name, val) => {
     setOrder(prev => ({...prev, [name]: val}));

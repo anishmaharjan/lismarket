@@ -12,9 +12,11 @@ import Menu from '../components/Menu';
 import Cart from '../components/cart/Cart';
 import CheckoutScreen from '../components/cart/CheckoutScreen';
 import PaymentSuccessScreen from '../components/cart/PaymentSuccess';
-import Profile from '../components/Profile';
+import Profile from '../components/user/Profile';
 
 import Users from '../components/user/admin/AdminUsers';
+import PurchaseHistory from '../components/user/PurchaseHistory';
+import PurchaseDetails from '../components/user/PurchaseDetails';
 
 import AdminProduct from '../components/product/admin/AdminProduct';
 import ProductMain from '../components/product/admin/ProductMain';
@@ -23,7 +25,7 @@ import EditProduct from '../components/product/admin/EditProduct';
 import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
-import AddCategory from '../components/category/AddCategory';
+import AddCategory from '../components/category/admin/AddCategory';
 import ProductDetails from '../components/product/ProductDetails';
 
 import Dashboard from '../components/admin/Dashboard';
@@ -50,13 +52,46 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="ProductList" component={ProductList} />
           <Stack.Screen name="ProductDetailScreen" component={ProductDetails} />
-          <Stack.Screen name="CartScreen" component={Cart} />
-          <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+          <Stack.Screen
+            name="CartScreen"
+            component={Cart}
+            options={{title: 'Cart'}}
+          />
+          <Stack.Screen
+            name="CheckoutScreen"
+            component={CheckoutScreen}
+            options={{title: 'CheckoutScreen'}}
+          />
           <Stack.Screen
             name="PaymentSuccessScreen"
             component={PaymentSuccessScreen}
           />
-          <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen
+            name="CategoryScreen"
+            component={Category}
+            options={{title: 'Category'}}
+          />
+          <Stack.Screen
+            name="PurchaseHistoryScreen"
+            component={PurchaseHistory}
+            options={{title: 'Purchase History'}}
+          />
+          <Stack.Screen
+            name="PurchaseDetailsScreen"
+            component={PurchaseDetails}
+            options={{title: 'Order Details'}}
+          />
+
+          {isAdmin && (
+            <>
+              {/*Admin*/}
+              <Stack.Screen name="Dashboard" component={Dashboard} />
+              <Stack.Screen name="Customers" component={Users} />
+              <Stack.Screen name="AdminProducts" component={AdminProduct} />
+              <Stack.Screen name="Orders" component={Order} />
+              <Stack.Screen name="Inventory" component={Inventory} />
+            </>
+          )}
         </>
       ) : (
         <>

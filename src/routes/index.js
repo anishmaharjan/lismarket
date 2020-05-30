@@ -15,6 +15,8 @@ import PaymentSuccessScreen from '../components/cart/PaymentSuccess';
 import Profile from '../components/Profile';
 
 import Users from '../components/user/admin/AdminUsers';
+import PurchaseHistory from '../components/user/PurchaseHistory';
+import PurchaseDetails from '../components/user/PurchaseDetails';
 
 import AdminProduct from '../components/product/admin/AdminProduct';
 import AddProduct from '../components/product/admin/AddProduct';
@@ -55,6 +57,27 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
             component={PaymentSuccessScreen}
           />
           <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen
+            name="PurchaseHistoryScreen"
+            component={PurchaseHistory}
+            options={{title: 'Purchase History'}}
+          />
+          <Stack.Screen
+            name="PurchaseDetailsScreen"
+            component={PurchaseDetails}
+            options={{title: 'Order Details'}}
+          />
+
+          {isAdmin && (
+            <>
+              {/*Admin*/}
+              <Stack.Screen name="Dashboard" component={Dashboard} />
+              <Stack.Screen name="Customers" component={Users} />
+              <Stack.Screen name="AdminProducts" component={AdminProduct} />
+              <Stack.Screen name="Orders" component={Order} />
+              <Stack.Screen name="Inventory" component={Inventory} />
+            </>
+          )}
         </>
       ) : (
         <>
@@ -73,16 +96,6 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
             component={ConfirmSignUp}
             options={{title: 'Verify'}}
           />
-        </>
-      )}
-      {isAdmin && (
-        <>
-          {/*Admin*/}
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="Customers" component={Users} />
-          <Stack.Screen name="AdminProducts" component={AdminProduct} />
-          <Stack.Screen name="Orders" component={Order} />
-          <Stack.Screen name="Inventory" component={Inventory} />
         </>
       )}
     </Stack.Navigator>

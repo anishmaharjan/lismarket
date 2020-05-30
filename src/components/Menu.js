@@ -38,10 +38,11 @@ const Menu = props => {
             Profile
           </Text>
         </TouchableOpacity>
-
         <TouchableOpacity>
-          <Text style={style.list} onPress={navPointer('Category')}>
-            Category
+          <Text
+            style={style.list}
+            onPress={navPointer('PurchaseHistoryScreen')}>
+            Purchase History
           </Text>
         </TouchableOpacity>
         <TouchableOpacity>

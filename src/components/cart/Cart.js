@@ -19,31 +19,36 @@ const Cart = props => {
 
   return (
     <Container>
-      <ScrollView>
-        <View
-          style={css`
-            ${tm.paddingWalls}
-          `}>
-          {cart &&
-            cart.map((item, key) => (
-              <CartItem key={'cartItems' + key} index={key} item={item} />
-            ))}
-        </View>
-        {cart.length === 0 && (
+      <View
+        style={css`
+          height: 85%;
+        `}>
+        <ScrollView>
           <View
             style={css`
               ${tm.paddingWalls}
             `}>
-            <Text>No items in cart, browse items in the shop.</Text>
-            <Button
-              title={'Go back'}
-              type="outline"
-              onPress={navigation.goBack}
-            />
+            {cart &&
+              cart.map((item, key) => (
+                <CartItem key={'cartItems' + key} index={key} item={item} />
+              ))}
           </View>
-        )}
-        {cart.length !== 0 && <CartSummary />}
-      </ScrollView>
+          {cart.length === 0 && (
+            <View
+              style={css`
+                ${tm.paddingWalls}
+              `}>
+              <Text>No items in cart, browse items in the shop.</Text>
+              <Button
+                title={'Go back'}
+                type="outline"
+                onPress={navigation.goBack}
+              />
+            </View>
+          )}
+          {cart.length !== 0 && <CartSummary />}
+        </ScrollView>
+      </View>
 
       {cart.length !== 0 && (
         <View

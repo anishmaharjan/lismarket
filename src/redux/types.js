@@ -13,6 +13,7 @@ export const LIST_USERS = 'LIST_USERS';
 
 export const GET_USER_API = 'GET_USER_API';
 export const CREATE_USER_API = 'CREATE_USER_API';
+export const GET_PURCHASE_HISTORY = 'GET_PURCHASE_HISTORY';
 
 export const ITEMS = 'ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';

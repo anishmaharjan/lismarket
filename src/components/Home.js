@@ -12,6 +12,7 @@ import Footer from './Footer';
 import {listAllProducts} from '../redux/actions/product';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import EachItem from './product/EachItem';
+import gss from './variables.styles';
 
 const Home = props => {
   const {title, navigation} = props;
@@ -88,12 +89,13 @@ const Home = props => {
                     })
                   }
                   style={css`
-                    // background-color: #abc;
+                    background-color: white;
                     width: 100px;
                     height: 100px;
                     padding: 10px;
-                    border-width: 1px;
+                    // border-width: 1px;
                     border-radius: 10px;
+                    box-shadow: 3px 3px 2px ${gss.primary};
                     justify-content: center;
                     align-items: center;
                     margin: 10px;
@@ -110,14 +112,20 @@ const Home = props => {
               ))}
           </ScrollView>
         </View>
-
-        {products &&
-          products.items &&
-          products.items.map((prod, key) => {
-            return (
-              key < 10 && <EachItem key={'product-list' + key} product={prod} />
-            );
-          })}
+        <View
+          style={css`
+            margin-top: 20px;
+          `}>
+          {products &&
+            products.items &&
+            products.items.map((prod, key) => {
+              return (
+                key < 10 && (
+                  <EachItem key={'product-list' + key} product={prod} />
+                )
+              );
+            })}
+        </View>
       </ScrollView>
       {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
       {/*<Text>Icons made by Freepik from www.flaticon.com</Text>*/}

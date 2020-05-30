@@ -24,7 +24,7 @@ import EditProduct from '../components/product/admin/EditProduct';
 import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
-import AddCategory from '../components/category/AddCategory';
+import AddCategory from '../components/category/admin/AddCategory';
 import ProductDetails from '../components/product/ProductDetails';
 
 import Dashboard from '../components/admin/Dashboard';
@@ -55,12 +55,20 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
             component={Cart}
             options={{title: 'Cart'}}
           />
-          <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+          <Stack.Screen
+            name="CheckoutScreen"
+            component={CheckoutScreen}
+            options={{title: 'CheckoutScreen'}}
+          />
           <Stack.Screen
             name="PaymentSuccessScreen"
             component={PaymentSuccessScreen}
           />
-          <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen
+            name="CategoryScreen"
+            component={Category}
+            options={{title: 'Category'}}
+          />
           <Stack.Screen
             name="PurchaseHistoryScreen"
             component={PurchaseHistory}

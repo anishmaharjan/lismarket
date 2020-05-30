@@ -26,6 +26,8 @@ const EachItem = props => {
         flex-direction: row;
         justify-content: space-between;
         min-height: 40px;
+        background: white;
+        box-shadow: 1px 5px 5px ${gss.grey2};
       `}>
       <TouchableOpacity
         style={css`

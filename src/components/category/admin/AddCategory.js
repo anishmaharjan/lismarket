@@ -13,7 +13,7 @@ import styled, {css} from '@emotion/native';
 import {Input, Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 
-import {addCategory} from '../../redux/actions/category';
+import {addCategory} from '../../../redux/actions/category';
 
 const AddCategory = props => {
   const {navigation, addingCategory, successAddingCategory, categories} = props;

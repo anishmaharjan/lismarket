@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {css} from '@emotion/native';
 import {Image, TouchableOpacity, View} from 'react-native';
-import {Picker, Text} from 'native-base';
+import {Picker, Text, Toast} from 'native-base';
 
 import {useNavigation} from '@react-navigation/native';
 import * as tm from '../theme.style';
@@ -26,6 +26,8 @@ const EachItem = props => {
         flex-direction: row;
         justify-content: space-between;
         min-height: 40px;
+        background: white;
+        box-shadow: 1px 5px 5px ${gss.grey2};
       `}>
       <TouchableOpacity
         style={css`
@@ -105,7 +107,14 @@ const EachItem = props => {
           style={css`
             ${tm.btn}
           `}
-          onPress={() => dispatch(addToCart({...product, quantity: quantity}))}>
+          onPress={() => {
+            Toast.show({
+              text: 'Added to cart!',
+              buttonText: 'Okay',
+              duration: 3000,
+            });
+            dispatch(addToCart({...product, quantity: quantity}));
+          }}>
           <Text
             style={css`
               ${tm.btnText}

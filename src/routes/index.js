@@ -12,7 +12,7 @@ import Menu from '../components/Menu';
 import Cart from '../components/cart/Cart';
 import CheckoutScreen from '../components/cart/CheckoutScreen';
 import PaymentSuccessScreen from '../components/cart/PaymentSuccess';
-import Profile from '../components/Profile';
+import Profile from '../components/user/Profile';
 
 import Users from '../components/user/admin/AdminUsers';
 import PurchaseHistory from '../components/user/PurchaseHistory';

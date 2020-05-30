@@ -3,7 +3,7 @@ import {ScrollView, Text, View} from 'react-native';
 import {Container} from 'native-base';
 import {connect} from 'react-redux';
 import {getPurchaseHistoryApi} from '../../redux/actions/user';
-import {css} from '@emotion/native';
+import styled, {css} from '@emotion/native';
 import * as tm from '../theme.style';
 import gss from '../variables.styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -14,7 +14,7 @@ const PurchaseDetails = props => {
   const {route, user} = props;
   const {order} = route.params;
 
-  console.log('route', order);
+  const Text = styled.Text``;
 
   return (
     <Container>
@@ -56,24 +56,36 @@ const PurchaseDetails = props => {
               ? ' Ready for collection.'
               : ' Item being processed.'}
           </Text>
-          <Text
+          <View
             style={css`
-              ${tm.h1}
-              color:green;
+              margin-bottom: 10px;
+              padding: 10px;
+              border-color: #8908ec;
+              border-width: 1px;
+              // background: #e293de;
             `}>
-            Total:
-            {monefy(
-              order.orderItems.items.reduce(
-                (total, item) => total + item.amount * item.orderQuantity,
-                0,
-              ),
-            )}
-          </Text>
+            <Text
+              style={css`
+                ${tm.h1}
+                text-align: center;
+                color: #2c6837;
+              `}>
+              Invoice:
+              {monefy(
+                order.orderItems.items.reduce(
+                  (total, item) => total + item.amount * item.orderQuantity,
+                  0,
+                ),
+              )}
+            </Text>
+          </View>
+
           <View>
             {order.orderItems &&
               order.orderItems &&
               order.orderItems.items.map((item, key) => (
                 <View
+                  key={key + 'order-items'}
                   style={css`
                     ${tm.borderBottom}
                   `}>
@@ -112,6 +124,7 @@ const PurchaseDetails = props => {
                         style={css`
                           font-weight: bold;
                           text-align: right;
+                          ${tm.h3}
                         `}>
                         {monefy(item.orderQuantity * item.amount)}
                       </Text>

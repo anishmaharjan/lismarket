@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Text, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import {Container} from 'native-base';
 import styled, {css} from '@emotion/native';
 import {Input, Button} from 'react-native-elements';
@@ -15,11 +15,6 @@ const SignIn = props => {
 
   const [form, setForm] = useState({});
 
-  const Text = styled.Text({
-    // fontFamily:
-    // Platform.OS === 'ios' ? 'Questrial-Regular' : 'some_filename.ttf',
-  });
-
   const submitForm = () => {
     dispatch(
       signIn(form, userData => {
@@ -30,6 +25,22 @@ const SignIn = props => {
 
   return (
     <Container>
+      <View
+        style={css`
+          justify-content: center;
+          align-items: center;
+        `}>
+        <Image
+          source={{
+            uri:
+              'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/images/logo.png',
+          }}
+          style={css`
+            height: 200px;
+            width: 300px;
+          `}
+        />
+      </View>
       <View
         style={css`
           margin-top: 30px;
@@ -66,6 +77,9 @@ const SignIn = props => {
           buttonStyle={{
             backgroundColor: gas.primary,
           }}
+          titleStyle={css`
+            font-family: Montserrat-Regular;
+          `}
           onPress={submitForm}
           loading={fetchingSignIn}
         />

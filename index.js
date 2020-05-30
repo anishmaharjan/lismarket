@@ -9,6 +9,7 @@ import Amplify from 'aws-amplify';
 import awsConfig from './aws-exports';
 import {Provider} from 'react-redux';
 import configureStore from './src/store';
+import {typography} from './src/typography.util';
 
 const store = configureStore();
 
@@ -19,5 +20,7 @@ const ReduxInfused = () => (
 );
 
 Amplify.configure(awsConfig);
+
+typography();
 
 AppRegistry.registerComponent(appName, () => ReduxInfused);

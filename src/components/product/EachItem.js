@@ -69,7 +69,7 @@ const EachItem = props => {
               font-size: 22px;
               color: black;
             `}>
-            {monefy(product.price)}{' '}
+            {monefy(product.price)}
           </Text>
 
           <View

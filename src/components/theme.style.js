@@ -1,5 +1,16 @@
 import gss from './variables.styles';
+import {Platform} from 'react-native';
 
+/*
+ * Fonts
+ * Platform.OS === 'ios'?
+ *
+ * Questrial-Regular
+ * Montserrat-SemiBold
+ * Montserrat-Regular
+ * Roboto
+ *
+ */
 export const borderBottom = `
   border-bottom-width: 1px; 
   border-bottom-color: ${gss.grey2};

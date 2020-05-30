@@ -12,6 +12,8 @@ const AdminUsers = props => {
   const {authUser} = props;
   const {userList, dispatch, getUserInfo, getAllUsers} = props;
 
+  console.log(userList);
+
   useEffect(() => {
     dispatch(getAllUsers());
     // dispatch(getUserInfo());

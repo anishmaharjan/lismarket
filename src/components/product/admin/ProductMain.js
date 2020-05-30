@@ -3,12 +3,12 @@ import {Auth} from 'aws-amplify';
 import Dashboard from 'react-native-dashboard';
 
 import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity} from 'react-native';
-import {Container, Content, Left, Right} from 'native-base';
-import Header from '../Header';
+import {Container, Content, Left, Right, Icon} from 'native-base';
+import Header from '../../Header';
 import {connect} from 'react-redux';
-import {signOut} from '../../redux/actions/auth';
+import {signOut} from '../../../redux/actions/auth';
 
-const Menu = props => {
+const ProductMain = props => {
   const {authUser} = props;
   const {title, navigation} = props;
   const {dispatch, signOut} = props;
@@ -24,12 +24,9 @@ const Menu = props => {
   };
 
   const items = [
-    { name: 'Customers', value: 'Customers', background: '#74D4DE', icon: 'user' },
-    { name: 'Product', value: 'ProductMain', background: '#76EE00', icon: 'lemon' },
-    { name: 'Inventory', value: 'Inventory', background: '#FEC001', icon: 'warehouse' },
-    { name: 'Orders', value: 'Orders', background: '#FC8369', icon: 'shopping-bag' },
-    { name: 'Home Page', value: 'Home', background: '#9932CC', icon: 'home' },
-    { name: 'SignOut', value: 'signout', background: '#778899', icon: 'sign-out-alt' },
+    { name: 'Category', value: 'Category', background: '#74D4DE', icon: 'user' },
+    { name: 'Products', value: 'AdminProducts', background: '#76EE00', icon: 'apple-alt' },
+    { name: 'Out of Stock Products', value: 'NoStock', background: '#FEC001', icon: 'expand-arrows-alt' },    
   ];
   return (
       <Container>
@@ -62,4 +59,4 @@ export default connect(state => ({
   }), dispatch => ({
   dispatch,
   signOut
-}))(Menu);
+}))(ProductMain);

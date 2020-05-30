@@ -182,6 +182,7 @@ export const listOrders = /* GraphQL */ `
         sentPackaging
         collectionReady
         comment
+        invoiceNumber
         users {
           id
           email
@@ -189,7 +190,16 @@ export const listOrders = /* GraphQL */ `
           userGroup
         }
         orderItems {
-          nextToken
+          items{
+            id
+            createdAt
+            amount
+            orderQuantity
+            product
+            {
+              name
+            }
+          }
         }
       }
       nextToken

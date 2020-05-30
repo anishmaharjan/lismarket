@@ -1,10 +1,10 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {listOrders} from '../../graphql/queries';
-import {SS, ER, LIST_ORDERS, CREATE_ORDER} from '../types';
-import {createOrder, createOrderItem} from '../../graphql/mutations';
+import {SS, ER, LIST_ORDERS, CREATE_ORDER, UPDATE_ORDER} from '../types';
+import {createOrder, createOrderItem, updateOrder} from '../../graphql/mutations';
 
 export const listOrder = () => dispatch =>
-  dispatch({
+  ({
     type: LIST_ORDERS,
     payload: API.graphql(graphqlOperation(listOrders))
       .then(result => {
@@ -58,3 +58,44 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
         });
       }),
   });
+
+  export const editOrder = order => dispatch =>
+  dispatch({
+    type: UPDATE_ORDER,
+    payload: API.graphql(graphqlOperation(updateOrder, {input: order}))
+      .then(result => {
+        dispatch({
+          type: UPDATE_ORDER + SS,
+          payload: result.data.updateOrder,
+        });
+      })
+      .catch(e => {
+        dispatch({
+          type: UPDATE_ORDER + ER,
+          payload: e,
+        });
+      }),
+  });
+
+  export const sentPackaging = orderId => dispatch =>
+  dispatch({
+    type: UPDATE_ORDER,
+    payload: API.graphql(graphqlOperation(updateOrder, {input: {
+      id: orderId,
+      sentPackaging: true
+    }
+  }))
+      .then(result => {
+        dispatch({
+          type: UPDATE_ORDER + SS,
+          payload: result.data.updateOrder,
+        });
+      })
+      .catch(e => {
+        dispatch({
+          type: UPDATE_ORDER + ER,
+          payload: e,
+        });
+      }),
+  });
+

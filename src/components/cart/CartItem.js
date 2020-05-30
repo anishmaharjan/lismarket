@@ -8,11 +8,11 @@ import {Picker} from 'native-base';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Image} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {updateCartQuantity} from '../../redux/actions/cart';
+import {updateCartQuantity, cartRemoveItem} from '../../redux/actions/cart';
 import {connect} from 'react-redux';
 
 const CartItem = props => {
-  const {index, item, dispatch, updateCartQuantity} = props;
+  const {index, item, dispatch, updateCartQuantity, cartRemoveItem} = props;
 
   const setQuantity = quantity => {
     dispatch(updateCartQuantity({index, quantity}));
@@ -62,7 +62,7 @@ const CartItem = props => {
               ${tm.flexRow} padding: 20px 10px;
               justify-content: flex-end;
             `}
-            onPress={() => console.log('remove item', index)}>
+            onPress={() => dispatch(cartRemoveItem(index))}>
             <FontAwesome5
               name={'trash'}
               style={css`
@@ -110,6 +110,7 @@ export default connect(
   null,
   dispatch => ({
     dispatch,
+    cartRemoveItem,
     updateCartQuantity,
   }),
 )(CartItem);

@@ -36,6 +36,7 @@ export const GET_PRODUCTS_BY_CATEGORY_SUCCESS =
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const UDPATE_CART_QUANTITY = 'UDPATE_CART_QUANTITY';
+export const CART_REMOVE_ITEM = 'CART_REMOVE_ITEM';
 export const CLEAR_CART = 'CLEAR_CART';
 
 export const CREATE_ORDER = 'CREATE_ORDER';

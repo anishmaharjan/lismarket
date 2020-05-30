@@ -24,7 +24,7 @@ const CartSummary = props => {
             padding: 10px;
             color: ${gss.text};
           `}>
-          Order summary
+          Order summary ({cart.length} item/s)
         </Text>
       </View>
       <View

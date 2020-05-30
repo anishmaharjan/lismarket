@@ -50,7 +50,11 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="ProductList" component={ProductList} />
           <Stack.Screen name="ProductDetailScreen" component={ProductDetails} />
-          <Stack.Screen name="CartScreen" component={Cart} />
+          <Stack.Screen
+            name="CartScreen"
+            component={Cart}
+            options={{title: 'Cart'}}
+          />
           <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
           <Stack.Screen
             name="PaymentSuccessScreen"

@@ -1,4 +1,11 @@
-import {SS, ER, ADD_TO_CART, UDPATE_CART_QUANTITY, CLEAR_CART} from './types';
+import {
+  SS,
+  ER,
+  ADD_TO_CART,
+  UDPATE_CART_QUANTITY,
+  CART_REMOVE_ITEM,
+  CLEAR_CART,
+} from './types';
 
 const initialState = {
   cartItems: [],
@@ -19,6 +26,14 @@ export default (state = initialState, action) => {
 
       cartClone[index].quantity = quantity;
       return {...state, cartItems: cartClone};
+
+    case CART_REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (sub, index) => index !== action.payload.index,
+        ),
+      };
 
     case CLEAR_CART:
       return {

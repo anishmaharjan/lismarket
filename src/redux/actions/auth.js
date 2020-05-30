@@ -9,6 +9,7 @@ import {
   AUTH_USER_INFO,
   AUTH_CHECK_USER,
   AUTH_RESEND_CODE,
+  AUTH_UPDATE_USER_ATTRIBUTES,
 } from '../types';
 
 export const signIn = (form, cb) => dispatch => ({
@@ -108,10 +109,37 @@ export const checkCurrentUser = () => dispatch => ({
         payload: result,
       });
     })
-    .catch(e =>
+    .catch(error =>
       dispatch({
         type: AUTH_CHECK_USER + ER,
-        payload: e,
+        payload: error,
       }),
     ),
 });
+
+export const authUpdateUser = userAttributes => dispatch =>
+  dispatch({
+    type: AUTH_UPDATE_USER_ATTRIBUTES,
+    payload: Auth.currentAuthenticatedUser()
+      .then(cognitoUser => {
+        Auth.updateUserAttributes(cognitoUser, userAttributes)
+          .then(data =>
+            dispatch({
+              type: AUTH_UPDATE_USER_ATTRIBUTES + SS,
+              payload: {data, userAttributes},
+            }),
+          )
+          .catch(error =>
+            dispatch({
+              type: AUTH_UPDATE_USER_ATTRIBUTES + ER,
+              payload: {error},
+            }),
+          );
+      })
+      .catch(error =>
+        dispatch({
+          type: AUTH_CHECK_USER + ER,
+          payload: error,
+        }),
+      ),
+  });

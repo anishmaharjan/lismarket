@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
-import uuid from 'react-native-uuid';
 import {getUserInfo} from '../../redux/actions/auth';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -11,27 +10,60 @@ import {
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';
-
-import {Container, Content, Header, Left, Right, Icon} from 'native-base';
-import Swiper from 'react-native-swiper';
+import {css} from '@emotion/native';
+import {failSafeImage} from '../../consts';
+import {Button} from 'react-native-elements';
+import gas from '../variables.styles';
 
 const Profile = props => {
-  const {authUser} = props;
+  const {authUser, navigation} = props;
   const {dispatch, getUserInfo} = props;
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.iconContentedit}>
-          <FontAwesomeIcon icon={faUserEdit} size={20} color={'#FF914D'} />
-        </View>
+        <View style={styles.iconContentedit} />
         <View style={styles.headerContent}>
           <Image
             style={styles.avatar}
-            source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}
+            source={{uri: authUser.profile || failSafeImage}}
           />
-          <Text style={styles.name}>Mr. Puffy Puff </Text>
+          <Text style={styles.name}>{authUser.name} </Text>
         </View>
+      </View>
+
+      <View
+        style={css`
+          flex-direction: row;
+          justify-content: center;
+        `}>
+        <Button
+          type="outline"
+          title={'Edit profile'}
+          onPress={() => navigation.navigate('EditProfileScreen')}
+          style={css`
+            margin: 10px 20px;
+          `}
+          titleStyle={css`
+            color: ${gas.primary};
+          `}
+          buttonStyle={css`
+            border-color: ${gas.primary};
+          `}
+        />
+        {/*<Button
+          type="outline"
+          title={'Change password'}
+          style={css`
+            margin: 10px 20px;
+          `}
+          titleStyle={css`
+            color: ${gas.primary};
+          `}
+          buttonStyle={css`
+            border-color: ${gas.primary};
+          `}
+        />*/}
       </View>
 
       <View style={styles.body}>
@@ -40,7 +72,7 @@ const Profile = props => {
             <FontAwesomeIcon icon={faUser} size={20} color={'#FF914D'} />
           </View>
           <View style={styles.infoContent}>
-            <Text style={styles.info}>PuffyPuff</Text>
+            <Text style={styles.info}>{authUser.name}</Text>
           </View>
         </View>
 
@@ -67,7 +99,7 @@ const Profile = props => {
             <FontAwesomeIcon icon={faAddressCard} size={20} color={'#FF914D'} />
           </View>
           <View style={styles.infoContent}>
-            <Text style={styles.info}>3/6 Pearl Street, Hurstville</Text>
+            <Text style={styles.info}>{authUser.address}</Text>
           </View>
         </View>
       </View>
@@ -77,7 +109,7 @@ const Profile = props => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#ffe',
   },
   headerContent: {
     padding: 30,

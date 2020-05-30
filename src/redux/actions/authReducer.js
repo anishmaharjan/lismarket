@@ -8,6 +8,7 @@ import {
   AUTH_USER_INFO,
   AUTH_CHECK_USER,
   AUTH_RESEND_CODE,
+  AUTH_UPDATE_USER_ATTRIBUTES,
 } from '../types';
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
   fetchingUser: false,
   authUser: null,
   isAdmin: false,
+
+  updatingProfile: false,
 };
 
 export default (state = initialState, action) => {
@@ -102,6 +105,26 @@ export default (state = initialState, action) => {
     case AUTH_RESEND_CODE + SS:
       return {
         ...state,
+      };
+
+    case AUTH_UPDATE_USER_ATTRIBUTES:
+      return {
+        ...state,
+        updatingProfile: true,
+      };
+
+    case AUTH_UPDATE_USER_ATTRIBUTES + SS:
+      const {userAttributes} = action.payload;
+      return {
+        ...state,
+        updatingProfile: false,
+        authUser: {...state.authUser, ...userAttributes},
+      };
+
+    case AUTH_UPDATE_USER_ATTRIBUTES + ER:
+      return {
+        ...state,
+        updatingProfile: false,
       };
 
     default:

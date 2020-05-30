@@ -13,6 +13,7 @@ import Cart from '../components/cart/Cart';
 import CheckoutScreen from '../components/cart/CheckoutScreen';
 import PaymentSuccessScreen from '../components/cart/PaymentSuccess';
 import Profile from '../components/user/Profile';
+import EditProfile from '../components/user/EditProfile';
 
 import Users from '../components/user/admin/AdminUsers';
 import PurchaseHistory from '../components/user/PurchaseHistory';
@@ -49,7 +50,14 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
         <>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Menu" component={Menu} />
+
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen
+            name="EditProfileScreen"
+            component={EditProfile}
+            options={{title: 'Edit Profile'}}
+          />
+
           <Stack.Screen name="ProductList" component={ProductList} />
           <Stack.Screen name="ProductDetailScreen" component={ProductDetails} />
           <Stack.Screen

@@ -82,3 +82,7 @@ export const editProduct = product => dispatch =>
         });
       }),
   });
+
+
+  //{filter:{ stockQuantity:{eq:0}}}
+  

@@ -1,11 +1,13 @@
-import {SS, ER, LIST_ORDERS, CREATE_ORDER} from './types';
+import {SS, ER, LIST_ORDERS, CREATE_ORDER,UPDATE_ORDER} from './types';
 
 const initialState = {
   orderList: null,
   fetchingOrders: false,
-
   processingPayment: false,
   successPayment: null,
+  updatingOrder: false,
+  updatingOrderSuccess: false,
+  updatedOrder: null
 };
 
 export default (state = initialState, action) => {
@@ -19,6 +21,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingOrders: false,
+        updatingOrderSuccess: false,
         orderList: action.payload,
       };
 
@@ -36,6 +39,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         processingPayment: false,
+      };
+
+    case UPDATE_ORDER:
+      return {...state, updatingOrder: true};
+
+    case UPDATE_ORDER + SS:
+      return {
+        ...state,
+        updatingOrder: false,
+        updatingOrderSuccess: true,
+        updatedOrder: action.payload,
       };
 
     default:

@@ -17,6 +17,7 @@ import Profile from '../components/Profile';
 import Users from '../components/user/admin/AdminUsers';
 
 import AdminProduct from '../components/product/admin/AdminProduct';
+import ProductMain from '../components/product/admin/ProductMain';
 import AddProduct from '../components/product/admin/AddProduct';
 import EditProduct from '../components/product/admin/EditProduct';
 import ProductList from '../components/product/ProductList';
@@ -30,6 +31,7 @@ import Order from '../components/admin/orders/Order';
 import OrderDetail from '../components/admin/orders/OrderDetail';
 import Inventory from '../components/admin/inventory/Inventory';
 import StockChange from '../components/admin/inventory/StockChange';
+import NoStock from '../components/admin/inventory/NoStock';
 import {connect} from 'react-redux';
 
 const RootStack = createStackNavigator();
@@ -83,6 +85,9 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
           <Stack.Screen name="AdminProducts" component={AdminProduct} />
           <Stack.Screen name="Orders" component={Order} />
           <Stack.Screen name="Inventory" component={Inventory} />
+          <Stack.Screen name="OrderDetail" component={OrderDetail} />
+          <Stack.Screen name="ProductMain" component={ProductMain} />
+          <Stack.Screen name="NoStock" component={NoStock} />
         </>
       )}
     </Stack.Navigator>

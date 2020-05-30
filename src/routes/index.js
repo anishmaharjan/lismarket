@@ -90,6 +90,9 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
               <Stack.Screen name="AdminProducts" component={AdminProduct} />
               <Stack.Screen name="Orders" component={Order} />
               <Stack.Screen name="Inventory" component={Inventory} />
+              <Stack.Screen name="OrderDetail" component={OrderDetail} />
+              <Stack.Screen name="ProductMain" component={ProductMain} />
+              <Stack.Screen name="NoStock" component={NoStock} />
             </>
           )}
         </>

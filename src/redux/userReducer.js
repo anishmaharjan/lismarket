@@ -5,6 +5,7 @@ import {
   LIST_USERS,
   CREATE_USER_API,
   GET_PURCHASE_HISTORY,
+  AUTH_SIGN_OUT,
 } from './types';
 
 const initialState = {
@@ -14,6 +15,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_SIGN_OUT + SS:
+      return {
+        ...state,
+        user: null,
+      };
     case GET_USER_API:
       return {
         ...state,

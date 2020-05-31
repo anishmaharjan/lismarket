@@ -25,108 +25,114 @@ const Home = props => {
   return (
     <Container>
       <Header />
-      <ScrollView>
-        <View
-          style={css`
-            height: 200px;
-          `}>
-          <Swiper
+      <View
+        style={css`
+          height: 80%;
+        `}>
+        <ScrollView>
+          <View
             style={css`
-              padding: 10px;
-            `}
-            autoplay={false}>
-            <View style={''}>
-              <Image
-                style={css`
-                  height: 170px;
-                `}
-                source={{
-                  uri:
-                    'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png',
-                }}
-              />
-            </View>
-            <View style={''}>
-              <Image
-                style={css`
-                  height: 170px;
-                `}
-                source={{
-                  uri:
-                    'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner2.jpg',
-                }}
-              />
-            </View>
-            <View style={''}>
-              <Image
-                style={css`
-                  height: 170px;
-                `}
-                source={{
-                  uri:
-                    'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner3.jpg',
-                }}
-              />
-            </View>
-          </Swiper>
-        </View>
-        <View
-          style={css`
-            min-height: 100px;
-          `}>
-          <ScrollView
-            horizontal={true}
-            style={css`
-              padding: 10px;
+              height: 200px;
             `}>
-            {categories &&
-              categories.map((cat, key) => (
-                <TouchableOpacity
-                  key={'cat' + key}
-                  onPress={() =>
-                    navigation.navigate('ProductList', {
-                      category: cat,
-                    })
-                  }
+            <Swiper
+              style={css`
+                padding: 10px;
+              `}
+              autoplay={false}>
+              <View style={''}>
+                <Image
                   style={css`
-                    background-color: white;
-                    width: 100px;
-                    height: 100px;
-                    padding: 10px;
-                    // border-width: 1px;
-                    border-radius: 10px;
-                    box-shadow: 3px 3px 2px ${gss.primary};
-                    justify-content: center;
-                    align-items: center;
-                    margin: 10px;
-                  `}>
-                  <FontAwesome5
-                    name={cat.image || 'circle-notch'}
+                    height: 170px;
+                  `}
+                  source={{
+                    uri:
+                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png',
+                  }}
+                />
+              </View>
+              <View style={''}>
+                <Image
+                  style={css`
+                    height: 170px;
+                  `}
+                  source={{
+                    uri:
+                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner2.jpg',
+                  }}
+                />
+              </View>
+              <View style={''}>
+                <Image
+                  style={css`
+                    height: 170px;
+                  `}
+                  source={{
+                    uri:
+                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner3.jpg',
+                  }}
+                />
+              </View>
+            </Swiper>
+          </View>
+          <View
+            style={css`
+              min-height: 100px;
+            `}>
+            <ScrollView
+              horizontal={true}
+              style={css`
+                padding: 10px;
+              `}>
+              {categories &&
+                categories.map((cat, key) => (
+                  <TouchableOpacity
+                    key={'cat' + key}
+                    onPress={() =>
+                      navigation.navigate('ProductList', {
+                        category: cat,
+                      })
+                    }
                     style={css`
-                      font-size: 24px;
-                      padding-bottom: 5px;
-                    `}
-                  />
-                  <Text>{cat.name}</Text>
-                </TouchableOpacity>
-              ))}
-          </ScrollView>
-        </View>
-        <View
-          style={css`
-            margin-top: 20px;
-          `}>
-          {products &&
-            products.items &&
-            products.items.map((prod, key) => {
-              return (
-                key < 10 && (
-                  <EachItem key={'product-list' + key} product={prod} />
-                )
-              );
-            })}
-        </View>
-      </ScrollView>
+                      background-color: white;
+                      width: 100px;
+                      height: 100px;
+                      padding: 10px;
+                      // border-width: 1px;
+                      border-radius: 10px;
+                      box-shadow: 3px 3px 2px ${gss.primary};
+                      justify-content: center;
+                      align-items: center;
+                      margin: 10px;
+                    `}>
+                    <FontAwesome5
+                      name={cat.image || 'circle-notch'}
+                      style={css`
+                        font-size: 24px;
+                        padding-bottom: 5px;
+                        color: ${gss.text};
+                      `}
+                    />
+                    <Text>{cat.name}</Text>
+                  </TouchableOpacity>
+                ))}
+            </ScrollView>
+          </View>
+          <View
+            style={css`
+              margin-top: 20px;
+            `}>
+            {products &&
+              products.items &&
+              products.items.map((prod, key) => {
+                return (
+                  key < 10 && (
+                    <EachItem key={'product-list' + key} product={prod} />
+                  )
+                );
+              })}
+          </View>
+        </ScrollView>
+      </View>
       {/*      <Text>Icons made by Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></Text>*/}
       {/*<Text>Icons made by Freepik from www.flaticon.com</Text>*/}
       <Footer navigation={navigation} />

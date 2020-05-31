@@ -13,6 +13,7 @@ export const typography = () => {
 
 const styles = StyleSheet.create({
   defaultText: {
+    color: '#4F4F4F',
     fontFamily:
       Platform.OS === 'ios' ? 'Montserrat-Regular' : 'Montserrat-Regular.ttf',
   },

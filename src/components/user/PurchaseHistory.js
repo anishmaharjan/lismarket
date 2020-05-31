@@ -16,7 +16,7 @@ const PurchaseHistory = props => {
 
   useEffect(() => {
     !user && dispatch(getPurchaseHistoryApi(authUser.sub));
-  }, [user, dispatch, getPurchaseHistoryApi, authUser]);
+  }, [authUser.sub, dispatch, getPurchaseHistoryApi, user]);
 
   return (
     <Container>
@@ -24,6 +24,12 @@ const PurchaseHistory = props => {
         style={css`
           ${tm.paddingWalls}
         `}>
+        {user &&
+          user.orders &&
+          user.orders.items &&
+          user.orders.items.length === 0 && (
+            <Text> No purchases made yet.</Text>
+          )}
         <ScrollView>
           {user &&
             user.orders &&

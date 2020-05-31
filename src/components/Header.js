@@ -5,6 +5,7 @@ import {css} from '@emotion/native';
 import {useNavigation} from '@react-navigation/native';
 import {Badge} from 'react-native-elements';
 import {connect} from 'react-redux';
+import * as tm from './theme.style';
 
 const Header = props => {
   const navigation = useNavigation();
@@ -22,6 +23,8 @@ const Header = props => {
         <Text
           style={css`
             font-size: 24px;
+            font-weight: 600;
+            ${tm.primary}
           `}>
           LI Market
         </Text>

@@ -1,5 +1,16 @@
 import gss from './variables.styles';
+import {Platform} from 'react-native';
 
+/*
+ * Fonts
+ * Platform.OS === 'ios'?
+ *
+ * Questrial-Regular
+ * Montserrat-SemiBold
+ * Montserrat-Regular
+ * Roboto
+ *
+ */
 export const borderBottom = `
   border-bottom-width: 1px; 
   border-bottom-color: ${gss.grey2};
@@ -17,9 +28,17 @@ export const h3 = `
 font-size: 16px;
 `;
 
+export const p = `
+font-family: Questrial-Regular;
+color: ${gss.text};
+`;
+
+export const primary = `
+color: ${gss.primary};`;
+
 // 5px 10px 20px 35px 50px
 export const pt2 = `
-padding-top: 10px`;
+padding-top: 10px;`;
 
 export const flexRow = `
   flex-direction: row;`;

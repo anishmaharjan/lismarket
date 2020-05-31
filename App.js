@@ -28,7 +28,7 @@ YellowBox.ignoreWarnings([
 const App: () => React$Node = props => {
   const {isLoggedIn, dispatch, listCategory, checkCurrentUser} = props;
 
-  console.log('is logged in ', isLoggedIn, 'actual state', props.actualState);
+  console.log('is logged in ', isLoggedIn);
   useEffect(() => {
     // keep user logged in
     dispatch(checkCurrentUser());
@@ -67,7 +67,6 @@ const App: () => React$Node = props => {
 
 export default connect(
   state => ({
-    actualState: state,
     isLoggedIn: state.auth.isLoggedIn,
   }),
   dispatch => ({

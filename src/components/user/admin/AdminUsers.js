@@ -15,7 +15,6 @@ const AdminUsers = props => {
   const Text = styled.Text`
     ${tm.h3}
   `;
-  console.log(userList);
 
   useEffect(() => {
     dispatch(getAllUsers());

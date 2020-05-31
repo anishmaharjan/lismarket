@@ -60,6 +60,7 @@ const EachItem = props => {
             style={css`
               font-size: 20px;
               padding-bottom: 15px;
+              ${tm.p}
             `}>
             {product.name}
           </Text>
@@ -67,9 +68,9 @@ const EachItem = props => {
           <Text
             style={css`
               font-size: 22px;
-              color: black;
+              ${tm.p}
             `}>
-            {monefy(product.price)}{' '}
+            {monefy(product.price)}
           </Text>
 
           <View

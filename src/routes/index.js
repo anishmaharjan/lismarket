@@ -20,7 +20,7 @@ import PurchaseHistory from '../components/user/PurchaseHistory';
 import PurchaseDetails from '../components/user/PurchaseDetails';
 
 import AdminProduct from '../components/product/admin/AdminProduct';
-import ProductMain from '../components/product/admin/ProductMain';
+import ProductMain from '../components/admin/ProductMain';
 import AddProduct from '../components/product/admin/AddProduct';
 import EditProduct from '../components/product/admin/EditProduct';
 import ProductList from '../components/product/ProductList';
@@ -38,6 +38,7 @@ import Inventory from '../components/admin/inventory/Inventory';
 import StockChange from '../components/admin/inventory/StockChange';
 import NoStock from '../components/admin/inventory/NoStock';
 import {connect} from 'react-redux';
+import AdminCategory from '../components/category/admin/AdminCategory';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -97,8 +98,11 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
               {/*Admin*/}
               <Stack.Screen name="Dashboard" component={Dashboard} />
               <Stack.Screen name="Customers" component={Users} />
-              <Stack.Screen name="AdminProducts" component={AdminProduct} options={{title: 'Products'}} />
-              <Stack.Screen name="AdminCategory" component={AdminCategory} options={{title: 'Category'}}/>
+              <Stack.Screen name="AdminProducts" component={AdminProduct} />
+              <Stack.Screen
+                name="AdminCategoryScreen"
+                component={AdminCategory}
+              />
               <Stack.Screen name="Orders" component={Order} />
               <Stack.Screen name="Inventory" component={Inventory} />
               <Stack.Screen name="OrderDetail" component={OrderDetail} options={{title: 'Order Details'}} />

@@ -1,17 +1,20 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button, Text, View} from 'react-native';
+import {Button, ScrollView, Text, View} from 'react-native';
 import {Container} from 'native-base';
 import {createUserApi, getAllUsers} from '../../../redux/actions/user';
 import {getUserInfo} from '../../../redux/actions/auth';
-import {css} from '@emotion/native';
-import gas from '../../variables.styles';
+import styled, {css} from '@emotion/native';
+import gss from '../../variables.styles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import * as tm from '../../theme.style';
 
 const AdminUsers = props => {
-  const {authUser} = props;
-  const {userList, dispatch, getUserInfo, getAllUsers} = props;
+  const {authUser, userList, dispatch, getUserInfo, getAllUsers} = props;
 
+  const Text = styled.Text`
+    ${tm.h3}
+  `;
   console.log(userList);
 
   useEffect(() => {
@@ -32,58 +35,53 @@ const AdminUsers = props => {
 
   return (
     <Container>
-      <View style={css``}>
-        {userList &&
-          userList.items &&
-          userList.items.map((v, key) => (
-            <View
-              key={key}
-              style={css`
-                border-bottom-width: 1px;
-                border-bottom-color: #74d4de;
-                padding: 10px 20px;
-                background-color: #faf7f7;
-              `}>
+      <ScrollView>
+        <View
+          style={css`
+            ${tm.paddingWalls}
+          `}>
+          {userList &&
+            userList.items &&
+            userList.items.map((user, key) => (
               <View
-                style={{
-                  flex: 1,
-                  alignItems: 'flex-start',
-                  justifyContent: 'center',
-                }}>
-                <Text style={{paddingLeft: 5, paddingTop: 35}}>
-                  <Icon name="user" size={26} color="#FC8369" />
-                </Text>
+                key={key + 'userList'}
+                style={css`
+                  ${tm.borderBottom}
+                  margin-bottom: 20px;
+                `}>
+                <View
+                  style={css`
+                    ${tm.flexRow} justify-content: space-between
+                  `}>
+                  <View
+                    style={css`
+                      ${tm.flexRow}
+                      align-items: center;
+                    `}>
+                    <Icon name="user" size={26} color="#FC8369" />
+                    <View
+                      style={css`
+                        margin: 0 10px;
+                      `}>
+                      <Text>{user.email}</Text>
+                      <Text>{user.contactNo}</Text>
+                      <Text
+                        style={css`
+                          font-size: 12px;
+                          color: #4f4f4f;
+                        `}>
+                        (id: {user.id} )
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={css``}>
+                    <Text>{user.userGroup}</Text>
+                  </View>
+                </View>
               </View>
-
-              <View
-                style={{
-                  flex: 1,
-                  padding: 35,
-                  alignItems: 'flex-start',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={css`
-                    font-size: 16px;
-                  `}>
-                  Anish Maharjan
-                </Text>
-                <Text
-                  style={css`
-                    font-size: 16px;
-                  `}>
-                  {v.email}
-                </Text>
-                <Text
-                  style={css`
-                    font-size: 16px;
-                  `}>
-                  {v.contactNo}
-                </Text>
-              </View>
-            </View>
-          ))}
-      </View>
+            ))}
+        </View>
+      </ScrollView>
     </Container>
   );
 };

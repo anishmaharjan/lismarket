@@ -45,3 +45,34 @@ export const getPurchaseHistory = /* GraphQL */ `
     }
   }
 `;
+
+
+export const OutOfStock = /* GraphQL */ `
+  query ListProducts(
+    $filter: ModelProductFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProducts({filter:{ stockQuantity:{eq:0}}}, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        image
+        price
+        stockQuantity
+        createdBy
+        createdAt
+        category {
+          id
+          name
+          createdAt
+        }
+        orderItems {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;

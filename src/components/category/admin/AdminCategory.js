@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -7,66 +7,72 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
-import styled, {css} from '@emotion/native';
-import {Image} from 'react-native-elements';
+import styled, { css } from '@emotion/native';
+import { Image } from 'react-native-elements';
+import { Root, Container } from 'native-base';
+import { listCategory } from '../../../redux/actions/category';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-import {listCategory} from '../../../redux/actions/category';
 
-const Category = props => {
-  const {category} = props;
-  const {dispatch, listCategory} = props;
+const AdminCategory = props => {
+  const { category } = props;
+  const { dispatch, listCategory } = props;
 
   useEffect(() => {
-    dispatch(listCategory());
-  }, [dispatch, listCategory]);
+    !category && dispatch(listCategory());
+  }, [dispatch, category]);
+
 
   return (
-    <View>
-      {console.log('*category', category)}
-      <View>
+    <Root>
+      <Container>
+        <View>
         <Button
-          title="Add Category"
-          onPress={() => props.navigation.navigate('AddCategory')}
-        />
-        <Text>List of Categories</Text>
-        <View
-          style={css`
-            flex-direction: row;
-            padding: 10px 20px;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-          `}>
-          {category &&
-            category.map((item, key) => (
-              <View
-                key={'category-list' + key}
-                style={css`
-                  // padding: 10px 20px;
-                `}>
-                <View
-                  style={css`
-                    padding: 10px;
-                    height: 100px;
-                    width: 100px;
-                    background-color: red;
-                    align-items: center;
-                    justify-content: center;
+            title="Add Category"
+            type="outline"
+            onPress={() => props.navigation.navigate('AddCategory')}
+          />
+          <ScrollView>
+            {
+              category && category.map((item, key) =>
+                <View key={key} style={css`
+                  padding: 12px 10px;
+                  flex: 1;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  border-bottom-width: 1px;
+                  border-bottom-color: #FF914D;
                   `}>
-                  <Image />
-                  <Text>{item.name}</Text>
+                  <View style={css` padding-left: 5px; flex: 1;`}>
+                    <Image source={{ uri: 'https://localfoodconnect.org.au/wp-content/uploads/2015/09/tomato.png' }} style={css`
+                    height: 40px;
+                    width: 40px;
+                    margin: 0 5px;
+                    `} />
+                  </View>
+                  <View style={css` padding-left: 5px; flex: 3;`}>
+                    <Text style={css`font-size: 18px;`}>{item.name}</Text>
+                  </View>
+                  <View style={css`
+                      padding-right: 5;
+                    `}>
+                      <TouchableOpacity style={css`                  
+                    `}  onPress={() => props.navigation.navigate('EditCategory',{category: item})}><Icon name="edit" size={30} /></TouchableOpacity>
+                    </View>
                 </View>
-              </View>
-            ))}
+              )}
+          </ScrollView>
         </View>
-      </View>
-    </View>
-  );
+      </Container>
+    </Root>
+  )
 };
 
 export default connect(
   state => ({
     category: state.category.categories,
   }),
-  dispatch => ({dispatch, listCategory}),
-)(Category);
+  dispatch => ({ dispatch, listCategory }),
+)(AdminCategory);

@@ -99,3 +99,25 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
       }),
   });
 
+  export const completedPackaging = orderId => dispatch =>
+  dispatch({
+    type: UPDATE_ORDER,
+    payload: API.graphql(graphqlOperation(updateOrder, {input: {
+      id: orderId,
+      collectionReady: true
+    }
+  }))
+      .then(result => {
+        dispatch({
+          type: UPDATE_ORDER + SS,
+          payload: result.data.updateOrder,
+        });
+      })
+      .catch(e => {
+        dispatch({
+          type: UPDATE_ORDER + ER,
+          payload: e,
+        });
+      }),
+  });
+

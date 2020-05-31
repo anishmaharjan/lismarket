@@ -3,17 +3,20 @@ import { Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { css } from '@emotion/native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import { listAllProducts } from '../../../redux/actions/product';
+import { OutOfStock } from '../../../redux/actions/product';
 import { Root, Container, Header, Content, ActionSheet } from 'native-base';
 import { Button, Input } from 'react-native-elements';
 
 const NoStock = props => {
-    const { products } = props;
-    const { dispatch, addProduct, delProduct } = props;
+    const { nostockproducts } = props;
+    const { dispatch,OutOfStock } = props;
+
+    console.log(nostockproducts);
 
     useEffect(() => {
-        !products && dispatch(listAllProducts());
-      }, [dispatch, products]);
+        !nostockproducts && dispatch(OutOfStock());
+      }, [dispatch, nostockproducts]);
+    
     
     const borderBottom = `
   border-bottom-width: 1px;
@@ -46,7 +49,7 @@ const NoStock = props => {
                 <View>
                     <ScrollView>
                         {
-                            products && products.items && [...products.items].map((product, key) =>
+                            nostockproducts && nostockproducts.items && [...nostockproducts.items].map((product, key) =>
                                 <View key={key} style={css`
                 padding: 12px 10px;
                 flex: 1;
@@ -68,7 +71,8 @@ const NoStock = props => {
     );
 };
 export default connect(state => ({
-    products: state.product.products,
+    nostockproducts: state.product.nostockproducts,
 }), dispatch => ({
-    dispatch
+    dispatch,
+    OutOfStock
 }))(NoStock);

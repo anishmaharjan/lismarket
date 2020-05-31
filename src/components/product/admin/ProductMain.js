@@ -20,13 +20,13 @@ const ProductMain = props => {
     else
     {
      navigation.navigate(el.value);
-    }
+    } 
   };
 
   const items = [
-    { name: 'Category', value: 'Category', background: '#74D4DE', icon: 'user' },
-    { name: 'Products', value: 'AdminProducts', background: '#76EE00', icon: 'apple-alt' },
-    { name: 'Out of Stock Products', value: 'NoStock', background: '#FEC001', icon: 'expand-arrows-alt' },    
+    { name: 'Category', value: 'AdminCategory', background: '#74D4DE', icon: 'list' },
+    { name: 'Products', value: 'AdminProducts', background: '#76EE00', icon: 'lemon-o' },
+    { name: 'Out of Stock Products', value: 'NoStock', background: '#FEC001', icon: 'arrows-alt' },    
   ];
   return (
       <Container>

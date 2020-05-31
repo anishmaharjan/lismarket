@@ -5,10 +5,12 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
+  OUTOFSTOCK_PRODUCT
 } from './types';
 
 const initialState = {
   products: null,
+  nostockproducts: null,
   fetchingProducts: false,
   addingProduct: false,
   addingProductSuccess: false,
@@ -80,6 +82,18 @@ export default (state = initialState, action) => {
         updatingProduct: false,
         updatingProductSuccess: true,
         updatedProduct: action.payload,
+      };
+
+      case OUTOFSTOCK_PRODUCT:
+      return {
+        ...state,
+        fetchingProduct: true,
+      };
+      case OUTOFSTOCK_PRODUCT + SS:
+      return {
+        ...state,
+        fetchingProduct: false,
+        nostockproducts: action.payload.listProducts,
       };
     default:
       return state;

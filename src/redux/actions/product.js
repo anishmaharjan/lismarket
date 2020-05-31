@@ -10,6 +10,7 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
+  OUTOFSTOCK_PRODUCT
 } from '../types';
 
 export const listAllProducts = () => dispatch => ({
@@ -84,5 +85,19 @@ export const editProduct = product => dispatch =>
   });
 
 
-  //{filter:{ stockQuantity:{eq:0}}}
-  
+  export const OutOfStock = () => dispatch => ({
+    type: OUTOFSTOCK_PRODUCT,
+    payload: API.graphql(graphqlOperation(listProducts,({filter:{stockQuantity:{eq:0}}})))
+      .then(result => {
+        dispatch({
+          type: OUTOFSTOCK_PRODUCT + SS,
+          payload: result.data,
+        });
+      })
+      .catch(err =>
+        dispatch({
+          type: OUTOFSTOCK_PRODUCT + ER,
+          payload: err,
+        }),
+      ),
+  });

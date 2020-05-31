@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, Text, TouchableOpacity, View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {css} from '@emotion/native';
@@ -10,6 +10,10 @@ import {Button, Input} from 'react-native-elements';
 const Inventory = props => {
   const {products} = props;
   const {dispatch, addProduct, delProduct} = props;
+
+  useEffect(() => {
+    !products && dispatch(listAllProducts());
+  }, [dispatch, products]);
 
   const borderBottom = `
   border-bottom-width: 1px;

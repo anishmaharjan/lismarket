@@ -18,7 +18,7 @@ const SignIn = props => {
   const submitForm = () => {
     dispatch(
       signIn(form, userData => {
-        dispatch(getUserApi(userData.email));
+        dispatch(getUserApi(userData.sub));
       }),
     );
   };

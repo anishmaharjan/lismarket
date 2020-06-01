@@ -27,6 +27,8 @@ import ProductList from '../components/product/ProductList';
 
 import Category from '../components/category/Category';
 import AddCategory from '../components/category/admin/AddCategory';
+import AdminCategory from '../components/category/admin/AdminCategory';
+import EditCategory from '../components/category/admin/EditCategory';
 import ProductDetails from '../components/product/ProductDetails';
 
 import Dashboard from '../components/admin/Dashboard';
@@ -35,8 +37,8 @@ import OrderDetail from '../components/admin/orders/OrderDetail';
 import Inventory from '../components/admin/inventory/Inventory';
 import StockChange from '../components/admin/inventory/StockChange';
 import NoStock from '../components/admin/inventory/NoStock';
+import UserGroupEdit from '../components/user/admin/UserGroupEdit';
 import {connect} from 'react-redux';
-import AdminCategory from '../components/category/admin/AdminCategory';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -103,9 +105,9 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
               />
               <Stack.Screen name="Orders" component={Order} />
               <Stack.Screen name="Inventory" component={Inventory} />
-              <Stack.Screen name="OrderDetail" component={OrderDetail} />
-              <Stack.Screen name="ProductMain" component={ProductMain} />
-              <Stack.Screen name="NoStock" component={NoStock} />
+              <Stack.Screen name="OrderDetail" component={OrderDetail} options={{title: 'Order Details'}} />
+              <Stack.Screen name="ProductMain" component={ProductMain} options={{title: 'Product'}}/>
+              <Stack.Screen name="NoStock" component={NoStock} options={{title: 'Out of Stock Products'}}/>
             </>
           )}
         </>
@@ -127,8 +129,8 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
             options={{title: 'Verify'}}
           />
         </>
-      )}
-    </Stack.Navigator>
+      )}    
+      </Stack.Navigator>
   );
 
   return (
@@ -142,7 +144,9 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
         <RootStack.Screen name="AddCategory" component={AddCategory} />
         <RootStack.Screen name="AddProduct" component={AddProduct} />
         <RootStack.Screen name="EditProduct" component={EditProduct} />
+        <RootStack.Screen name="EditCategory" component={EditCategory} />
         <RootStack.Screen name="StockChange" component={StockChange} />
+        <RootStack.Screen name="UserGroupEdit" component={UserGroupEdit} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

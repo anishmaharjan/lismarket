@@ -10,6 +10,7 @@ import {
   AUTH_CHECK_USER,
   AUTH_RESEND_CODE,
   AUTH_UPDATE_USER_ATTRIBUTES,
+  AUTH_UPDATE_USER_GROUP
 } from '../types';
 
 export const signIn = (form, cb) => dispatch => ({
@@ -121,7 +122,7 @@ export const authUpdateUser = userAttributes => dispatch =>
   dispatch({
     type: AUTH_UPDATE_USER_ATTRIBUTES,
     payload: Auth.currentAuthenticatedUser()
-      .then(cognitoUser => {
+      .then(cognitoUser => {        
         Auth.updateUserAttributes(cognitoUser, userAttributes)
           .then(data =>
             dispatch({
@@ -132,6 +133,33 @@ export const authUpdateUser = userAttributes => dispatch =>
           .catch(error =>
             dispatch({
               type: AUTH_UPDATE_USER_ATTRIBUTES + ER,
+              payload: {error},
+            }),
+          );
+      })
+      .catch(error =>
+        dispatch({
+          type: AUTH_CHECK_USER + ER,
+          payload: error,
+        }),
+      ),
+  });
+
+  export const authUpdateGroup = userAttributes => dispatch =>
+  dispatch({
+    type: AUTH_UPDATE_USER_GROUP,
+    payload: Auth.getUserInfo()
+      .then(cognitoUser => {      
+        Auth.updateUserAttributes(cognitoUser, userAttributes)
+          .then(data =>
+            dispatch({
+              type: AUTH_UPDATE_USER_GROUP + SS,
+              payload: {data, userAttributes},
+            }),
+          )
+          .catch(error =>
+            dispatch({
+              type: AUTH_UPDATE_USER_GROUP + ER,
               payload: {error},
             }),
           );

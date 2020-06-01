@@ -49,7 +49,7 @@ export default (state = initialState, action) => {
         ...state,
         updatingOrder: false,
         updatingOrderSuccess: true,
-        updatedOrder: action.payload,
+        orderList: action.payload,
       };
 
     default:

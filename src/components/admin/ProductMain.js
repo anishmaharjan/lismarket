@@ -38,13 +38,13 @@ const ProductMain = props => {
       name: 'Products',
       value: 'AdminProducts',
       background: '#76EE00',
-      icon: 'apple-alt',
+      icon: 'apple',
     },
     {
       name: 'Out of Stock Products',
       value: 'NoStock',
       background: '#FEC001',
-      icon: 'expand-arrows-alt',
+      icon: 'arrows-alt',
     },
   ];
   return (

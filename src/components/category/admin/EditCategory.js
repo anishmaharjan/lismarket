@@ -16,12 +16,16 @@ import {connect} from 'react-redux';
 import {editCategory, listCategory} from '../../../redux/actions/category';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-
 const EditCategory = props => {
-  const {navigation, updatingCategory, successUpdatingCategory, categories} = props;
+  const {
+    navigation,
+    updatingCategory,
+    successUpdatingCategory,
+    categories,
+  } = props;
   const {dispatch, editCategory} = props;
 
-  const{category} = props.route.params;
+  const {category} = props.route.params;
 
   const [form, setForm] = useState({
     id: category.id,
@@ -38,7 +42,7 @@ const EditCategory = props => {
   useEffect(() => {
     if (successUpdatingCategory === true) {
       dispatch(listCategory());
-      navigation.goBack();      
+      navigation.goBack();
     }
   });
   return (
@@ -47,11 +51,15 @@ const EditCategory = props => {
         flex: 1;
         top: 40px;
       `}>
-      <View style={css`flex-direction: row; justify-content: space-between;`}>
+      <View
+        style={css`
+          flex-direction: row;
+          justify-content: space-between;
+        `}>
         <Text
           style={css`
             font-size: 18px;
-            padding: 10px 20px;            
+            padding: 10px 20px;
           `}>
           Edit a category
         </Text>
@@ -66,7 +74,7 @@ const EditCategory = props => {
       </View>
       <Input
         placeholder="Category Name"
-        defaultValue = {category.name}
+        defaultValue={category.name}
         onChangeText={val => handleChange('name', val)}
         containerStyle={css`
           padding: 10px 20px;
@@ -74,13 +82,14 @@ const EditCategory = props => {
       />
       <Input
         placeholder="Fav-icon"
+        defaultValue={category.image}
         onChangeText={val => handleChange('image', val)}
         containerStyle={css`
           padding: 10px 20px;
         `}
       />
       <Button
-        title="Update category"       
+        title="Update category"
         style={css`
           padding: 10px 20px;
         `}

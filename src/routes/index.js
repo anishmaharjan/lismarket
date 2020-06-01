@@ -37,8 +37,8 @@ import OrderDetail from '../components/admin/orders/OrderDetail';
 import Inventory from '../components/admin/inventory/Inventory';
 import StockChange from '../components/admin/inventory/StockChange';
 import NoStock from '../components/admin/inventory/NoStock';
+import UserGroupEdit from '../components/user/admin/UserGroupEdit';
 import {connect} from 'react-redux';
-import AdminCategory from '../components/category/admin/AdminCategory';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -146,6 +146,7 @@ const rootStack = ({isLoggedIn, isAdmin}) => {
         <RootStack.Screen name="EditProduct" component={EditProduct} />
         <RootStack.Screen name="EditCategory" component={EditCategory} />
         <RootStack.Screen name="StockChange" component={StockChange} />
+        <RootStack.Screen name="UserGroupEdit" component={UserGroupEdit} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

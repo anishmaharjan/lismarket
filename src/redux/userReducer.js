@@ -6,11 +6,13 @@ import {
   CREATE_USER_API,
   GET_PURCHASE_HISTORY,
   AUTH_SIGN_OUT,
+  EDIT_USER,
 } from './types';
 
 const initialState = {
   user: null,
   userList: null,
+  updateUserSuccess: false,
 };
 
 export default (state = initialState, action) => {
@@ -42,6 +44,7 @@ export default (state = initialState, action) => {
     case LIST_USERS + SS:
       return {
         ...state,
+        updateUserSuccess: false,
         userList: action.payload,
       };
 
@@ -49,6 +52,12 @@ export default (state = initialState, action) => {
       return {...state};
 
     case CREATE_USER_API + ER:
+      return {...state};
+
+    case EDIT_USER + SS:
+      return{...state, updateUserSuccess: true };
+    
+    case EDIT_USER + ER:
       return {...state};
 
     default:

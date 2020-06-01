@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button, ScrollView, Text, View} from 'react-native';
+import {Button, ScrollView, Text, View,TouchableOpacity} from 'react-native';
 import {Container} from 'native-base';
 import {createUserApi, getAllUsers} from '../../../redux/actions/user';
 import {getUserInfo} from '../../../redux/actions/auth';
@@ -8,10 +8,11 @@ import styled, {css} from '@emotion/native';
 import gss from '../../variables.styles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import * as tm from '../../theme.style';
+import { listUsers } from '../../../graphql/queries';
 
 const AdminUsers = props => {
-  const {authUser, userList, dispatch, getUserInfo, getAllUsers} = props;
-
+  const {authUser, userList, dispatch, getUserInfo, getAllUsers} = props;  
+  console.log(userList);
   const Text = styled.Text`
     ${tm.h3}
   `;
@@ -71,10 +72,14 @@ const AdminUsers = props => {
                         `}>
                         (id: {user.id} )
                       </Text>
-                    </View>
+                      <Text>{user.userGroup}</Text>
+                    </View>                    
                   </View>
-                  <View style={css``}>
-                    <Text>{user.userGroup}</Text>
+                  <View style={css``}>                    
+                    <TouchableOpacity onPress={() =>
+                        props.navigation.navigate('UserGroupEdit', {
+                          user: user,
+                        })}><Text><Icon name="pencil-square-o" size={30}></Icon></Text></TouchableOpacity>
                   </View>
                 </View>
               </View>

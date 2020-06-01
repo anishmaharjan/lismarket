@@ -9,6 +9,7 @@ import {
   AUTH_CHECK_USER,
   AUTH_RESEND_CODE,
   AUTH_UPDATE_USER_ATTRIBUTES,
+  AUTH_UPDATE_USER_GROUP
 } from '../types';
 
 const initialState = {
@@ -126,6 +127,12 @@ export default (state = initialState, action) => {
         ...state,
         updatingProfile: false,
       };
+
+    case AUTH_UPDATE_USER_GROUP + SS:
+      return {...state};
+    
+    case AUTH_UPDATE_USER_GROUP + ER:
+      return {...state};
 
     default:
       return state;

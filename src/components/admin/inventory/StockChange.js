@@ -3,7 +3,6 @@ import {Text, View, ScrollView} from 'react-native';
 import {css} from '@emotion/native';
 import {Button, Input} from 'react-native-elements';
 import {connect} from 'react-redux';
-import DropDownPicker from 'react-native-dropdown-picker';
 import {editProduct,listAllProducts} from '../../../redux/actions/product';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -25,9 +24,6 @@ const StockChange = props => {
       dispatch(editProduct(form));
   };
 
-  const handleDropdown = ({value}) => {
-    setForm(prev => ({...prev, productCategoryId: value}));
-  };
   const handleChange = (name, val) => {
     setForm(prev => ({...prev, [name]: val}));
   };
@@ -43,7 +39,7 @@ const StockChange = props => {
                   font-size: 24px;
                   padding: 10px;
                   `}
-                              onPress={() => navigation.goBack()}
+                  onPress={() => navigation.goBack()}
                 />
               </View>
         <View style={css`

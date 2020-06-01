@@ -7,9 +7,10 @@ import {
   CREATE_USER_API,
   LIST_USERS,
   GET_PURCHASE_HISTORY,
+  EDIT_USER,
 } from '../types';
 import {getUser, listUsers} from '../../graphql/queries';
-import {createUser} from '../../graphql/mutations';
+import {createUser, updateUser} from '../../graphql/mutations';
 import {getPurchaseHistory} from '../../graphql/customQueries';
 
 export const getUserApi = userId => dispatch => ({
@@ -77,3 +78,21 @@ export const getPurchaseHistoryApi = userId => dispatch => {
       .catch(error => console.log('Error at getorder', error)),
   });
 };
+
+export const editUser = user => dispatch => ({
+  type: EDIT_USER,
+  payload: API.graphql(graphqlOperation(updateUser, {input: user}))
+    .then(result => {
+      dispatch({
+        type: EDIT_USER + SS,
+        payload: result.data.updateUser,
+      });
+    })
+    .catch(e => {
+      dispatch({
+        type: EDIT_USER + ER,
+        payload: e,
+      });
+      console.log('Error Update user', e);
+    }),
+});

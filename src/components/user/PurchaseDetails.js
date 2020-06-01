@@ -72,17 +72,21 @@ const PurchaseDetails = props => {
               `}>
               Invoice:
               {monefy(
-                order.orderItems.items.reduce(
-                  (total, item) => total + item.amount * item.orderQuantity,
-                  0,
-                ),
+                order &&
+                  order.orderItems &&
+                  order.orderItems.items &&
+                  order.orderItems.items.reduce(
+                    (total, item) => total + item.amount * item.orderQuantity,
+                    0,
+                  ),
               )}
             </Text>
           </View>
 
           <View>
-            {order.orderItems &&
+            {order &&
               order.orderItems &&
+              order.orderItems.items &&
               order.orderItems.items.map((item, key) => (
                 <View
                   key={key + 'order-items'}

@@ -5,7 +5,7 @@ import {defaultQty, failSafeImage} from '../../consts';
 import {monefy} from '../../util';
 import gss from '../variables.styles';
 import {Picker} from 'native-base';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Platform} from 'react-native';
 import {Image} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {updateCartQuantity, cartRemoveItem} from '../../redux/actions/cart';
@@ -47,7 +47,8 @@ const CartItem = props => {
           </Text>
           <Text
             style={css`
-              ${tm.h3}
+              ${tm.h3};
+              font-family: ${Platform.OS === 'ios' ? 'Roboto' : 'Roboto.ttf'};
             `}>
             {item.description}
           </Text>
@@ -71,7 +72,15 @@ const CartItem = props => {
                 color: ${gss.primary};
               `}
             />
-            <Text style={css`${tm.h3} color: ${gss.text}`}>Remove item</Text>
+            <Text
+              style={css`
+                ${tm.h3}font-family: ${Platform.OS === 'ios'
+                  ? 'Roboto'
+                  : 'Roboto.ttf'};
+                color: ${gss.text};
+              `}>
+              Remove item
+            </Text>
           </TouchableOpacity>
         </View>
         <View>

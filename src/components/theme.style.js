@@ -78,3 +78,7 @@ font-weight: bold;
 export const activeCategoryBorder = `
 border-bottom-width: 3px;
 border-bottom-color: ${gss.primary};`;
+
+export const boxShadow = `
+box-shadow: 1px 5px 5px ${gss.grey2};
+`;

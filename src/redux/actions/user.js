@@ -11,11 +11,11 @@ import {
 } from '../types';
 import {getUser, listUsers} from '../../graphql/queries';
 import {createUser, updateUser} from '../../graphql/mutations';
-import {getPurchaseHistory} from '../../graphql/customQueries';
+import {getPurchaseHistory, getUserDetailed} from '../../graphql/customQueries';
 
 export const getUserApi = userId => dispatch => ({
   type: GET_USER_API,
-  payload: API.graphql(graphqlOperation(getUser, {id: userId}))
+  payload: API.graphql(graphqlOperation(getUserDetailed, {id: userId}))
     .then(result => {
       if (result.data.getUser) {
         dispatch({

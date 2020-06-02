@@ -5,13 +5,17 @@ import {
   ADD_CATEGORY_SUCCESS,
   GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCTS_BY_CATEGORY_SUCCESS,
+  UPDATE_CATEGORY,
+  UPDATE_CATEGORY_SUCCESS
 } from './types';
 
 const initialState = {
   categories: null,
   fetchingCategory: false,
   addingCategory: false,
+  updatingCategory: false,
   successAddingCategory: false,
+  successUpdatingCategory:false,
   fetchingProductsByCategory: false,
 };
 
@@ -26,6 +30,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingCategory: false,
+        successUpdatingCategory: false,
         categories: action.payload,
       };
 
@@ -40,6 +45,20 @@ export default (state = initialState, action) => {
         ...state,
         addingCategory: false,
         successAddingCategory: true,
+        categories: [...state.categories, action.payload],
+      };
+
+      case UPDATE_CATEGORY:
+      return {
+        ...state,
+        updatingCategory: true,
+      };
+
+    case UPDATE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        updaingCategory: false,
+        successUpdatingCategory: true,
         categories: [...state.categories, action.payload],
       };
 

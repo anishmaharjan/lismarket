@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {Container, Spinner} from 'native-base';
@@ -28,6 +28,7 @@ const CheckoutScreen = props => {
 
   const navigation = useNavigation();
 
+  const [errorMessage, setErrorMessage] = useState(null);
   const [paymentOption, setPaymentOption] = useState('paypal');
   const [order, setOrder] = useState({
     invoiceNumber:
@@ -40,17 +41,46 @@ const CheckoutScreen = props => {
     orderUsersId: authUser.sub,
   });
 
+  useEffect(() => {
+    setOrder(prev => ({...prev, paymentType: paymentOption}));
+  }, [paymentOption]);
+
   const handleChange = (name, val) => {
     setOrder(prev => ({...prev, [name]: val}));
   };
 
-  const submitPayment = () => {
+  const submitPayment = () => () => {
+    //validate
+    if (order.paymentType === 'bankCard') {
+      let today = new Date();
+      let providedDate = new Date();
+
+      if (!order.cardNumber || !order.month || !order.year || !order.cvv) {
+        setErrorMessage('Please fill all the fields.');
+        return;
+      }
+
+      if (!order.cardNumber.includes('4242424242424242')) {
+        setErrorMessage('Card number is invalid.');
+        return;
+      }
+
+      providedDate.setFullYear(order.year, order.month, 1);
+      if (providedDate < today) {
+        setErrorMessage(
+          "The expiry date is before today's date. Please select a valid expiry date",
+        );
+        return;
+      }
+      setErrorMessage(null);
+    }
+
     dispatch(
       createOrder(order, cart, orderSummary => {
         //clear cart
         navigation.navigate('PaymentSuccessScreen', {
           amountPaid: calculateTotal(cart),
-          invoiceNumber: order.invoiceNumber,
+          order: order,
         });
         dispatch(clearCart());
       }),
@@ -132,6 +162,7 @@ const CheckoutScreen = props => {
                   placeholder="Card Number xxxx-xxxx-xxxx-xxxx"
                   onChangeText={val => handleChange('cardNumber', val)}
                   containerStyle={css``}
+                  maxLength={16}
                 />
               </View>
               <View
@@ -145,6 +176,7 @@ const CheckoutScreen = props => {
                   containerStyle={css`
                     width: 30%;
                   `}
+                  maxLength={2}
                 />
                 <Input
                   placeholder="YY"
@@ -152,6 +184,7 @@ const CheckoutScreen = props => {
                   containerStyle={css`
                     width: 30%;
                   `}
+                  maxLength={4}
                 />
                 <Input
                   placeholder="CVV"
@@ -159,8 +192,15 @@ const CheckoutScreen = props => {
                   containerStyle={css`
                     width: 30%;
                   `}
+                  maxLength={3}
                 />
               </View>
+              <Text
+                style={css`
+                  color: red;
+                `}>
+                {errorMessage}
+              </Text>
             </View>
           )}
         </View>
@@ -176,12 +216,12 @@ const CheckoutScreen = props => {
             ${tm.btn}
             align-items: center;
             margin-left: 30%;
-          `}>
+          `}
+          onPress={submitPayment()}>
           <Text
             style={css`
               ${tm.btnText}
-            `}
-            onPress={() => submitPayment()}>
+            `}>
             Pay
           </Text>
         </TouchableOpacity>

@@ -1,7 +1,15 @@
 import {
-  SS, ER,
+  SS,
+  ER,
   AUTH_SIGN_IN,
-  AUTH_SIGN_OUT, AUTH_SIGN_UP, AUTH_SIGN_UP_CONFIRM, AUTH_USER_INFO, AUTH_CHECK_USER,
+  AUTH_SIGN_OUT,
+  AUTH_SIGN_UP,
+  AUTH_SIGN_UP_CONFIRM,
+  AUTH_USER_INFO,
+  AUTH_CHECK_USER,
+  AUTH_RESEND_CODE,
+  AUTH_UPDATE_USER_ATTRIBUTES,
+  AUTH_UPDATE_USER_GROUP
 } from '../types';
 
 const initialState = {
@@ -13,6 +21,9 @@ const initialState = {
 
   fetchingUser: false,
   authUser: null,
+  isAdmin: false,
+
+  updatingProfile: false,
 };
 
 export default (state = initialState, action) => {
@@ -23,12 +34,18 @@ export default (state = initialState, action) => {
         ...state,
         fetchingSignIn: true,
       };
+
     case AUTH_SIGN_IN + SS:
       return {
         ...state,
         fetchingSignIn: false,
         isLoggedIn: true,
         user: action.payload,
+        authUser: {
+          ...action.payload.attributes,
+          username: action.payload.username,
+        },
+        isAdmin: action.payload.attributes['custom:userGroup'] === 'admin',
       };
     case AUTH_SIGN_IN + ER:
       return {
@@ -41,7 +58,7 @@ export default (state = initialState, action) => {
     case AUTH_SIGN_UP + SS:
       return {...state, user: action.payload.user, fetchingSignUp: false};
 
-    case AUTH_SIGN_UP_CONFIRM :
+    case AUTH_SIGN_UP_CONFIRM:
       return {...state, fetchingConfirmSignUp: true};
 
     case AUTH_SIGN_UP_CONFIRM + SS:
@@ -56,6 +73,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
         user: null,
+        authUser: null,
       };
 
     case AUTH_USER_INFO:
@@ -67,20 +85,54 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fetchingUser: false,
-        authUser: action.payload,
       };
 
     case AUTH_CHECK_USER + SS:
       return {
         ...state,
         isLoggedIn: true,
-        authUser: action.payload.attributes
+        authUser: {
+          ...action.payload.attributes,
+          username: action.payload.username,
+        },
+        isAdmin: action.payload.attributes['custom:userGroup'] === 'admin',
       };
     case AUTH_CHECK_USER + ER:
       return {
         ...state,
         isLoggedIn: false,
       };
+
+    case AUTH_RESEND_CODE + SS:
+      return {
+        ...state,
+      };
+
+    case AUTH_UPDATE_USER_ATTRIBUTES:
+      return {
+        ...state,
+        updatingProfile: true,
+      };
+
+    case AUTH_UPDATE_USER_ATTRIBUTES + SS:
+      const {userAttributes} = action.payload;
+      return {
+        ...state,
+        updatingProfile: false,
+        authUser: {...state.authUser, ...userAttributes},
+      };
+
+    case AUTH_UPDATE_USER_ATTRIBUTES + ER:
+      return {
+        ...state,
+        updatingProfile: false,
+      };
+
+    case AUTH_UPDATE_USER_GROUP + SS:
+      return {...state};
+    
+    case AUTH_UPDATE_USER_GROUP + ER:
+      return {...state};
 
     default:
       return state;

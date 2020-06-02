@@ -1,52 +1,84 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
-import {css} from '@emotion/native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import { css } from '@emotion/native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import { Button } from 'native-base';
+import { completedPackaging } from '../../../redux/actions/order';
+import { listOrders } from '../../../graphql/queries';
+import moment from 'moment';
 
 const OrderDetail = props => {
 
+  const { navigation } = props;
+  const { orderItems, orderDetails } = props.route.params;
+  const { dispatch, completedPackaging, updatingOrderSuccess } = props;
+
+ 
+  const PackagingComplete = orderId => {
+    dispatch(completedPackaging(orderId));
+  };
+
+  useEffect(() => {
+    if (updatingOrderSuccess === true) {
+      navigation.goBack();
+    }
+  });
+
   return (
-      <View style = {styles.container}>
-             <View style = {styles.itemContainer}>
-                      <View style = {styles.headingContainer}>
-                        <Text style={{paddingLeft: 20, paddingTop: 5}}><Icon name="clipboard" size={20} color="#74D4DE" /> <Text style={{fontSize:20}}>Order No: #ORDN1234</Text></Text>
-                      </View>
-                      <View style={{flex: 1, flexDirection :'row', justifyContent: 'center', paddingTop: 1 }}>
-                          <View style={{flex: 2,alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <Text style={{paddingLeft: 20, paddingTop: 10, fontSize: 20}}> Mr. Puffy Puff</Text>
-                            <Text style={{paddingLeft: 20, paddingTop: 2, fontSize: 16}}> May 22, 2020 </Text>
-                          </View>
-                          <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'space-around', flexDirection:'row', paddingTop: 10 }}>
-                            <TouchableOpacity><Icon name="cube" size={30} color="#74D4DE" /></TouchableOpacity>
-                            <TouchableOpacity><Icon name="chevron-right" size={30} color="#74D4DE" /></TouchableOpacity>                              
-                          </View>
-                       </View>
-               </View>
+    <View style={styles.container}>
+      <View style={styles.headingContainer}>
+        <Text style={{ paddingLeft: 20, paddingTop: 5 }}><Icon name="clipboard" size={20} color="#74D4DE" /> <Text style={{ fontSize: 20 }}>Invoice No: {orderDetails.invoiceNumber}</Text></Text>
+        <Text style={{ paddingLeft: 20, paddingTop: 5, fontSize: 16 }}>Placed on {moment(orderDetails.createdAt).format("DD MMM, YYYY")}</Text>
       </View>
+      <ScrollView>
+        {orderItems && orderItems.items && orderItems.items.map((item, value) =>
+          <View style={styles.itemContainer}>
+            <View style={{ marginLeft: 10 }}>
+              {item.product && Object.values(item.product).map((k) =>
+                <Text style={{ fontSize: 20 }}>{k}</Text>
+              )}             
+              <Text style={{ fontSize: 20 }}>QUANTITY: {item.orderQuantity} </Text>
+            </View>
+          </View>)
+        }
+      </ScrollView>
+      <View>
+        {orderDetails.collectionReady ?
+          <Button style={{ justifyContent: 'center', backgroundColor: '#74D4DE', borderRadius: 5 }}><Text style={{ fontSize: 20, color: '#FFF' }}>Order Already Packed</Text></Button> :
+          <Button onPress={()=> PackagingComplete(orderDetails.id)} style={{ justifyContent: 'center', backgroundColor: '#FC8369', borderRadius: 5 }}><Text style={{ fontSize: 20, color: '#FFF' }}>Packaging Complete</Text></Button>
+        }
+
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   headingContainer: {
-     borderBottomWidth: 1,
-     borderBottomColor: '#74D4DE',
-     padding: 1
+    padding: 5,
+    backgroundColor: '#FAF7F7',
+    height: 100,
+    marginBottom: 1,
   },
   itemContainer: {
-       padding: 5,
-       backgroundColor: '#FAF7F7',
-       height: 110,
-       borderBottomWidth: 8,
-       borderBottomColor: '#fff',
-    },
-  container:{
-   backgroundColor: '#fff',
-   flex : 1
+    padding: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FC8369',
+    flexDirection: 'column',
+    marginBottom: 5,
+  },
+  container: {
+    backgroundColor: '#fff',
+    flex: 1
   }
 
 });
 
-export default connect(null,dispatch => ({
-      dispatch      
- }))(OrderDetail);
+export default connect(state => ({
+  updatingOrderSuccess: state.order.updatingOrderSuccess
+}), dispatch => ({
+  dispatch,
+  completedPackaging,
+}),
+)(OrderDetail);

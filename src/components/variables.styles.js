@@ -1,5 +1,6 @@
 const variablesStyles = {
   primary: '#FC8369',
+  secondary: '#74D4DE',
 
   text: '#4F4F4F',
   grey2: '#82828282',

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import {Container, Picker} from 'native-base';
 import {Image, Button} from 'react-native-elements';
 import {css} from '@emotion/native';
@@ -58,6 +58,7 @@ const ProductDetails = props => {
         <Text
           style={css`
             ${tm.h3} min-height: 100px;
+            font-family: ${Platform.OS === 'ios' ? 'Roboto' : 'Roboto.ttf'};
           `}>
           {product.description}
         </Text>

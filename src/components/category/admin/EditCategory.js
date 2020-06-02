@@ -13,39 +13,68 @@ import styled, {css} from '@emotion/native';
 import {Input, Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 
-import {addCategory} from '../../redux/actions/category';
+import {editCategory, listCategory} from '../../../redux/actions/category';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const AddCategory = props => {
-  const {navigation, addingCategory, successAddingCategory, categories} = props;
-  const {dispatch, addCategory} = props;
+const EditCategory = props => {
+  const {
+    navigation,
+    updatingCategory,
+    successUpdatingCategory,
+    categories,
+  } = props;
+  const {dispatch, editCategory} = props;
 
-  const [form, setForm] = useState({});
+  const {category} = props.route.params;
+
+  const [form, setForm] = useState({
+    id: category.id,
+  });
+
+  const updateCategory = () => {
+    dispatch(editCategory(form));
+  };
 
   const handleChange = (name, val) => {
     setForm(prev => ({...prev, [name]: val}));
   };
 
   useEffect(() => {
-    successAddingCategory === true ? navigation.goBack() : '';
-  }, [navigation, successAddingCategory]);
-
+    if (successUpdatingCategory === true) {
+      dispatch(listCategory());
+      navigation.goBack();
+    }
+  });
   return (
     <View
       style={css`
         flex: 1;
         top: 40px;
       `}>
-      <View style={css``}>
+      <View
+        style={css`
+          flex-direction: row;
+          justify-content: space-between;
+        `}>
         <Text
           style={css`
             font-size: 18px;
             padding: 10px 20px;
           `}>
-          Add a category
+          Edit a category
         </Text>
+        <FontAwesome5
+          name={'times'}
+          style={css`
+            font-size: 24px;
+            padding: 10px;
+          `}
+          onPress={() => navigation.goBack()}
+        />
       </View>
       <Input
         placeholder="Category Name"
+        defaultValue={category.name}
         onChangeText={val => handleChange('name', val)}
         containerStyle={css`
           padding: 10px 20px;
@@ -53,18 +82,18 @@ const AddCategory = props => {
       />
       <Input
         placeholder="Fav-icon"
+        defaultValue={category.image}
         onChangeText={val => handleChange('image', val)}
         containerStyle={css`
           padding: 10px 20px;
         `}
       />
       <Button
-        title="Add a category"
-        loading={addingCategory}
+        title="Update category"
         style={css`
           padding: 10px 20px;
         `}
-        onPress={() => dispatch(addCategory(form))}
+        onPress={updateCategory}
       />
       <Button
         onPress={() => navigation.goBack()}
@@ -80,12 +109,12 @@ const AddCategory = props => {
 
 export default connect(
   state => ({
-    addingCategory: state.category.addingCategory,
-    successAddingCategory: state.category.successAddingCategory,
+    updatingCategory: state.category.updatingCategory,
+    successUpdatingCategory: state.category.successUpdatingCategory,
     categories: state.category.categories,
   }),
   dispatch => ({
     dispatch,
-    addCategory,
+    editCategory,
   }),
-)(AddCategory);
+)(EditCategory);

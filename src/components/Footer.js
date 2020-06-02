@@ -37,6 +37,7 @@ export default props => {
         <Text>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={() => navigation.navigate('CategoryScreen')}
         style={css`
           align-items: center;
         `}>

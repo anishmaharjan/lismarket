@@ -178,18 +178,25 @@ export const listOrders = /* GraphQL */ `
     listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        createdAt
         paymentType
         sentPackaging
         collectionReady
         comment
+        invoiceNumber
         users {
           id
           email
           contactNo
           userGroup
         }
-        orderItems {
-          nextToken
+        orderItems {          
+          items{
+            orderQuantity
+            product{
+              name
+            }
+          }
         }
       }
       nextToken
@@ -272,3 +279,4 @@ export const listOrderItems = /* GraphQL */ `
     }
   }
 `;
+

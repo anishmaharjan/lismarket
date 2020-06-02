@@ -49,17 +49,9 @@ const ProductList = props => {
           </View>
         </ScrollView>
         <ScrollView>
-          {products.items &&
-            [
-              ...products.items,
-              ...products.items,
-              ...products.items,
-              ...products.items,
-              ...products.items,
-              ...products.items,
-              ...products.items,
-              ...products.items,
-            ]
+          {products &&
+            products.items &&
+            [...products.items]
               .filter(fil => category.id === fil.category.id)
               .map((product, key) => (
                 <EachItem key={'product-list' + key} product={product} />

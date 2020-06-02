@@ -18,6 +18,11 @@ const CartItem = props => {
     dispatch(updateCartQuantity({index, quantity}));
   };
 
+  let quantityList = [];
+  for (let i = 1; i <= item.stockQuantity; i++) {
+    quantityList = [...quantityList, i];
+  }
+
   return (
     <View
       style={css`
@@ -105,7 +110,7 @@ const CartItem = props => {
             itemTextStyle={{fontSize: 18}}
             selectedValue={item.quantity}
             onValueChange={val => setQuantity(val)}>
-            {defaultQty.map((v, i) => (
+            {quantityList.map((v, i) => (
               <Picker.Item key={i} label={v} value={v} />
             ))}
           </Picker>

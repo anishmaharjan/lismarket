@@ -27,6 +27,9 @@ const CartItem = props => {
 
   let quantityList = [];
   for (let i = 1; i <= item.stockQuantity; i++) {
+    if (i > 10) {
+      break;
+    }
     quantityList = [...quantityList, i];
   }
 
@@ -39,8 +42,8 @@ const CartItem = props => {
         <Image
           source={{uri: item.image || failSafeImage}}
           style={css`
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
           `}
         />
       </TouchableOpacity>
@@ -50,10 +53,15 @@ const CartItem = props => {
           flex: 1;
           ${tm.flexRow} justify-content: space-between;
         `}>
-        <View>
+        <View
+          style={css`
+            width: 80%;
+            margin-right: 10px;
+          `}>
           <Text
             style={css`
               ${tm.h2}
+              font-weight: bold;
             `}>
             {item.name}
           </Text>
@@ -68,7 +76,7 @@ const CartItem = props => {
             style={css`
               ${tm.h3}
             `}>
-            {monefy(item.price)}
+            {item.quantity} @ {monefy(item.price)}
           </Text>
           <TouchableOpacity
             style={css`
@@ -102,6 +110,7 @@ const CartItem = props => {
           <Text
             style={css`
               ${tm.h2} margin-bottom: 20px;
+              text-align: right;
             `}>
             {monefy(item.price * item.quantity)}
           </Text>

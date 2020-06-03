@@ -22,7 +22,9 @@ export default (state = initialState, action) => {
         ...state,
         fetchingOrders: false,
         updatingOrderSuccess: false,
-        orderList: action.payload.items.reverse(),
+        orderList: action.payload.items.sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        }),
       };
 
     case CREATE_ORDER:

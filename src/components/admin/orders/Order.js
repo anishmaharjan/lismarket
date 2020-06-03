@@ -63,7 +63,15 @@ const Order = props => {
       <ScrollView>
         {orderList &&
           orderList.map((item, key) => (
-            <View key={key + 'list-invoices'} style={styles.itemContainer}>
+            <TouchableOpacity
+              key={key + 'list-invoices'}
+              onPress={() =>
+                props.navigation.navigate('OrderDetail', {
+                  orderItems: item.orderItems,
+                  orderDetails: item,
+                })
+              }
+              style={styles.itemContainer}>
               <View style={styles.headingContainer}>
                 <Text
                   style={{paddingLeft: 20, paddingTop: 5, marginBottom: 10}}>
@@ -95,8 +103,8 @@ const Order = props => {
                   </Text>
                   <Text>{(item.user && item.user.name) || ''}</Text>
                   <Text style={{paddingLeft: 20, paddingTop: 2, fontSize: 16}}>
-                    {' '}
-                    {moment(item.createdAt || moment.now()).fromNow()}{' '}
+                    {moment(item.createdAt || moment.now()).fromNow()} -{' '}
+                    {moment(item.createdAt).format('YYYY MMM Do')}
                   </Text>
                 </View>
                 <View
@@ -108,22 +116,12 @@ const Order = props => {
                     paddingTop: 10,
                   }}>
                   {ctaButtons(item)}
-                  <TouchableOpacity>
-                    <Icon
-                      name="chevron-right"
-                      size={30}
-                      color="#74D4DE"
-                      onPress={() =>
-                        props.navigation.navigate('OrderDetail', {
-                          orderItems: item.orderItems,
-                          orderDetails: item,
-                        })
-                      }
-                    />
-                  </TouchableOpacity>
+                  <View>
+                    <Icon name="chevron-right" size={30} color="#74D4DE" />
+                  </View>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
       </ScrollView>
     </Container>

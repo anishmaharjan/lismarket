@@ -8,22 +8,24 @@ import {
   updateProduct,
 } from '../../graphql/mutations';
 
-export const listOrder = () => dispatch => ({
-  type: LIST_ORDERS,
-  payload: API.graphql(graphqlOperation(listOrders))
-    .then(result => {
-      dispatch({
-        type: LIST_ORDERS + SS,
-        payload: result.data.listOrders,
-      });
-    })
-    .catch(e =>
-      dispatch({
-        type: LIST_ORDERS + ER,
-        payload: e,
+export const listOrder = () => dispatch =>
+  dispatch({
+    type: LIST_ORDERS,
+    payload: API.graphql(graphqlOperation(listOrders))
+      .then(result => {
+        dispatch({
+          type: LIST_ORDERS + SS,
+          payload: result.data.listOrders,
+        });
+      })
+      .catch(e => {
+        console.log('List orders error', e);
+        dispatch({
+          type: LIST_ORDERS + ER,
+          payload: e,
+        });
       }),
-    ),
-});
+  });
 
 export const createOrderApi = (order, orderItems, callBack) => dispatch =>
   dispatch({
@@ -109,7 +111,7 @@ export const editOrder = order => dispatch =>
       }),
   });
 
-export const sentPackaging = orderId => dispatch =>
+export const sentPackaging_safe_to_delete = orderId => dispatch =>
   dispatch({
     type: UPDATE_ORDER,
     payload: API.graphql(
@@ -134,14 +136,18 @@ export const sentPackaging = orderId => dispatch =>
       }),
   });
 
-export const completedPackaging = orderId => dispatch =>
+export const updateOrderStatus = (
+  orderId,
+  {collectionReady, sentPackaging},
+) => dispatch => {
   dispatch({
     type: UPDATE_ORDER,
     payload: API.graphql(
       graphqlOperation(updateOrder, {
         input: {
           id: orderId,
-          collectionReady: true,
+          collectionReady: collectionReady,
+          sentPackaging: sentPackaging,
         },
       }),
     )
@@ -158,3 +164,4 @@ export const completedPackaging = orderId => dispatch =>
         });
       }),
   });
+};

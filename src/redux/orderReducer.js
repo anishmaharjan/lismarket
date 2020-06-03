@@ -49,7 +49,13 @@ export default (state = initialState, action) => {
         ...state,
         updatingOrder: false,
         updatingOrderSuccess: true,
-        orderList: action.payload,
+        orderList: state.orderList.map(item => {
+          if (item.id === action.payload.id) {
+            item.sentPackaging = action.payload.sentPackaging;
+            item.collectionReady = action.payload.collectionReady;
+          }
+          return item;
+        }),
       };
 
     default:

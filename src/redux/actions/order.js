@@ -7,6 +7,7 @@ import {
   updateOrder,
   updateProduct,
 } from '../../graphql/mutations';
+import {updateOrderStatusQuery} from '../../graphql/customQueries';
 
 export const listOrder = () => dispatch =>
   dispatch({
@@ -143,7 +144,7 @@ export const updateOrderStatus = (
   dispatch({
     type: UPDATE_ORDER,
     payload: API.graphql(
-      graphqlOperation(updateOrder, {
+      graphqlOperation(updateOrderStatusQuery, {
         input: {
           id: orderId,
           collectionReady: collectionReady,
@@ -152,6 +153,7 @@ export const updateOrderStatus = (
       }),
     )
       .then(result => {
+        // console.log('result', result);
         dispatch({
           type: UPDATE_ORDER + SS,
           payload: result.data.updateOrder,

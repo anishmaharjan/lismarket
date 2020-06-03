@@ -19,6 +19,21 @@ const PurchaseHistory = props => {
     dispatch(getPurchaseHistoryApi(authUser.sub));
   }, [authUser.sub, dispatch, getPurchaseHistoryApi]);
 
+  const orderStatus = order => {
+    if (order.collectionReady === true && order.sentPackaging === true) {
+      return <Text>Order collected.</Text>;
+    }
+    if (order.collectionReady === true && order.sentPackaging === false) {
+      return <Text>Order is pending to be picked up.</Text>;
+    }
+    if (order.collectionReady === false && order.sentPackaging === true) {
+      return <Text>Your order are being processed.</Text>;
+    }
+    if (order.collectionReady === false && order.sentPackaging === false) {
+      return <Text>Your order has been placed.</Text>;
+    }
+  };
+
   return (
     <Container>
       <View
@@ -82,11 +97,11 @@ const PurchaseHistory = props => {
                     </Text>
                     <Text>Paid by: {order.paymentType.toUpperCase()}</Text>
                     <Text>Comments: {order.comment}</Text>
-                    <Text>
-                      Status:
-                      {order.collectionReady
-                        ? ' Ready for collection.'
-                        : ' Item being processed.'}
+                    <Text
+                      style={css`
+                        font-weight: bold;
+                      `}>
+                      Status: {orderStatus(order)}
                     </Text>
                   </View>
                   <View>

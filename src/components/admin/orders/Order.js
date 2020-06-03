@@ -24,8 +24,8 @@ const Order = props => {
   } = props;
 
   useEffect(() => {
-    !orderList && dispatch(listOrder());
-  });
+    dispatch(listOrder());
+  }, [dispatch, listOrder]);
 
   useEffect(() => {
     if (updatingOrderSuccess === true) {

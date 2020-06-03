@@ -20,7 +20,7 @@ const Category = props => {
             justify-content: flex-start;
           `}>
           {category &&
-            [...category, ...category, ...category].map((item, key) => (
+            category.map((item, key) => (
               <TouchableOpacity
                 key={'category-list' + key}
                 onPress={() =>

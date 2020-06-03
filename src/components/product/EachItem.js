@@ -19,7 +19,7 @@ const EachItem = props => {
   const [quantity, setQuantity] = useState(1);
 
   let quantityList = [];
-  for (let i = 1; i <= product.stockQuantity; i++) {
+  for (let i = 1; i < product.stockQuantity + 1; i++) {
     quantityList = [...quantityList, i];
   }
 

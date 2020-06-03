@@ -12,7 +12,14 @@ import {updateCartQuantity, cartRemoveItem} from '../../redux/actions/cart';
 import {connect} from 'react-redux';
 
 const CartItem = props => {
-  const {index, item, dispatch, updateCartQuantity, cartRemoveItem} = props;
+  const {
+    index,
+    item,
+    dispatch,
+    updateCartQuantity,
+    cartRemoveItem,
+    setCheckoutError,
+  } = props;
 
   const setQuantity = quantity => {
     dispatch(updateCartQuantity({index, quantity}));
@@ -68,7 +75,10 @@ const CartItem = props => {
               ${tm.flexRow} padding: 20px 10px;
               justify-content: flex-end;
             `}
-            onPress={() => dispatch(cartRemoveItem(index))}>
+            onPress={() => {
+              dispatch(cartRemoveItem(index));
+              setCheckoutError(false);
+            }}>
             <FontAwesome5
               name={'trash'}
               style={css`

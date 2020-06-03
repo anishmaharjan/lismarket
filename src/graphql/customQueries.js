@@ -61,6 +61,7 @@ export const getPurchaseHistory = /* GraphQL */ `
           sentPackaging
           collectionReady
           comment
+          createdAt
           orderItems {
             items {
               id

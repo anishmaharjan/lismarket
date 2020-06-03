@@ -9,20 +9,22 @@ import gss from '../variables.styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import Footer from '../Footer';
+import moment from 'moment';
 
 const PurchaseHistory = props => {
   const {authUser, user, dispatch, getPurchaseHistoryApi} = props;
   const navigation = useNavigation();
 
   useEffect(() => {
-    !user && dispatch(getPurchaseHistoryApi(authUser.sub));
-  }, [authUser.sub, dispatch, getPurchaseHistoryApi, user]);
+    dispatch(getPurchaseHistoryApi(authUser.sub));
+  }, [authUser.sub, dispatch, getPurchaseHistoryApi]);
 
   return (
     <Container>
       <View
         style={css`
           ${tm.paddingWalls}
+          height: 90%;
         `}>
         {user &&
           user.orders &&
@@ -73,8 +75,13 @@ const PurchaseHistory = props => {
                     justify-content: space-between;
                   `}>
                   <View>
-                    <Text>Comments: {order.comment}</Text>
+                    <Text>
+                      {moment(order.createdAt).format(
+                        'dddd, Do MMMM YYYY, h:mm:ss a',
+                      )}
+                    </Text>
                     <Text>Paid by: {order.paymentType.toUpperCase()}</Text>
+                    <Text>Comments: {order.comment}</Text>
                     <Text>
                       Status:
                       {order.collectionReady

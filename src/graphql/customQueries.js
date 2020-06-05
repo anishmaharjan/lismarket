@@ -61,6 +61,7 @@ export const getPurchaseHistory = /* GraphQL */ `
           sentPackaging
           collectionReady
           comment
+          createdAt
           orderItems {
             items {
               id
@@ -120,6 +121,18 @@ export const OutOfStock = /* GraphQL */ `
         }
       }
       nextToken
+    }
+  }
+`;
+export const updateOrderStatusQuery = /* GraphQL */ `
+  mutation UpdateOrder(
+    $input: UpdateOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    updateOrder(input: $input, condition: $condition) {
+      id
+      sentPackaging
+      collectionReady
     }
   }
 `;

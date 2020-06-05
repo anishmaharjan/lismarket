@@ -1,4 +1,3 @@
-/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const getUser = /* GraphQL */ `
@@ -169,6 +168,8 @@ export const getOrder = /* GraphQL */ `
     }
   }
 `;
+
+/* Modified */
 export const listOrders = /* GraphQL */ `
   query ListOrders(
     $filter: ModelOrderFilterInput
@@ -190,11 +191,24 @@ export const listOrders = /* GraphQL */ `
           contactNo
           userGroup
         }
-        orderItems {          
-          items{
+        orderItems {
+          items {
             orderQuantity
-            product{
+            amount
+            product {
+              id
               name
+              description
+              image
+              price
+              stockQuantity
+              createdBy
+              createdAt
+              category {
+                id
+                name
+                createdAt
+              }
             }
           }
         }
@@ -279,4 +293,3 @@ export const listOrderItems = /* GraphQL */ `
     }
   }
 `;
-

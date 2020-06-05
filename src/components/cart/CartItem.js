@@ -12,11 +12,26 @@ import {updateCartQuantity, cartRemoveItem} from '../../redux/actions/cart';
 import {connect} from 'react-redux';
 
 const CartItem = props => {
-  const {index, item, dispatch, updateCartQuantity, cartRemoveItem} = props;
+  const {
+    index,
+    item,
+    dispatch,
+    updateCartQuantity,
+    cartRemoveItem,
+    setCheckoutError,
+  } = props;
 
   const setQuantity = quantity => {
     dispatch(updateCartQuantity({index, quantity}));
   };
+
+  let quantityList = [];
+  for (let i = 1; i <= item.stockQuantity; i++) {
+    if (i > 10) {
+      break;
+    }
+    quantityList = [...quantityList, i];
+  }
 
   return (
     <View
@@ -27,8 +42,8 @@ const CartItem = props => {
         <Image
           source={{uri: item.image || failSafeImage}}
           style={css`
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
           `}
         />
       </TouchableOpacity>
@@ -38,10 +53,15 @@ const CartItem = props => {
           flex: 1;
           ${tm.flexRow} justify-content: space-between;
         `}>
-        <View>
+        <View
+          style={css`
+            width: 80%;
+            margin-right: 10px;
+          `}>
           <Text
             style={css`
               ${tm.h2}
+              font-weight: bold;
             `}>
             {item.name}
           </Text>
@@ -56,14 +76,17 @@ const CartItem = props => {
             style={css`
               ${tm.h3}
             `}>
-            {monefy(item.price)}
+            {item.quantity} @ {monefy(item.price)}
           </Text>
           <TouchableOpacity
             style={css`
               ${tm.flexRow} padding: 20px 10px;
               justify-content: flex-end;
             `}
-            onPress={() => dispatch(cartRemoveItem(index))}>
+            onPress={() => {
+              dispatch(cartRemoveItem(index));
+              setCheckoutError(false);
+            }}>
             <FontAwesome5
               name={'trash'}
               style={css`
@@ -87,6 +110,7 @@ const CartItem = props => {
           <Text
             style={css`
               ${tm.h2} margin-bottom: 20px;
+              text-align: right;
             `}>
             {monefy(item.price * item.quantity)}
           </Text>
@@ -105,7 +129,7 @@ const CartItem = props => {
             itemTextStyle={{fontSize: 18}}
             selectedValue={item.quantity}
             onValueChange={val => setQuantity(val)}>
-            {defaultQty.map((v, i) => (
+            {quantityList.map((v, i) => (
               <Picker.Item key={i} label={v} value={v} />
             ))}
           </Picker>

@@ -17,11 +17,20 @@ const Cart = props => {
   const {title, cart} = props;
   const navigation = useNavigation();
 
+  const [checkoutError, setCheckoutError] = useState(false);
+  useEffect(() => {
+    cart.map(item => {
+      if (item.stockQuantity < item.quantity) {
+        setCheckoutError(true);
+      }
+    });
+  }, [cart]);
+
   return (
     <Container>
       <View
         style={css`
-          height: 85%;
+          height: 75%;
         `}>
         <ScrollView>
           <View
@@ -30,7 +39,12 @@ const Cart = props => {
             `}>
             {cart &&
               cart.map((item, key) => (
-                <CartItem key={'cartItems' + key} index={key} item={item} />
+                <CartItem
+                  key={'cartItems' + key}
+                  index={key}
+                  item={item}
+                  setCheckoutError={setCheckoutError}
+                />
               ))}
           </View>
           {cart.length === 0 && (
@@ -46,10 +60,9 @@ const Cart = props => {
               />
             </View>
           )}
-          {cart.length !== 0 && <CartSummary />}
         </ScrollView>
       </View>
-
+      {cart.length !== 0 && <CartSummary />}
       {cart.length !== 0 && (
         <View
           style={css`
@@ -63,26 +76,35 @@ const Cart = props => {
             padding: 10px 0;
             background: white;
           `}>
-          <TouchableOpacity
-            style={css`
-              ${tm.btnOutline}
-              padding: 0 60px;
-            `}>
+          {checkoutError ? (
             <Text
               style={css`
-                ${tm.btnText} color: #FC8369;
-              `}
-              onPress={() => navigation.navigate('CheckoutScreen')}>
-              Proceed to Checkout
-              <FontAwesome5
-                name={'arrow-circle-right'}
-                style={css`
-                  font-size: 20px;
-                  padding: 10px;
-                `}
-              />
+                color: red;
+              `}>
+              Please update Cart items to checkout.
             </Text>
-          </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={css`
+                ${tm.btnOutline}
+                padding: 0 60px;
+              `}>
+              <Text
+                style={css`
+                  ${tm.btnText} color: #FC8369;
+                `}
+                onPress={() => navigation.navigate('CheckoutScreen')}>
+                Proceed to Checkout
+                <FontAwesome5
+                  name={'arrow-circle-right'}
+                  style={css`
+                    font-size: 20px;
+                    padding: 10px;
+                  `}
+                />
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       )}
     </Container>

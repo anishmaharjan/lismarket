@@ -13,7 +13,6 @@ import {listAllProducts} from '../redux/actions/product';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import EachItem from './product/EachItem';
 import gss from './variables.styles';
-//import {signOut} from '../redux/actions/auth';
 
 const Home = props => {
   const {title, navigation} = props;

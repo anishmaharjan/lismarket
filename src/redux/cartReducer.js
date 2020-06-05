@@ -5,6 +5,7 @@ import {
   UDPATE_CART_QUANTITY,
   CART_REMOVE_ITEM,
   CLEAR_CART,
+  ADD_INVOICE_TO_CART,
 } from './types';
 
 const initialState = {
@@ -18,6 +19,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cartItems: [...state.cartItems, action.payload.product],
+      };
+
+    case ADD_INVOICE_TO_CART:
+      return {
+        ...state,
+        cartItems: action.payload.map(item => {
+          return {
+            ...item.product,
+            quantity: item.orderQuantity,
+            price: item.amount,
+          };
+        }),
       };
 
     case UDPATE_CART_QUANTITY:

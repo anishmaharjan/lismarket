@@ -8,31 +8,24 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {css} from '@emotion/native';
-import {Container} from 'native-base';
+import {Container, Spinner} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
-import {
-  listOrder,
-  editOrder,
-  sentPackaging,
-} from '../../../redux/actions/order';
+import {listOrder} from '../../../redux/actions/order';
 import moment from 'moment';
+import gss from '../../variables.styles';
 
 const Order = props => {
   const {
     dispatch,
     orderList,
     listOrder,
-    editOrder,
     updatingOrderSuccess,
+    fetchingOrders,
   } = props;
 
-  const sendPackaging = orderId => {
-    dispatch(sentPackaging(orderId));
-  };
-
   useEffect(() => {
-    !orderList && dispatch(listOrder());
-  });
+    dispatch(listOrder());
+  }, [dispatch, listOrder]);
 
   useEffect(() => {
     if (updatingOrderSuccess === true) {
@@ -40,17 +33,49 @@ const Order = props => {
     }
   }, [updatingOrderSuccess, dispatch, listOrder]);
 
+  const ctaButtons = item => {
+    if (item.collectionReady === true && item.sentPackaging === true) {
+      return <Icon name="clipboard-check" size={30} color="#0f9" />;
+    }
+    if (item.collectionReady === true && item.sentPackaging === false) {
+      return <Icon name="box" size={30} color={gss.primary} />;
+    }
+    if (item.collectionReady === false && item.sentPackaging === true) {
+      return <Icon name="box-open" size={30} color={gss.secondary} />;
+    }
+    if (item.collectionReady === false && item.sentPackaging === false) {
+      return <Icon name="exclamation" size={30} color={gss.primary} />;
+    }
+  };
   return (
     <Container>
+      {fetchingOrders && (
+        <>
+          <Spinner />
+          <Text
+            style={css`
+              text-align: center;
+            `}>
+            Fetching Orders
+          </Text>
+        </>
+      )}
       <ScrollView>
         {orderList &&
-          orderList.items &&
-          orderList.items.map((item, value) => (
-            <View style={styles.itemContainer}>
+          orderList.map((item, key) => (
+            <TouchableOpacity
+              key={key + 'list-invoices'}
+              onPress={() =>
+                props.navigation.navigate('OrderDetail', {
+                  orderItems: item.orderItems,
+                  orderDetails: item,
+                })
+              }
+              style={styles.itemContainer}>
               <View style={styles.headingContainer}>
                 <Text
                   style={{paddingLeft: 20, paddingTop: 5, marginBottom: 10}}>
-                  <Icon name="clipboard-list" size={20} color="#74D4DE" />{' '}
+                  <Icon name="clipboard-list" size={20} color={gss.primary} />{' '}
                   <Text style={{fontSize: 20}}>
                     Invoice No: {item.invoiceNumber}
                   </Text>
@@ -69,7 +94,6 @@ const Order = props => {
                     alignItems: 'flex-start',
                     justifyContent: 'center',
                   }}>
-                  {console.log('item', item)}
                   <Text
                     style={css`
                       padding: 10px;
@@ -79,8 +103,8 @@ const Order = props => {
                   </Text>
                   <Text>{(item.user && item.user.name) || ''}</Text>
                   <Text style={{paddingLeft: 20, paddingTop: 2, fontSize: 16}}>
-                    {' '}
-                    {moment(item.createdAt || moment.now()).fromNow()}{' '}
+                    {moment(item.createdAt || moment.now()).fromNow()} -{' '}
+                    {moment(item.createdAt).format('YYYY MMM Do')}
                   </Text>
                 </View>
                 <View
@@ -91,38 +115,13 @@ const Order = props => {
                     flexDirection: 'row',
                     paddingTop: 10,
                   }}>
-                  {item.collectionReady ? (
-                    <Icon name="bell" size={30} color="#FC8369" />
-                  ) : (
-                    <TouchableOpacity>
-                      {item.sentPackaging ? (
-                        <Icon name="box" size={30} color="#76EE00" />
-                      ) : (
-                        <Icon
-                          name="box"
-                          size={30}
-                          color="#74D4DE"
-                          onPress={() => sendPackaging(item.id)}
-                        />
-                      )}
-                    </TouchableOpacity>
-                  )}
-                  <TouchableOpacity>
-                    <Icon
-                      name="chevron-right"
-                      size={30}
-                      color="#74D4DE"
-                      onPress={() =>
-                        props.navigation.navigate('OrderDetail', {
-                          orderItems: item.orderItems,
-                          orderDetails: item,
-                        })
-                      }
-                    />
-                  </TouchableOpacity>
+                  {ctaButtons(item)}
+                  <View>
+                    <Icon name="chevron-right" size={30} color="#74D4DE" />
+                  </View>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
       </ScrollView>
     </Container>
@@ -147,12 +146,12 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => ({
+    fetchingOrders: state.order.fetchingOrders,
     orderList: state.order.orderList,
     updatingOrderSuccess: state.order.updatingOrderSuccess,
   }),
   dispatch => ({
     dispatch,
     listOrder,
-    sentPackaging,
   }),
 )(Order);

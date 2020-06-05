@@ -9,6 +9,7 @@ import {Root, Container, Header, Content, ActionSheet} from 'native-base';
 import gas from '../../variables.styles';
 import * as tm from '../../theme.style';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {failSafeImage} from '../../../consts';
 
 const AdminProduct = props => {
   const {products} = props;
@@ -73,9 +74,7 @@ const AdminProduct = props => {
                     `}>
                     <Image
                       source={{
-                        uri:
-                          product.image ||
-                          'https://localfoodconnect.org.au/wp-content/uploads/2015/09/tomato.png',
+                        uri: product.image || failSafeImage,
                       }}
                       style={css`
                         height: 50px;
@@ -87,13 +86,19 @@ const AdminProduct = props => {
                       style={css`
                         ${flexColumn};
                         padding-left: 15px;
+                        width: 65%;
                       `}>
                       <Text
                         style={css`
                           font-size: 20px;
+                          font-weight: 600;
                         `}>
                         {product.name}
-                        <Text style={{fontSize: 16, color: '#4F4F4F'}}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: '#4F4F4F',
+                          }}>
                           ({product.category.name})
                         </Text>
                       </Text>
@@ -101,11 +106,12 @@ const AdminProduct = props => {
                         style={css`
                           font-size: 16px;
                         `}>
-                        {product.description}
+                        {product.description.substring(0, 35)}...
                       </Text>
                       <Text
                         style={css`
                           font-size: 16px;
+                          font-weight: bold;
                         `}>
                         Price: $ {product.price}
                       </Text>

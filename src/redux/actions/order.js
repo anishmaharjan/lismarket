@@ -1,10 +1,16 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {listOrders} from '../../graphql/queries';
 import {SS, ER, LIST_ORDERS, CREATE_ORDER, UPDATE_ORDER} from '../types';
-import {createOrder, createOrderItem, updateOrder} from '../../graphql/mutations';
+import {
+  createOrder,
+  createOrderItem,
+  updateOrder,
+  updateProduct,
+} from '../../graphql/mutations';
+import {updateOrderStatusQuery} from '../../graphql/customQueries';
 
 export const listOrder = () => dispatch =>
-  ({
+  dispatch({
     type: LIST_ORDERS,
     payload: API.graphql(graphqlOperation(listOrders))
       .then(result => {
@@ -13,22 +19,33 @@ export const listOrder = () => dispatch =>
           payload: result.data.listOrders,
         });
       })
-      .catch(e =>
+      .catch(e => {
+        console.log('List orders error', e);
         dispatch({
           type: LIST_ORDERS + ER,
           payload: e,
-        }),
-      ),
+        });
+      }),
   });
 
 export const createOrderApi = (order, orderItems, callBack) => dispatch =>
   dispatch({
     type: CREATE_ORDER,
-    payload: API.graphql(graphqlOperation(createOrder, {input: order}))
+    payload: API.graphql(
+      graphqlOperation(createOrder, {
+        input: {
+          invoiceNumber: order.invoiceNumber,
+          paymentType: order.paymentType,
+          sentPackaging: order.sentPackaging,
+          collectionReady: order.collectionReady,
+          orderUsersId: order.orderUsersId,
+        },
+      }),
+    )
       .then(result => {
-        /* TODO: Do a bulk insert here */
         orderItems &&
           orderItems.map((itm, key) => {
+            /* TODO: Do a bulk insert here */
             dispatch({
               type: 'CREATE_ORDER_ITEMS' + SS,
               payload: API.graphql(
@@ -40,7 +57,25 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
                     amount: itm.price,
                   },
                 }),
+              ).catch(error =>
+                console.log('Failed placing order items', error),
               ),
+            });
+
+            // change stock
+            dispatch({
+              type: 'ORDER_UPDATE_STOCK' + SS,
+              payload: API.graphql(
+                graphqlOperation(updateProduct, {
+                  input: {
+                    id: itm.id,
+                    stockQuantity: Math.max(
+                      0,
+                      itm.stockQuantity - itm.quantity,
+                    ),
+                  },
+                }),
+              ).catch(error => console.log('Failed updating stock', error)),
             });
           });
 
@@ -48,10 +83,10 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
           type: CREATE_ORDER + SS,
           payload: result.data.createOrder,
         });
-
         callBack(result);
       })
       .catch(err => {
+        console.log('Error creating order', err, order, orderItems);
         dispatch({
           type: CREATE_ORDER + ER,
           payload: err,
@@ -59,7 +94,7 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
       }),
   });
 
-  export const editOrder = order => dispatch =>
+export const editOrder = order => dispatch =>
   dispatch({
     type: UPDATE_ORDER,
     payload: API.graphql(graphqlOperation(updateOrder, {input: order}))
@@ -77,14 +112,17 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
       }),
   });
 
-  export const sentPackaging = orderId => dispatch =>
+export const sentPackaging_safe_to_delete = orderId => dispatch =>
   dispatch({
     type: UPDATE_ORDER,
-    payload: API.graphql(graphqlOperation(updateOrder, {input: {
-      id: orderId,
-      sentPackaging: true
-    }
-  }))
+    payload: API.graphql(
+      graphqlOperation(updateOrder, {
+        input: {
+          id: orderId,
+          sentPackaging: true,
+        },
+      }),
+    )
       .then(result => {
         dispatch({
           type: UPDATE_ORDER + SS,
@@ -99,15 +137,23 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
       }),
   });
 
-  export const completedPackaging = orderId => dispatch =>
+export const updateOrderStatus = (
+  orderId,
+  {collectionReady, sentPackaging},
+) => dispatch => {
   dispatch({
     type: UPDATE_ORDER,
-    payload: API.graphql(graphqlOperation(updateOrder, {input: {
-      id: orderId,
-      collectionReady: true
-    }
-  }))
+    payload: API.graphql(
+      graphqlOperation(updateOrderStatusQuery, {
+        input: {
+          id: orderId,
+          collectionReady: collectionReady,
+          sentPackaging: sentPackaging,
+        },
+      }),
+    )
       .then(result => {
+        // console.log('result', result);
         dispatch({
           type: UPDATE_ORDER + SS,
           payload: result.data.updateOrder,
@@ -120,4 +166,4 @@ export const createOrderApi = (order, orderItems, callBack) => dispatch =>
         });
       }),
   });
-
+};

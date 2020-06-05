@@ -2,10 +2,9 @@ import React, {useEffect} from 'react';
 import {Image, Text, TouchableOpacity, View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {css} from '@emotion/native';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {outOfStock} from '../../../redux/actions/product';
-import {Root, Container, Header, Content, ActionSheet} from 'native-base';
-import {Button, Input} from 'react-native-elements';
+import {Root, Container} from 'native-base';
+import {Button} from 'react-native-elements';
 import * as tm from '../../theme.style';
 import {failSafeImage} from '../../../consts';
 import gas from '../../variables.styles';
@@ -15,7 +14,7 @@ const NoStock = props => {
   const {dispatch, outOfStock} = props;
 
   useEffect(() => {
-    !noStockProducts && dispatch(outOfStock());
+    dispatch(outOfStock());
   }, [outOfStock, dispatch, noStockProducts]);
 
   return (

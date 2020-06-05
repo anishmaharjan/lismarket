@@ -1,4 +1,4 @@
-import {SS, ER, LIST_ORDERS, CREATE_ORDER,UPDATE_ORDER} from './types';
+import {SS, ER, LIST_ORDERS, CREATE_ORDER, UPDATE_ORDER} from './types';
 
 const initialState = {
   orderList: null,
@@ -7,7 +7,7 @@ const initialState = {
   successPayment: null,
   updatingOrder: false,
   updatingOrderSuccess: false,
-  updatedOrder: null
+  updatedOrder: null,
 };
 
 export default (state = initialState, action) => {
@@ -22,7 +22,9 @@ export default (state = initialState, action) => {
         ...state,
         fetchingOrders: false,
         updatingOrderSuccess: false,
-        orderList: action.payload,
+        orderList: action.payload.items.sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        }),
       };
 
     case CREATE_ORDER:
@@ -49,7 +51,13 @@ export default (state = initialState, action) => {
         ...state,
         updatingOrder: false,
         updatingOrderSuccess: true,
-        orderList: action.payload,
+        orderList: state.orderList.map(item => {
+          if (item.id === action.payload.id) {
+            item.sentPackaging = action.payload.sentPackaging;
+            item.collectionReady = action.payload.collectionReady;
+          }
+          return item;
+        }),
       };
 
     default:

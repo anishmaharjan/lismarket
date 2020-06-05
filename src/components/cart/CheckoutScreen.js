@@ -14,6 +14,7 @@ import {clearCart} from '../../redux/actions/cart';
 
 import {calculateTotal, getRandomInt} from '../../util';
 import {useNavigation} from '@react-navigation/native';
+import {listAllProducts} from '../../redux/actions/product';
 
 const CheckoutScreen = props => {
   const {
@@ -24,6 +25,7 @@ const CheckoutScreen = props => {
     authUser,
     cart,
     cartTotal,
+    listAllProducts,
   } = props;
 
   const navigation = useNavigation();
@@ -82,6 +84,7 @@ const CheckoutScreen = props => {
           amountPaid: calculateTotal(cart),
           order: order,
         });
+        dispatch(listAllProducts());
         dispatch(clearCart());
       }),
     );
@@ -265,5 +268,6 @@ export default connect(
     dispatch,
     createOrder: createOrderApi,
     clearCart,
+    listAllProducts,
   }),
 )(CheckoutScreen);

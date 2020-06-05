@@ -9,20 +9,37 @@ import gss from '../variables.styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import Footer from '../Footer';
+import moment from 'moment';
 
 const PurchaseHistory = props => {
   const {authUser, user, dispatch, getPurchaseHistoryApi} = props;
   const navigation = useNavigation();
 
   useEffect(() => {
-    !user && dispatch(getPurchaseHistoryApi(authUser.sub));
-  }, [authUser.sub, dispatch, getPurchaseHistoryApi, user]);
+    dispatch(getPurchaseHistoryApi(authUser.sub));
+  }, [authUser.sub, dispatch, getPurchaseHistoryApi]);
+
+  const orderStatus = order => {
+    if (order.collectionReady === true && order.sentPackaging === true) {
+      return <Text>Order collected.</Text>;
+    }
+    if (order.collectionReady === true && order.sentPackaging === false) {
+      return <Text>Order is pending to be picked up.</Text>;
+    }
+    if (order.collectionReady === false && order.sentPackaging === true) {
+      return <Text>Your order are being processed.</Text>;
+    }
+    if (order.collectionReady === false && order.sentPackaging === false) {
+      return <Text>Your order has been placed.</Text>;
+    }
+  };
 
   return (
     <Container>
       <View
         style={css`
           ${tm.paddingWalls}
+          height: 90%;
         `}>
         {user &&
           user.orders &&
@@ -73,13 +90,18 @@ const PurchaseHistory = props => {
                     justify-content: space-between;
                   `}>
                   <View>
-                    <Text>Comments: {order.comment}</Text>
-                    <Text>Paid by: {order.paymentType.toUpperCase()}</Text>
                     <Text>
-                      Status:
-                      {order.collectionReady
-                        ? ' Ready for collection.'
-                        : ' Item being processed.'}
+                      {moment(order.createdAt).format(
+                        'dddd, Do MMMM YYYY, h:mm:ss a',
+                      )}
+                    </Text>
+                    <Text>Paid by: {order.paymentType.toUpperCase()}</Text>
+                    <Text>Comments: {order.comment}</Text>
+                    <Text
+                      style={css`
+                        font-weight: bold;
+                      `}>
+                      Status: {orderStatus(order)}
                     </Text>
                   </View>
                   <View>

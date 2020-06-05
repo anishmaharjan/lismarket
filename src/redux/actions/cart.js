@@ -5,6 +5,7 @@ import {
   UDPATE_CART_QUANTITY,
   CART_REMOVE_ITEM,
   CLEAR_CART,
+  ADD_INVOICE_TO_CART,
 } from '../types';
 
 export const addToCart = product => dispatch =>
@@ -29,4 +30,10 @@ export const clearCart = () => dispatch =>
   dispatch({
     type: CLEAR_CART,
     payload: [],
+  });
+
+export const addInvoiceToCart = products => dispatch =>
+  dispatch({
+    type: ADD_INVOICE_TO_CART,
+    payload: products,
   });

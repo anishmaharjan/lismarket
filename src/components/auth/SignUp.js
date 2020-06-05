@@ -30,7 +30,7 @@ const SignIn = props => {
             id: data.userSub,
             email: form.email,
             contactNo: form.phone_number,
-            userGroup: form.userGroup || 'user',
+            userGroup: form.username,
           }),
         );
         navigation.navigate('ConfirmSignUpScreen');

@@ -26,6 +26,11 @@ export default (state = initialState, action) => {
           return new Date(b.createdAt) - new Date(a.createdAt);
         }),
       };
+    case LIST_ORDERS + ER:
+      return {
+        ...state,
+        fetchingOrders: false,
+      };
 
     case CREATE_ORDER:
       return {...state, processingPayment: true};

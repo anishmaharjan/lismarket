@@ -9,7 +9,7 @@ import moment from 'moment';
 import gss from '../../variables.styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import * as tm from '../../theme.style';
-import {monefy} from '../../../util';
+import {monefy, sendEmail} from '../../../util';
 
 const OrderDetail = props => {
   const {navigation} = props;
@@ -88,10 +88,22 @@ const OrderDetail = props => {
         <Button
           onPress={() =>
             dispatch(
-              updateOrderStatus(orderDetails.id, {
-                collectionReady: true,
-                sentPackaging: false,
-              }),
+              updateOrderStatus(
+                orderDetails.id,
+                {
+                  collectionReady: true,
+                  sentPackaging: false,
+                },
+                () => {
+                  sendEmail({
+                    to: props.authUser.email,
+                    subject: 'Collection ready',
+                    content: {
+                      text: 'Hello, Your order is ready to be collected.',
+                    },
+                  });
+                },
+              ),
             )
           }
           style={{
@@ -241,6 +253,7 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => ({
+    authUser: state.auth.authUser,
     updatingOrderSuccess: state.order.updatingOrderSuccess,
   }),
   dispatch => ({

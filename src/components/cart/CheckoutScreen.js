@@ -12,7 +12,7 @@ import {createOrderApi} from '../../redux/actions/order';
 import uuid from 'react-native-uuid';
 import {clearCart} from '../../redux/actions/cart';
 
-import {calculateTotal, getRandomInt} from '../../util';
+import {calculateTotal, getRandomInt, monefy, sendEmail} from '../../util';
 import {useNavigation} from '@react-navigation/native';
 import {listAllProducts} from '../../redux/actions/product';
 
@@ -79,6 +79,15 @@ const CheckoutScreen = props => {
 
     dispatch(
       createOrder(order, cart, orderSummary => {
+        //pay success
+        sendEmail({
+          to: authUser.email,
+          subject: 'Payment made',
+          content: {
+            text: `Payment successful for ${monefy(calculateTotal(cart))}.`,
+          },
+        });
+
         //clear cart
         navigation.navigate('PaymentSuccessScreen', {
           amountPaid: calculateTotal(cart),

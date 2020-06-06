@@ -17,8 +17,8 @@
                     "defaultAuthentication": {
                         "authenticationType": "API_KEY",
                         "apiKeyConfig": {
-                            "description": "",
-                            "apiKeyExpirationDays": 7
+                            "description": "li2",
+                            "apiKeyExpirationDays": "365"
                         }
                     }
                 }

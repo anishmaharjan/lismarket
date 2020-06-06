@@ -37,6 +37,7 @@ type Order @model{
   sentPackaging: Boolean
   collectionReady: Boolean
   comment: String
+  createdAt: String
   users : User @connection(name: "OrderUsers")
   orderItems: [OrderItem] @connection(name:"OrderItemOrder")
   }

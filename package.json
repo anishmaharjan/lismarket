@@ -26,6 +26,7 @@
     "aws-amplify": "^3.0.7",
     "aws-amplify-react-native": "^4.0.3",
     "aws-appsync": "^3.0.3",
+    "axios": "^0.19.2",
     "graphql-tag": "^2.10.3",
     "moment": "^2.26.0",
     "native-base": "^2.13.12",

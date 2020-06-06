@@ -140,6 +140,7 @@ export const sentPackaging_safe_to_delete = orderId => dispatch =>
 export const updateOrderStatus = (
   orderId,
   {collectionReady, sentPackaging},
+  callback,
 ) => dispatch => {
   dispatch({
     type: UPDATE_ORDER,
@@ -153,7 +154,7 @@ export const updateOrderStatus = (
       }),
     )
       .then(result => {
-        // console.log('result', result);
+        callback();
         dispatch({
           type: UPDATE_ORDER + SS,
           payload: result.data.updateOrder,

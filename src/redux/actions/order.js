@@ -140,7 +140,7 @@ export const sentPackaging_safe_to_delete = orderId => dispatch =>
 export const updateOrderStatus = (
   orderId,
   {collectionReady, sentPackaging},
-  callback,
+  callback = () => {},
 ) => dispatch => {
   dispatch({
     type: UPDATE_ORDER,

@@ -60,22 +60,10 @@ const OrderDetail = props => {
         <Button
           onPress={() =>
             dispatch(
-              updateOrderStatus(
-                orderDetails.id,
-                {
-                  collectionReady: true,
-                  sentPackaging: true,
-                },
-                () => {
-                  sendEmail({
-                    to: props.authUser.email,
-                    subject: 'Collection ready',
-                    content: {
-                      text: 'Hello, Your order is ready to be collected.',
-                    },
-                  });
-                },
-              ),
+              updateOrderStatus(orderDetails.id, {
+                collectionReady: true,
+                sentPackaging: true,
+              }),
             )
           }
           style={{
@@ -100,10 +88,22 @@ const OrderDetail = props => {
         <Button
           onPress={() =>
             dispatch(
-              updateOrderStatus(orderDetails.id, {
-                collectionReady: true,
-                sentPackaging: false,
-              }),
+              updateOrderStatus(
+                orderDetails.id,
+                {
+                  collectionReady: true,
+                  sentPackaging: false,
+                },
+                () => {
+                  sendEmail({
+                    to: props.authUser.email,
+                    subject: 'Collection ready',
+                    content: {
+                      text: 'Hello, Your order is ready to be collected.',
+                    },
+                  });
+                },
+              ),
             )
           }
           style={{

@@ -16,8 +16,8 @@ export const getRandomInt = (min, max) => {
 export const sendEmail = data => {
   axios
     .post(
-      // 'https://0cli622ocj.execute-api.ap-southeast-2.amazonaws.com/dev/sendmail',
-      'http://localhost:3000/dev/sendmail',
+      'https://0cli622ocj.execute-api.ap-southeast-2.amazonaws.com/dev/sendmail',
+      // 'http://localhost:3000/dev/sendmail',
       JSON.stringify(data),
     )
     .then(response => {

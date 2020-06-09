@@ -55,8 +55,8 @@ export default (state = initialState, action) => {
       return {...state};
 
     case EDIT_USER + SS:
-      return{...state, updateUserSuccess: true };
-    
+      return {...state, updateUserSuccess: true};
+
     case EDIT_USER + ER:
       return {...state};
 

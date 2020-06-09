@@ -30,7 +30,14 @@ const PurchaseHistory = props => {
       return <Text>Your order are being processed.</Text>;
     }
     if (order.collectionReady === false && order.sentPackaging === false) {
-      return <Text>Your order has been placed.</Text>;
+      return (
+        <Text
+          style={css`
+            ${tm.primary}
+          `}>
+          Your order has been placed.
+        </Text>
+      );
     }
   };
 

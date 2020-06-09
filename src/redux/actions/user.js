@@ -68,7 +68,12 @@ export const createUserApi = user => dispatch => ({
 export const getPurchaseHistoryApi = userId => dispatch => {
   dispatch({
     type: GET_PURCHASE_HISTORY,
-    payload: API.graphql(graphqlOperation(getPurchaseHistory, {id: userId}))
+    payload: API.graphql(
+      graphqlOperation(getPurchaseHistory, {
+        id: userId,
+        sort: 'DESC',
+      }),
+    )
       .then(result => {
         dispatch({
           type: GET_PURCHASE_HISTORY + SS,

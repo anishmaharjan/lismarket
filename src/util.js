@@ -14,16 +14,15 @@ export const getRandomInt = (min, max) => {
 };
 
 export const sendEmail = data => {
+  // const URL =
+  'https://0cli622ocj.execute-api.ap-southeast-2.amazonaws.com/dev/sendmail';
+  const URL = 'http://localhost:3000/dev/sendmail';
   axios
-    .post(
-      'https://0cli622ocj.execute-api.ap-southeast-2.amazonaws.com/dev/sendmail',
-      // 'http://localhost:3000/dev/sendmail',
-      JSON.stringify(data),
-    )
+    .post(URL, JSON.stringify(data))
     .then(response => {
       console.log('Success sending email', response);
     })
     .catch(error => {
-      console.log('Sendgrid errro",', error);
+      console.log('Send email error",', error);
     });
 };

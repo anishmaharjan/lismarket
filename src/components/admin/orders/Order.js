@@ -71,8 +71,20 @@ const Order = props => {
                   orderDetails: item,
                 })
               }
-              style={styles.itemContainer}>
-              <View style={styles.headingContainer}>
+              style={css`
+                padding: 10px;
+                background-color: #efe5ff;
+                min-height: 125px;
+                border-bottom-width: 1px;
+                border-bottom-color: #ccc;
+                margin-bottom: 15px;
+              `}>
+              <View
+                style={css`
+                  border-bottom-width: 1px;
+                  border-bottom-color: '#74D4DE';
+                  padding: 1px;
+                `}>
                 <Text
                   style={{paddingLeft: 20, paddingTop: 5, marginBottom: 10}}>
                   <Icon name="clipboard-list" size={20} color={gss.primary} />{' '}
@@ -127,22 +139,6 @@ const Order = props => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  headingContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#74D4DE',
-    padding: 1,
-  },
-  itemContainer: {
-    padding: 5,
-    backgroundColor: '#f3ffff',
-    height: 125,
-    borderBottomWidth: 1,
-    borderBottomColor: '#bbb',
-    marginBottom: 15,
-  },
-});
 
 export default connect(
   state => ({

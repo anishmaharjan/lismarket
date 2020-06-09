@@ -15,7 +15,7 @@ import {
 
 export const listAllProducts = () => dispatch => ({
   type: LIST_PRODUCT,
-  payload: API.graphql(graphqlOperation(listProducts))
+  payload: API.graphql(graphqlOperation(listProducts, {limit: 40}))
     .then(result => {
       dispatch({
         type: LIST_PRODUCT + SS,

@@ -15,7 +15,7 @@ const NoStock = props => {
 
   useEffect(() => {
     dispatch(outOfStock());
-  }, [outOfStock, dispatch, noStockProducts]);
+  }, [outOfStock, dispatch]);
 
   return (
     <Root>
@@ -25,16 +25,19 @@ const NoStock = props => {
             style={css`
               ${tm.paddingWalls}
             `}>
+            {noStockProducts && noStockProducts.items.length === 0 && (
+              <View>
+                <Text>No items are out of stock</Text>
+              </View>
+            )}
             {noStockProducts &&
               noStockProducts.items &&
-              [...noStockProducts.items].map((product, key) => (
+              noStockProducts.items.map((product, key) => (
                 <View
                   key={key}
                   style={css`
                     padding: 12px 10px;
                     margin-bottom: 20px;
-                    flex-direction: row;
-                    justify-content: space-between;
                     border-bottom-width: 1px;
                     border-bottom-color: #ff914d;
                   `}>

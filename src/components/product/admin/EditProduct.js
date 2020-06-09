@@ -34,17 +34,21 @@ const EditProduct = props => {
     setForm(prev => ({...prev, [name]: val}));
   };
 
+  const label = 'padding-top: 10px; padding-left: 20px;';
+
   return (
     <ScrollView>
       <View
         style={css`
           flex-direction: row;
           justify-content: space-between;
+          background: #4f4f4f;
         `}>
         <Text
           style={css`
             font-size: 18px;
             padding: 10px 20px;
+            color: white;
           `}>
           Edit a product
         </Text>
@@ -74,7 +78,12 @@ const EditProduct = props => {
         activeLabelStyle={{color: 'red'}}
         onChangeItem={handleDropdown}
       />
-
+      <Text
+        style={css`
+          ${label}
+        `}>
+        Name
+      </Text>
       <Input
         placeholder="Product name"
         defaultValue={product.name}
@@ -83,6 +92,12 @@ const EditProduct = props => {
           padding: 10px 20px;
         `}
       />
+      <Text
+        style={css`
+          ${label}
+        `}>
+        Description
+      </Text>
       <Input
         placeholder="Description"
         defaultValue={product.description}
@@ -91,6 +106,12 @@ const EditProduct = props => {
           padding: 10px 20px;
         `}
       />
+      <Text
+        style={css`
+          ${label}
+        `}>
+        Price ($)
+      </Text>
       <Input
         keyboardType="numeric"
         placeholder="Price"
@@ -100,6 +121,12 @@ const EditProduct = props => {
           padding: 10px 20px;
         `}
       />
+      <Text
+        style={css`
+          ${label}
+        `}>
+        Current stock
+      </Text>
       <Input
         keyboardType="numeric"
         placeholder="Current stock"
@@ -109,6 +136,12 @@ const EditProduct = props => {
           padding: 10px 20px;
         `}
       />
+      <Text
+        style={css`
+          ${label}
+        `}>
+        Image URL
+      </Text>
       <Input
         placeholder="Image Url"
         onChangeText={val => handleChange('image', val)}

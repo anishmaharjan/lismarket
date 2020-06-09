@@ -47,13 +47,13 @@ export const getUserDetailed = /* GraphQL */ `
 `;
 
 export const getPurchaseHistory = /* GraphQL */ `
-  query GetPurchaseHistory($id: ID!) {
+  query GetPurchaseHistory($id: ID!, $sort: ModelSortDirection) {
     getUser(id: $id) {
       id
       email
       contactNo
       userGroup
-      orders {
+      orders(sortDirection: $sort) {
         items {
           id
           invoiceNumber

@@ -8,36 +8,42 @@ import * as tm from '../../theme.style';
 import gas from '../../variables.styles';
 import {editUser, getAllUsers} from '../../../redux/actions/user';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {authUpdateGroup} from '../../../redux/actions/auth';
 
 const UserGroupEdit = props => {
-  const {authUser, navigation, dispatch, updateUserSuccess, authUpdateGroup} = props;
+  const {
+    authUser,
+    navigation,
+    dispatch,
+    updateUserSuccess,
+    authUpdateGroup,
+  } = props;
 
   const {user} = props.route.params;
 
   const [form, setForm] = useState({
     //id: user.id,
-    });
+  });
 
   const handleDropdown = ({value}) => {
-    setForm(prev => ({...prev, 'custom:userGroup':value}));
+    setForm(prev => ({...prev, 'custom:userGroup': value}));
   };
 
   const submitForm = () => () => {
     dispatch(authUpdateGroup(form));
   };
 
-    /*useEffect(()=>{
+  /*useEffect(()=>{
         if(updateUserSuccess == true){
         dispatch(getAllUsers());
         navigation.goBack(); }
     })*/
 
   const userGroups = [
-    {label:'Admin', value:'admin'},
-    {label:'Inventory Manager', value:'manager'},
-    {label:'User', value:'user'},
+    {label: 'Admin', value: 'admin'},
+    {label: 'Inventory Manager', value: 'manager'},
+    {label: 'User', value: 'user'},
   ];
 
   return (
@@ -48,14 +54,14 @@ const UserGroupEdit = props => {
         `}>
         <Text>User Group</Text>
         <DropDownPicker
-        items= {userGroups}
-        placeholder="Select a category"
-        defaultValue = {user.userGroup}
-        containerStyle={{height: 60}}
-        activeLabelStyle={{color: 'red'}}
-        onChangeItem={handleDropdown}
-      />     
-      <Button
+          items={userGroups}
+          placeholder="Select a category"
+          defaultValue={'user'}
+          containerStyle={{height: 60}}
+          activeLabelStyle={{color: 'red'}}
+          onChangeItem={handleDropdown}
+        />
+        <Button
           onPress={submitForm()}
           title="Submit"
           style={css`
@@ -81,7 +87,6 @@ const UserGroupEdit = props => {
           `}
         />
       </View>
-
     </Container>
   );
 };
@@ -94,6 +99,6 @@ export default connect(
     dispatch,
     editUser,
     getAllUsers,
-    authUpdateGroup
+    authUpdateGroup,
   }),
 )(UserGroupEdit);

@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {css} from '@emotion/native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {listAllProducts} from '../../../redux/actions/product';
-import {Root, Container, Header, Content, ActionSheet} from 'native-base';
-import {Button, Input} from 'react-native-elements';
+import {Root, Container, Item, Input} from 'native-base';
 import {failSafeImage} from '../../../consts';
 
 const Inventory = props => {
@@ -15,6 +14,12 @@ const Inventory = props => {
   useEffect(() => {
     !products && dispatch(listAllProducts());
   }, [dispatch, products]);
+
+  const [search, setSearch] = useState('');
+
+  const handleSearch = text => {
+    setSearch(text);
+  };
 
   const borderBottom = `
   border-bottom-width: 1px;
@@ -44,79 +49,100 @@ const Inventory = props => {
   return (
     <Root>
       <Container>
+        <View
+          style={css`
+            padding: 0 10px;
+          `}>
+          <Item rounded style={css``}>
+            <Icon
+              name="search"
+              size={20}
+              style={css`
+                padding: 5px;
+              `}
+            />
+            <Input placeholder="Search" onChangeText={handleSearch} />
+          </Item>
+        </View>
         <View>
           <ScrollView>
             {products &&
               products.items &&
-              [...products.items].map((product, key) => (
-                <View
-                  key={key}
-                  style={css`
-                    padding: 12px 10px;
-                    flex: 1;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    border-bottom-width: 1px;
-                    border-bottom-color: #ff914d;
-                  `}>
+              products.items
+                .filter(fil =>
+                  search === ''
+                    ? true
+                    : fil.name.toLowerCase().includes(search.toLowerCase()),
+                )
+                .map((product, key) => (
                   <View
+                    key={key}
                     style={css`
-                      padding-left: 5px;
+                      padding: 12px 10px;
                       flex: 1;
+                      flex-direction: row;
+                      justify-content: space-between;
+                      border-bottom-width: 1px;
+                      border-bottom-color: #ff914d;
                     `}>
-                    <Image
-                      source={{uri: product.image || failSafeImage}}
+                    <View
                       style={css`
-                        height: 40px;
-                        width: 40px;
-                        margin: 0 5px;
-                      `}
-                    />
-                  </View>
-                  <View
-                    style={css`
-                      padding-left: 5px;
-                      flex: 2;
-                    `}>
-                    <Text
-                      style={css`
-                        font-size: 18px;
+                        padding-left: 5px;
+                        flex: 1;
                       `}>
-                      {product.name}
-                    </Text>
-                  </View>
-                  <View
-                    style={css`
-                      padding-left: 20;
-                      flex: 1;
-                    `}>
-                    <Text
+                      <Image
+                        source={{uri: product.image || failSafeImage}}
+                        style={css`
+                          height: 40px;
+                          width: 40px;
+                          margin: 0 5px;
+                        `}
+                      />
+                    </View>
+                    <View
                       style={css`
-                        font-size: 16px;
+                        padding-left: 5px;
+                        flex: 2;
                       `}>
-                      {' '}
-                      QTY: {product.stockQuantity}
-                    </Text>
-                  </View>
+                      <Text
+                        style={css`
+                          font-size: 18px;
+                        `}>
+                        {product.name}
+                      </Text>
+                    </View>
+                    <View
+                      style={css`
+                        padding-left: 20;
+                        flex: 1;
+                      `}>
+                      <Text
+                        style={css`
+                          font-size: 16px;
+                        `}>
+                        {' '}
+                        QTY: {product.stockQuantity}
+                      </Text>
+                    </View>
 
-                  <View
-                    style={css`
-                      padding-right: 5;
-                    `}>
-                    <TouchableOpacity
+                    <View
                       style={css`
-                        ${padding};
-                      `}
-                      onPress={() =>
-                        props.navigation.navigate('StockChange', {
-                          product: product,
-                        })
-                      }>
-                      <Icon name="edit" size={30} />
-                    </TouchableOpacity>
+                        padding-right: 5;
+                      `}>
+                      <TouchableOpacity
+                        style={css`
+                          ${padding};
+                        `}
+                        onPress={() =>
+                          props.navigation.navigate('StockChange', {
+                            product: product,
+                          })
+                        }>
+                        <Icon name="edit" size={30} />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              ))}
+                ))}
           </ScrollView>
         </View>
       </Container>

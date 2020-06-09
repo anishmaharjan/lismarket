@@ -47,7 +47,7 @@ const Home = props => {
                   `}
                   source={{
                     uri:
-                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png',
+                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner2.jpg',
                   }}
                 />
               </View>
@@ -58,7 +58,7 @@ const Home = props => {
                   `}
                   source={{
                     uri:
-                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner2.jpg',
+                      'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/banners/banner1.png',
                   }}
                 />
               </View>

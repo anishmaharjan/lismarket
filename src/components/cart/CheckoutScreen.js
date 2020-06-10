@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {Container, Spinner} from 'native-base';
+import {
+  Container,
+  Spinner,
+  Item,
+  Input as CouponBox,
+  Button,
+} from 'native-base';
 import {css} from '@emotion/native';
 import * as tm from '../theme.style';
 import CartSummary from './CartSummary';
@@ -10,7 +16,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {createOrderApi} from '../../redux/actions/order';
 import uuid from 'react-native-uuid';
-import {clearCart} from '../../redux/actions/cart';
+import {applyCoupon, clearCart} from '../../redux/actions/cart';
 
 import {calculateTotal, getRandomInt, monefy, sendEmail} from '../../util';
 import {useNavigation} from '@react-navigation/native';
@@ -24,14 +30,17 @@ const CheckoutScreen = props => {
     createOrder,
     authUser,
     cart,
-    cartTotal,
+    couponApplied,
     listAllProducts,
+    applyCoupon,
   } = props;
 
   const navigation = useNavigation();
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [paymentOption, setPaymentOption] = useState('paypal');
+  const [coupon, setCoupon] = useState('');
+
   const [order, setOrder] = useState({
     invoiceNumber:
       'INV-' +
@@ -84,13 +93,15 @@ const CheckoutScreen = props => {
           to: authUser.email,
           subject: 'Payment made',
           content: {
-            text: `Payment successful for ${monefy(calculateTotal(cart))}.`,
+            text: `Payment successful for ${monefy(
+              calculateTotal(cart, couponApplied),
+            )}.`,
           },
         });
 
         //clear cart
         navigation.navigate('PaymentSuccessScreen', {
-          amountPaid: calculateTotal(cart),
+          amountPaid: calculateTotal(cart, couponApplied),
           order: order,
         });
         dispatch(listAllProducts());
@@ -101,8 +112,30 @@ const CheckoutScreen = props => {
 
   return (
     <Container>
+      <CartSummary />
+      <View
+        style={css`
+          padding: 20px;
+        `}>
+        <Text>Coupon</Text>
+        <View style={css``}>
+          <Item regular style={css``}>
+            <CouponBox
+              placeholder="Regular Textbox"
+              onChangeText={couponText => setCoupon(couponText)}
+            />
+            <Button
+              warning
+              onPress={() => dispatch(applyCoupon(coupon))}
+              style={css`
+                padding: 0 10px;
+              `}>
+              <Text> Apply </Text>
+            </Button>
+          </Item>
+        </View>
+      </View>
       <ScrollView>
-        <CartSummary />
         <View
           style={css`
             ${tm.paddingWalls}
@@ -170,12 +203,15 @@ const CheckoutScreen = props => {
                 style={css`
                   padding: 20px 0;
                 `}>
-                <Input
-                  placeholder="Card Number xxxx-xxxx-xxxx-xxxx"
-                  onChangeText={val => handleChange('cardNumber', val)}
-                  containerStyle={css``}
-                  maxLength={16}
-                />
+                <Item>
+                  <Input
+                    underline
+                    placeholder="Card Number xxxx-xxxx-xxxx-xxxx"
+                    onChangeText={val => handleChange('cardNumber', val)}
+                    containerStyle={css``}
+                    maxLength={16}
+                  />
+                </Item>
               </View>
               <View
                 style={css`
@@ -269,7 +305,7 @@ export default connect(
   state => ({
     authUser: state.auth.authUser,
     cart: state.cart.cartItems,
-    cartTotal: state.cart.cartTotal,
+    couponApplied: state.cart.couponApplied,
     processingPayment: state.order.processingPayment,
     successPayment: state.order.successPayment,
   }),
@@ -278,5 +314,6 @@ export default connect(
     createOrder: createOrderApi,
     clearCart,
     listAllProducts,
+    applyCoupon,
   }),
 )(CheckoutScreen);

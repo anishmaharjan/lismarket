@@ -37,3 +37,9 @@ export const addInvoiceToCart = products => dispatch =>
     type: ADD_INVOICE_TO_CART,
     payload: products,
   });
+
+export const applyCoupon = coupon => dispatch =>
+  dispatch({
+    type: 'APPLY_COUPON',
+    payload: {coupon},
+  });

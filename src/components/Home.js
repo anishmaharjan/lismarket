@@ -39,7 +39,7 @@ const Home = props => {
               style={css`
                 padding: 10px;
               `}
-              autoplay={false}>
+              autoplay={true}>
               <View style={''}>
                 <Image
                   style={css`

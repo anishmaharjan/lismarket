@@ -2,9 +2,15 @@ import axios from 'axios';
 
 export const monefy = amt => amt && `$ ${amt.toFixed(2)}`;
 
-export const calculateTotal = cartItems =>
-  cartItems &&
-  cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+export const calculateTotal = (cartItems, couponApplied = 0) =>
+  Math.max(
+    0,
+    (cartItems &&
+      cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0,
+      )) - couponApplied,
+  );
 
 export const getRandomInt = (min, max) => {
   //The maximum is exclusive and the minimum is inclusive

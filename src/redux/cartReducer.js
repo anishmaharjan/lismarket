@@ -10,7 +10,8 @@ import {
 
 const initialState = {
   cartItems: [],
-  cartTotal: null,
+  couponApplied: 0,
+  couponsList: [{coupon: 'NEWC', value: 5}, {coupon: 'NEWC2', value: 15}],
 };
 
 export default (state = initialState, action) => {
@@ -52,6 +53,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cartItems: action.payload,
+      };
+
+    case 'APPLY_COUPON':
+      const found = state.couponsList.find(
+        cc => cc.coupon === action.payload.coupon,
+      );
+      console.log('Coupon status', found);
+      return {
+        ...state,
+        couponApplied: found ? found.value : 0,
       };
 
     default:

@@ -9,7 +9,7 @@ import {calculateTotal, monefy} from '../../util';
 import {connect} from 'react-redux';
 
 const CartSummary = props => {
-  const {cart} = props;
+  const {cart, couponApplied} = props;
   return (
     <View
       style={css`
@@ -26,6 +26,14 @@ const CartSummary = props => {
           `}>
           Order summary ({cart.length} item/s)
         </Text>
+      </View>
+      <View
+        style={css`
+          ${tm.paddingWalls}
+        `}>
+        {couponApplied !== 0 && (
+          <Text>Coupon applied for {monefy(couponApplied)}</Text>
+        )}
       </View>
       <View
         style={css`
@@ -47,7 +55,7 @@ const CartSummary = props => {
             style={css`
               ${tm.h1}
             `}>
-            {monefy(calculateTotal(cart))}
+            {monefy(calculateTotal(cart, couponApplied))}
           </Text>
         </View>
       </View>
@@ -57,4 +65,5 @@ const CartSummary = props => {
 
 export default connect(state => ({
   cart: state.cart.cartItems,
+  couponApplied: state.cart.couponApplied,
 }))(CartSummary);

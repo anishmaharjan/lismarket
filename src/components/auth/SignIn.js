@@ -36,7 +36,7 @@ const SignIn = props => {
               'https://assets-limarket.s3-ap-southeast-2.amazonaws.com/images/logo.png',
           }}
           style={css`
-            height: 200px;
+            height: 300px;
             width: 300px;
           `}
         />

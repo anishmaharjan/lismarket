@@ -56,7 +56,6 @@ const App: () => React$Node = props => {
     <Root>
       <View
         style={css`
-          padding-top: 60;
           flex: 1;
         `}>
         <Routes />

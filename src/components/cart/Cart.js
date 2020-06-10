@@ -30,7 +30,7 @@ const Cart = props => {
     <Container>
       <View
         style={css`
-          height: 75%;
+          height: 73%;
         `}>
         <ScrollView>
           <View
